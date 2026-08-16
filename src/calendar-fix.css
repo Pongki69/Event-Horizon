@@ -1,0 +1,39 @@
+/* Ultra-specific fix for calendar backgrounds */
+
+/* Target every possible element that could have a background */
+.rbc-month-view .rbc-month-row,
+.rbc-month-view .rbc-month-row > *,
+.rbc-month-view .rbc-row,
+.rbc-month-view .rbc-row > *,
+.rbc-month-view .rbc-row-content,
+.rbc-month-view .rbc-row-content > *,
+.rbc-month-view .rbc-row-content > * > *,
+.rbc-month-view .rbc-date-cell,
+.rbc-month-view .rbc-show-more,
+.rbc-month-view div[role="row"],
+.rbc-month-view div[role="cell"] {
+  background: transparent !important;
+  background-color: transparent !important;
+}
+
+/* Keep only these backgrounds */
+.rbc-month-view .rbc-day-bg {
+  background: #1a202e !important;
+  background-color: #1a202e !important;
+}
+
+.rbc-month-view .rbc-day-bg.rbc-today {
+  background: rgba(139,120,255,0.2) !important;
+  background-color: rgba(139,120,255,0.2) !important;
+}
+
+.rbc-month-view .rbc-event {
+  background: #8b78ff !important;
+  background-color: #8b78ff !important;
+}
+
+.rbc-month-view .rbc-date-cell.rbc-now button,
+.rbc-month-view .rbc-today .rbc-date-cell button {
+  background: #8b78ff !important;
+  background-color: #8b78ff !important;
+}

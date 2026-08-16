@@ -1,0 +1,3087 @@
+/* ============================================================================
+   APP.CSS - Event Horizon Calendar Application Styles
+   ============================================================================
+   
+   TABLE OF CONTENTS:
+   ------------------
+   1. Root Variables .................... CSS custom properties & theme colors
+   2. Global Resets & Body .............. Base styles & typography
+   3. App Layout ........................ Main container & header
+   4. Sidebar Cards ..................... Left sidebar styling
+   5. Icon Buttons ...................... Small action buttons
+   6. Right Details Card ................ Event details panel
+   7. Calendar Area ..................... Calendar container
+   8. React Big Calendar Overrides ...... Third-party calendar styling
+   9. Event Bar Layout .................. Event display in calendar
+   10. Month View ....................... Calendar month-specific styles
+   11. Responsive Adjustments ........... Media queries for different screens
+   12. Floating Navigation .............. Mobile navigation
+   13. Footer ........................... Bottom section
+   
+   ============================================================================ */
+
+/* ============================================================================
+   1. ROOT VARIABLES
+   ============================================================================ */
+/* CSS variables for colors, spacing, radius used throughout the app */
+:root{
+  --bg: #0a0e1a;
+  --card: #151b2b;
+  --card-hover: #1a2133;
+  --muted: #6b7280;
+  --accent: #3b82f6;
+  --accent-hover: #2563eb;
+  --accent-2: #ff8c69;
+  --surface: #151b2b;
+  --text: #f3f4f6;
+  --text-secondary: #9ca3af;
+  --border: rgba(255,255,255,0.08);
+  --radius: 12px;
+  --gap: 16px;
+
+  /* legend colors (unique per game) */
+  --color-genshin: #FFB84D;
+  --color-starrail: #9D7FEA;
+  --color-zzz: #FF6B35;
+  --color-wuthering: #4ECDC4;
+  --color-arknights: #F87171;
+}
+
+/* ============================================================================
+   2. GLOBAL RESETS & BODY
+   ============================================================================ */
+/* Basic reset and body typography */
+*{box-sizing:border-box;margin:0;padding:0}
+html,body,#root{height:100%;min-height:100vh}
+body{
+  font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+  background: var(--bg);
+  color: var(--text);
+  padding: 0;
+  -webkit-font-smoothing:antialiased;
+  min-height: 100vh;
+  overflow: hidden;
+}
+
+/* ============================================================================
+   3. APP LAYOUT
+   ============================================================================ */
+/* Full height flex layout */
+.app { 
+  max-width: 100%;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  overflow: hidden;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.app-header { 
+  margin-bottom: 0;
+  padding: 16px 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: nowrap;
+  gap: 24px;
+  border-bottom: 1px solid var(--border);
+  flex-shrink: 0;
+  position: relative;
+  background: var(--bg);
+  z-index: 100;
+}
+
+/* Left side container */
+.header-title {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex: 0 0 auto;
+}
+
+/* Calendar button styling */
+.header-title button,
+.header-title .calendar-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 16px;
+  background: var(--accent);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 8px rgba(59, 130, 246, 0.3);
+}
+
+.header-title button:hover,
+.header-title .calendar-btn:hover {
+  background: var(--accent-hover);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4);
+}
+
+/* App title */
+.app-header h1 { 
+  font-size: 1.75rem; 
+  margin-bottom: 0;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  background: linear-gradient(135deg, #8b78ff 0%, #3b82f6 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Position view toggle to align with calendar month label */
+.app-header .view-toggle {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10;
+}
+
+.header-logo {
+  width: 40px;
+  height: 40px;
+  object-fit: contain;
+  cursor: pointer;
+  transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+.header-logo:hover {
+  transform: scale(1.1);
+  opacity: 0.8;
+}
+
+/* Right side buttons container */
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex: 0 0 auto;
+}
+
+.back-to-welcome-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 18px;
+  background: rgba(139, 120, 255, 0.1);
+  border: 1px solid rgba(139, 120, 255, 0.3);
+  border-radius: 8px;
+  color: #8b78ff;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.back-to-welcome-btn:hover {
+  background: #8b78ff;
+  color: white;
+  border-color: #8b78ff;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(139, 120, 255, 0.3);
+}
+
+.back-to-welcome-btn svg {
+  flex-shrink: 0;
+}
+
+.donate-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 18px;
+  background: rgba(255, 107, 107, 0.1);
+  border: 1px solid rgba(255, 107, 107, 0.3);
+  border-radius: 8px;
+  color: #ff6b6b;
+  font-size: 14px;
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.donate-btn:hover {
+  background: #ff6b6b;
+  color: white;
+  border-color: #ff6b6b;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(255, 107, 107, 0.3);
+}
+
+.donate-btn svg {
+  flex-shrink: 0;
+}
+
+.subtitle { color: var(--muted); font-size: .95rem; }
+
+/* Default content layout - three column grid */
+.content {
+  display: grid;
+  grid-template-columns: minmax(280px, 320px) minmax(0, 1fr) minmax(320px, 380px);
+  gap: 0;
+  align-items: stretch;
+  flex: 1;
+  overflow: hidden;
+  height: 100%;
+  min-height: 0;
+}
+
+/* Left sidebar */
+.sidebar {
+  width: 100%;
+  flex-shrink: 0;
+  border-right: 1px solid var(--border);
+  background: rgba(0, 0, 0, 0.2);
+  overflow-y: auto;
+  overflow-x: hidden;
+  height: 100%;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(139, 120, 255, 0.4) transparent;
+}
+
+.sidebar::-webkit-scrollbar {
+  width: 2px;
+}
+
+.sidebar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.sidebar::-webkit-scrollbar-thumb {
+  background: rgba(139, 120, 255, 0.4);
+  border-radius: 1px;
+}
+
+.sidebar::-webkit-scrollbar-thumb:hover {
+  background: rgba(139, 120, 255, 0.6);
+}
+
+/* Center calendar area */
+.calendar-area {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  min-width: 0;
+  height: 100%;
+}
+
+/* Right sidebar */
+.details-card {
+  width: 100%;
+  flex-shrink: 0;
+  border-left: 1px solid var(--border);
+  background: rgba(0, 0, 0, 0.2);
+  overflow-y: auto;
+  overflow-x: hidden;
+  height: 100%;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(139, 120, 255, 0.4) transparent;
+}
+
+.details-card::-webkit-scrollbar {
+  width: 2px;
+}
+
+.details-card::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.details-card::-webkit-scrollbar-thumb {
+  background: rgba(139, 120, 255, 0.4);
+  border-radius: 1px;
+}
+
+.details-card::-webkit-scrollbar-thumb:hover {
+  background: rgba(139, 120, 255, 0.6);
+}
+
+/* Enhanced depth for desktop only */
+@media (min-width: 1025px) {
+  .details-card {
+    border-left: 1px solid rgba(71, 85, 105, 0.4);
+    background: linear-gradient(135deg, rgba(30, 41, 59, 0.5) 0%, rgba(15, 23, 42, 0.7) 100%);
+    scrollbar-color: rgba(139, 120, 255, 0.4) rgba(30, 41, 59, 0.2);
+    box-shadow: inset 3px 0 8px rgba(0, 0, 0, 0.25);
+    position: relative;
+  }
+
+  .details-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 1px;
+    height: 100%;
+    min-height: 100vh;
+    background: linear-gradient(
+      180deg, 
+      transparent 0%, 
+      rgba(139, 120, 255, 0.3) 50%,
+      transparent 100%
+    );
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  .details-card::-webkit-scrollbar {
+    width: 4px;
+  }
+
+  .details-card::-webkit-scrollbar-track {
+    background: rgba(30, 41, 59, 0.2);
+    border-radius: 2px;
+  }
+
+  .details-card::-webkit-scrollbar-thumb {
+    background: rgba(139, 120, 255, 0.4);
+    border-radius: 2px;
+  }
+
+  .details-card::-webkit-scrollbar-thumb:hover {
+    background: rgba(139, 120, 255, 0.6);
+  }
+}
+
+/* Allow grid children to shrink (prevents overflow) */
+.content > * {
+  min-width: 0;
+  box-sizing: border-box;
+}
+
+/* ============================================================================
+   4. SIDEBAR CARDS
+   ============================================================================ */
+/* Card base styles used across the left and right sidebar cards */
+.sidebar .card {
+    background: transparent;
+    padding: 20px;
+    border-radius: 0;
+    margin-bottom: 0;
+    border: none;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    box-shadow: none;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.sidebar .card:hover {
+    background: linear-gradient(135deg, rgba(139, 120, 255, 0.03) 0%, rgba(59, 130, 246, 0.03) 100%);
+    border-bottom-color: rgba(139, 120, 255, 0.2);
+}
+
+.details-card .card {
+    background: transparent;
+    padding: 20px;
+    border-radius: 0;
+    border: none;
+    border-bottom: 1px solid var(--border);
+    gap: 16px;
+    box-shadow: none;
+    margin-bottom: 0;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.details-card .card:hover {
+    background: linear-gradient(135deg, rgba(139, 120, 255, 0.03) 0%, rgba(59, 130, 246, 0.03) 100%);
+    border-bottom-color: rgba(139, 120, 255, 0.2);
+}
+
+/* Enhanced card depth for desktop only */
+@media (min-width: 1025px) {
+  .details-card .card {
+    background: rgba(30, 41, 59, 0.3);
+    border-bottom: 1px solid rgba(71, 85, 105, 0.4);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+    transition: all 0.2s ease;
+    position: relative;
+  }
+
+  .details-card .card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(
+      90deg, 
+      transparent 0%,
+      rgba(139, 120, 255, 0.15) 50%,
+      transparent 100%
+    );
+    pointer-events: none;
+  }
+
+  .details-card .card:hover {
+    background: rgba(139, 120, 255, 0.06);
+    border-bottom-color: rgba(139, 120, 255, 0.3);
+    box-shadow: 0 2px 8px rgba(139, 120, 255, 0.1);
+  }
+}
+
+.sidebar .card h3,
+.details-card .card h3 {
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--muted);
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.section-header {
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--muted);
+    margin: 0;
+    display: flex;
+    alignItems: 'center';
+    gap: 8px;
+    padding: 8px 0;
+}
+
+/* Quick stats styling */
+.card#stats-section > div > div {
+    padding: 8px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.card#stats-section > div > div:last-child {
+    border-bottom: none;
+}
+
+/* Banner cards spacing - only in 3-column layout */
+/* Moved to consolidated media queries section at end of file */
+
+/* In 2-column and single-column layouts, banner cards follow normal card spacing */
+/* Moved to consolidated media queries section at end of file */
+
+/* Scrollable container for media rows */
+.card .media-rows-container {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    position: relative;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    min-height: 120px;
+}
+
+/* Scrollbar styling for media rows */
+.card .media-rows-container::-webkit-scrollbar {
+    display: none;
+}
+
+.card .media-rows-container::-webkit-scrollbar-track {
+    display: none;
+}
+
+.card .media-rows-container::-webkit-scrollbar-thumb {
+    display: none;
+}
+
+.card .media-rows-container::-webkit-scrollbar-thumb:hover {
+    display: none;
+}
+
+/* Fade indicator at bottom of scrollable containers - only show when scrollable */
+.card .media-rows-container[data-scrollable="true"]::after {
+    content: '';
+    position: sticky;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 40px;
+    background: linear-gradient(to top, rgba(21, 27, 43, 1) 0%, rgba(21, 27, 43, 0) 100%);
+    pointer-events: none;
+    z-index: 5;
+}
+
+/* When container has few items, center them vertically */
+.card .media-rows-container:not([data-scrollable="true"]) {
+    justify-content: flex-start;
+}
+
+/* legend list (game color dots) */
+.legend-list { 
+  list-style:none; 
+  margin-top:8px;
+  padding-bottom: 24px;
+}
+.legend-list li { 
+  display:flex; 
+  align-items:center; 
+  gap:10px; 
+  color:var(--muted); 
+  margin-bottom:8px; 
+  font-size: .95rem;
+  padding: 6px 8px;
+  border-radius: 6px;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.legend-list li::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(139, 120, 255, 0.1), transparent);
+  transition: left 0.5s ease;
+}
+
+.legend-list li:hover::before {
+  left: 100%;
+}
+
+.legend-list li:hover {
+  background: linear-gradient(90deg, rgba(139, 120, 255, 0.08) 0%, rgba(59, 130, 246, 0.08) 100%);
+  transform: translateX(6px);
+  box-shadow: 0 2px 8px rgba(139, 120, 255, 0.15);
+  color: var(--text);
+}
+
+.legend-list li:active {
+  transform: translateX(3px);
+  transition: all 0.1s ease;
+}
+
+/* small colored dot styles used in legends */
+.dot {
+  width:12px;
+  height:12px;
+  border-radius:50%;
+  display:inline-block;
+  box-shadow: 0 0 0 3px rgba(15,23,36,0.02) inset;
+  flex: 0 0 12px;
+}
+.dot.genshin { background: var(--color-genshin); }
+.dot.starrail { background: var(--color-starrail); }
+.dot.zzz { background: var(--color-zzz); }
+.dot.wuthering { background: var(--color-wuthering); }
+.dot.arknights { background: var(--color-arknights); }
+
+/* primary button used throughout the app */
+.btn{
+  padding:8px 12px;
+  background: linear-gradient(90deg, var(--accent), #a78bfa);
+  color:white; border: none; border-radius:6px; cursor:pointer;
+  box-shadow: 0 6px 18px rgba(139,120,255,0.25);
+}
+.btn:hover{ filter:brightness(1.1) }
+
+.muted { color: var(--muted); }
+
+/* ============================================================================
+   5. ICON BUTTONS
+   ============================================================================ */
+/* Small square icon-only buttons used for Close/Open actions.
+   They inherit color from the surrounding context (use stroke="currentColor" in SVG). */
+.icon-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  background: transparent;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  color: var(--muted);
+  cursor: pointer;
+  padding: 6px;
+  transition: all 0.2s ease;
+}
+.icon-btn:hover {
+  background: rgba(139,120,255,0.15);
+  color: var(--accent);
+  border-color: var(--accent);
+  transform: scale(1.1);
+}
+.icon-btn:active {
+  transform: scale(0.95);
+}
+.icon-btn svg {
+  display: block;
+  width: 16px;
+  height: 16px;
+  stroke: currentColor;
+  fill: none;
+  transition: transform 0.2s ease;
+}
+
+/* Media rows (image + text) */
+.media-row {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    padding: 10px;
+    border-radius: 8px;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    cursor: pointer;
+    background: rgba(255, 255, 255, 0.02);
+    min-height: 80px;
+    position: relative;
+    overflow: hidden;
+}
+
+.media-row::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(139, 120, 255, 0.1), transparent);
+    transition: left 0.5s ease;
+}
+
+.media-row:hover::before {
+    left: 100%;
+}
+
+.media-row:hover {
+    background: linear-gradient(135deg, rgba(139, 120, 255, 0.08) 0%, rgba(59, 130, 246, 0.08) 100%);
+    border-color: rgba(139, 120, 255, 0.4);
+    transform: translateX(4px) translateY(-2px);
+    box-shadow: 0 4px 16px rgba(139, 120, 255, 0.25), 0 0 0 1px rgba(139, 120, 255, 0.1);
+}
+
+.media-row:active {
+    transform: translateX(2px) translateY(0);
+    transition: all 0.1s ease;
+}
+
+/* fixed image size for media rows */
+.placeholder-img {
+  width: 100px;
+  height: 60px;
+  object-fit: cover;
+  border-radius: 6px;
+  flex: 0 0 100px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: crisp-edges;
+}
+
+.media-row:hover .placeholder-img {
+  transform: scale(1.05);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+  filter: brightness(1.1);
+}
+
+/* Placeholder for events without images */
+.placeholder-no-image {
+  background: linear-gradient(135deg, #374151 0%, #1f2937 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #9ca3af;
+  font-size: 11px;
+  font-weight: 600;
+  text-align: center;
+}
+
+/* Ensure images have exact same dimensions as placeholder */
+img.placeholder-img {
+  width: 100px !important;
+  height: 60px !important;
+}
+
+/* flexible text area next to images */
+.media-text {
+    flex: 1 1 auto;
+    min-width: 0;
+    max-height: none;
+    overflow: visible;
+    white-space: normal;
+    word-break: break-word;
+    line-height: 1.4;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    justify-content: center;
+}
+
+.media-text p { 
+  margin: 0; 
+  color: #e5e7eb; 
+  font-size: 0.9rem; 
+  line-height: 1.4; 
+  font-weight: 600;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+.media-text .game-name {
+  font-size: 0.75rem;
+  color: #9ca3af;
+  font-weight: 500;
+  margin-top: 2px;
+}
+
+/* Countdown badge */
+.countdown-badge {
+  position: absolute;
+  bottom: 4px;
+  right: 4px;
+  background: rgba(239, 68, 68, 0.95);
+  color: white;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 0.6rem;
+  font-weight: 700;
+  line-height: 1;
+  white-space: nowrap;
+  backdrop-filter: blur(8px);
+  z-index: 10;
+  max-width: calc(100% - 8px);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+/* Live badge for active events */
+.countdown-badge.live {
+  background: rgba(34, 197, 94, 0.95);
+  animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.8;
+  }
+}
+
+/* Responsive countdown badges for smaller screens */
+/* Moved to consolidated media queries section at end of file */
+
+/* Moved to consolidated media queries section at end of file */
+
+/* Moved to consolidated media queries section at end of file */
+
+/* ============================================================================
+   6. RIGHT DETAILS CARD
+   ============================================================================ */
+/* Panel that shows either a single event or the "show more" list */
+.details-card .card {
+  background: var(--card);
+  padding: 16px;
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  min-height: 160px;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Event details image - fixed, not scrollable */
+.details-card .card img,
+.details-card .event-detail-image {
+  flex-shrink: 0;
+}
+
+/* Event detail card - special handling for scrolling */
+.event-detail-card {
+  display: flex;
+  flex-direction: column;
+  max-height: calc(100vh - 200px);
+  overflow: hidden;
+  min-height: 500px;
+}
+
+.event-detail-card .event-detail-content {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.event-detail-content::-webkit-scrollbar {
+  display: none;
+}
+
+.event-detail-image-wrapper {
+  width: 100%;
+}
+
+.event-detail-image {
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+  object-fit: contain;
+}
+
+.event-detail-text {
+  flex: 1;
+  min-width: 0;
+}
+
+/* Adjust max height for smaller screens */
+/* Moved to consolidated media queries section at end of file */
+
+/* Event details text content wrapper - make only text scrollable, match image height */
+/* This applies to show-more-list items (horizontal layout) */
+.details-card .card > div[style*="display: flex"]:not(:first-child) > div:last-child {
+  overflow-y: auto;
+  overflow-x: hidden;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(139,120,255,0.3) transparent;
+  flex: 1;
+  min-height: 0;
+  max-height: 90px; /* Match default image height */
+}
+
+/* In 2-column layouts, match the smaller image heights for show-more-list */
+/* Moved to consolidated media queries section at end of file */
+
+/* Moved to consolidated media queries section at end of file */
+
+/* ============================================================================
+   7. CALENDAR AREA
+   ============================================================================ */
+/* Outer container for the calendar */
+.calendar-area {
+  background: transparent;
+  padding: 0;
+  border-radius: 0;
+  border: none;
+  box-shadow: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  overflow: hidden;
+  min-width: 0;
+  height: 100%;
+  flex: 1;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.calendar-area::-webkit-scrollbar {
+  display: none;
+}
+
+.calendar-area h2 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin: 0 0 16px 0;
+  color: var(--text);
+}
+
+/* Remove any background overlays that might cause black cutoffs */
+.calendar-area::before,
+.calendar-area::after {
+  display: none;
+}
+
+/* Calendar wrapper - provides padding and proper height */
+.calendar-wrapper {
+  padding: 4px 24px 24px 24px;
+  height: 100%;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* View Toggle */
+.view-toggle {
+  display: flex;
+  gap: 4px;
+  padding: 4px;
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 8px;
+  width: fit-content;
+  border: 1px solid var(--border);
+}
+
+/* Mobile toggle inside calendar - override navbar positioning */
+.view-toggle-mobile {
+  position: static !important;
+  left: auto !important;
+  transform: none !important;
+  margin: 0 auto;
+  justify-content: center;
+}
+
+/* Calendar top bar - contains view toggle on mobile */
+.calendar-top-bar {
+  display: none; /* Hidden by default on desktop */
+  padding: 10px 12px;
+  background: transparent;
+  border-radius: 0;
+  border: none;
+  margin-bottom: 0;
+}
+
+/* Inline toggle in calendar toolbar - hidden by default (desktop) */
+.view-toggle-mobile-inline {
+  display: none !important;
+  gap: 2px;
+  padding: 2px;
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 6px;
+  border: 1px solid var(--border);
+  margin-left: 8px;
+}
+
+.view-toggle-btn-inline {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px 6px;
+  background: transparent;
+  border: none;
+  border-radius: 4px;
+  color: var(--muted);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.view-toggle-btn-inline:hover {
+  color: var(--text);
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.view-toggle-btn-inline.active {
+  background: var(--accent);
+  color: white;
+  box-shadow: 0 1px 4px rgba(59, 130, 246, 0.3);
+}
+
+.view-toggle-btn-inline svg {
+  flex-shrink: 0;
+}
+
+.view-toggle-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  background: transparent;
+  border: none;
+  border-radius: 6px;
+  color: var(--muted);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.view-toggle-btn:hover {
+  color: var(--text);
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.view-toggle-btn.active {
+  background: var(--accent);
+  color: white;
+  box-shadow: 0 2px 8px rgba(59, 130, 246, 0.3);
+}
+
+.view-toggle-btn svg {
+  flex-shrink: 0;
+}
+
+/* ============================================================================
+   8. REACT BIG CALENDAR OVERRIDES
+   ============================================================================ */
+/* Base calendar font + sizing */
+.rbc-calendar {
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  background: transparent;
+  color: var(--text);
+  font-size: 0.9rem;
+  height: 100%;
+  max-height: 100%;
+  border-radius: 8px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+/* NUCLEAR OPTION: Remove all backgrounds from calendar internals */
+.rbc-month-view *,
+.rbc-month-view *::before,
+.rbc-month-view *::after {
+  background: transparent !important;
+  background-color: transparent !important;
+}
+
+/* Re-apply only the backgrounds we want */
+.rbc-calendar {
+  background: var(--card) !important;
+}
+
+.rbc-month-view {
+  background: var(--card) !important;
+}
+
+.rbc-day-bg {
+  background: var(--card) !important;
+  background-color: var(--card) !important;
+}
+
+.rbc-day-bg.rbc-today {
+  background: rgba(139,120,255,0.2) !important;
+  background-color: rgba(139,120,255,0.2) !important;
+}
+
+.rbc-off-range-bg {
+  background: rgba(0,0,0,0.2) !important;
+  background-color: rgba(0,0,0,0.2) !important;
+}
+
+.rbc-event,
+.rbc-month-view .rbc-event {
+  background: var(--accent) !important;
+  background-color: var(--accent) !important;
+}
+
+.rbc-date-cell.rbc-now button,
+.rbc-today .rbc-date-cell button {
+  background: var(--accent) !important;
+}
+
+.rbc-show-more:hover {
+  background: rgba(139,120,255,0.15) !important;
+}
+
+/* Month view grid styling */
+.rbc-month-view {
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  overflow: hidden;
+  background: rgba(0, 0, 0, 0.2);
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+/* Ensure no black overlays */
+.rbc-month-view::before,
+.rbc-month-view::after,
+.rbc-calendar::before,
+.rbc-calendar::after {
+  display: none !important;
+}
+
+/* Ensure month rows don't have white backgrounds that cover today */
+.rbc-month-view .rbc-month-row {
+  background: transparent !important;
+}
+
+/* Cell borders and backgrounds */
+.rbc-day-bg {
+  border-left: 1px solid var(--border);
+  transition: background-color 0.2s ease;
+  background: transparent;
+}
+
+.rbc-day-bg:hover {
+  background-color: rgba(59, 130, 246, 0.05);
+}
+
+/* Current day background */
+.rbc-day-bg.rbc-today {
+  background: rgba(59, 130, 246, 0.12) !important;
+}
+
+.rbc-month-row {
+  border-top: 1px solid var(--border);
+  overflow: visible;
+  background: transparent !important;
+}
+
+/* All rbc-row elements should be transparent */
+.rbc-row {
+  background: transparent !important;
+}
+
+.rbc-month-view .rbc-row {
+  background: transparent !important;
+}
+
+/* Ensure row background layer shows today highlight */
+.rbc-row-bg .rbc-day-bg.rbc-today {
+  background: rgba(139,120,255,0.2) !important;
+}
+
+/* Override any white backgrounds on row content that might cover today */
+.rbc-month-view .rbc-row-content {
+  background: transparent !important;
+}
+
+/* Make sure date cell container doesn't have white background */
+.rbc-month-view .rbc-date-cell {
+  background: transparent !important;
+}
+
+/* Make sure the background layer is full height */
+.rbc-row-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  flex-direction: row;
+  overflow: hidden;
+}
+
+.rbc-row-bg .rbc-day-bg {
+  flex: 1 0 0%;
+}
+
+/* header text style (day names) */
+.rbc-header {
+    color: var(--muted);
+    font-weight: 600;
+    padding: 14px 0;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    border-bottom: 1px solid var(--border);
+    background: rgba(0, 0, 0, 0.2);
+}
+
+/* Date number styling - minimal overlay that doesn't block cell lines */
+.rbc-date-cell {
+    padding: 4px 6px;
+    text-align: right;
+    position: absolute;
+    top: 2px;
+    right: 2px;
+    z-index: 10;
+    background: transparent !important;
+    pointer-events: none;
+}
+
+/* Specific override for today's date cell */
+.rbc-date-cell.rbc-now,
+.rbc-date-cell.rbc-now.rbc-current {
+    background: transparent !important;
+}
+
+.rbc-date-cell button {
+    font-weight: 600;
+    color: var(--text);
+    font-size: 0.75rem;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    opacity: 0.3;
+    transition: opacity 0.2s ease;
+    pointer-events: auto;
+    padding: 2px;
+}
+
+/* Show date number on hover */
+.rbc-date-cell:hover button,
+.rbc-day-bg:hover ~ * .rbc-date-cell button {
+    opacity: 0.8;
+}
+
+/* Current day date number - make it stand out */
+.rbc-today .rbc-date-cell button,
+.rbc-date-cell.rbc-now button {
+    background: var(--accent) !important;
+    color: white;
+    border-radius: 50%;
+    width: 26px;
+    height: 26px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    opacity: 1;
+    font-size: 0.75rem;
+    box-shadow: 0 2px 6px rgba(59, 130, 246, 0.4);
+}
+
+/* Dates from other months (grayed out) */
+.rbc-off-range {
+    color: #4b5563;
+}
+
+.rbc-off-range-bg {
+    background: rgba(0,0,0,0.2) !important;
+}
+
+/* toolbar layout overrides (prev/next + view buttons) */
+.rbc-toolbar {
+    margin-bottom: 20px;
+    display: flex;
+    gap: 16px;
+    align-items: center;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    padding: 20px 24px;
+    background: linear-gradient(135deg, rgba(139, 120, 255, 0.08) 0%, rgba(59, 130, 246, 0.08) 100%);
+    border-radius: 16px;
+    border: 1px solid rgba(139, 120, 255, 0.2);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Today button on the left */
+.rbc-toolbar .rbc-btn-group:first-child {
+    order: 1;
+    flex: 0 0 auto;
+}
+
+.rbc-toolbar .rbc-btn-group:first-child button {
+    background: linear-gradient(135deg, rgba(139, 120, 255, 0.2) 0%, rgba(99, 102, 241, 0.2) 100%);
+    border: 2px solid rgba(139, 120, 255, 0.4);
+    padding: 12px 24px;
+    font-weight: 700;
+    font-size: 0.95rem;
+    box-shadow: 0 2px 8px rgba(139, 120, 255, 0.2);
+}
+
+.rbc-toolbar .rbc-btn-group:first-child button:hover {
+    background: linear-gradient(135deg, rgba(139, 120, 255, 0.4) 0%, rgba(99, 102, 241, 0.4) 100%);
+    border-color: rgba(139, 120, 255, 0.6);
+    box-shadow: 0 4px 16px rgba(139, 120, 255, 0.4);
+}
+
+/* Month/Year label in the center */
+.rbc-toolbar .rbc-toolbar-label {
+    order: 2;
+    flex: 1 1 auto;
+    text-align: center;
+    font-size: 1.75rem;
+    font-weight: 900;
+    background: linear-gradient(135deg, #ffffff 0%, #a78bfa 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+}
+
+/* Navigation buttons (prev/next) on the right */
+.rbc-toolbar .rbc-btn-group:last-child {
+    order: 3;
+    flex: 0 0 auto;
+    display: flex;
+    gap: 12px;
+}
+
+/* Add icons to navigation buttons */
+.rbc-toolbar .rbc-btn-group:last-child button {
+    min-width: 48px;
+    min-height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12px;
+    background: linear-gradient(135deg, rgba(139, 120, 255, 0.15) 0%, rgba(99, 102, 241, 0.15) 100%);
+    border: 2px solid rgba(139, 120, 255, 0.3);
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.rbc-toolbar .rbc-btn-group:last-child button:hover {
+    background: linear-gradient(135deg, rgba(139, 120, 255, 0.35) 0%, rgba(99, 102, 241, 0.35) 100%);
+    border-color: rgba(139, 120, 255, 0.6);
+    box-shadow: 0 4px 16px rgba(139, 120, 255, 0.4);
+    transform: translateY(-3px) scale(1.05);
+}
+
+.rbc-toolbar .rbc-btn-group:last-child button:first-child::before {
+    content: '‹';
+    font-size: 1.8rem;
+    font-weight: 900;
+    line-height: 1;
+}
+
+.rbc-toolbar .rbc-btn-group:last-child button:last-child::before {
+    content: '›';
+    font-size: 1.8rem;
+    font-weight: 900;
+    line-height: 1;
+}
+
+/* toolbar buttons visual style */
+.rbc-btn-group button {
+    background: rgba(255, 255, 255, 0.1);
+    color: #ffffff !important;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    padding: 10px 20px;
+    border-radius: 10px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    letter-spacing: 0.02em;
+    backdrop-filter: blur(10px);
+}
+.rbc-btn-group button:hover { 
+    background: rgba(139, 120, 255, 0.3);
+    border-color: rgba(139, 120, 255, 0.5);
+    color: #ffffff !important;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(139, 120, 255, 0.3);
+}
+.rbc-btn-group button:active {
+    transform: scale(0.96);
+}
+
+/* Active state for view buttons */
+.rbc-btn-group button.rbc-active {
+    background: linear-gradient(135deg, #8b78ff 0%, #6b5dd3 100%);
+    border-color: #8b78ff;
+    color: white !important;
+    box-shadow: 0 4px 16px rgba(139, 120, 255, 0.4);
+}
+
+/* Override any default button text colors */
+.rbc-toolbar button {
+    color: #ffffff !important;
+}
+
+/* ============================================================================
+   9. EVENT BAR LAYOUT + THUMBNAILS
+   ============================================================================ */
+/* Make event bars use flex so thumbnail + title align nicely.
+   We keep padding and a compact thumbnail so multiple stacked events remain readable. */
+.rbc-event {
+    padding: 6px 8px !important;
+    border-radius: 8px !important;
+    font-weight: 600;
+    color: white !important;
+    font-size: 0.95rem !important;
+    line-height: 1.2;
+    display: flex !important;
+    align-items: center !important;
+    gap: 8px !important;
+    overflow: hidden;
+}
+
+/* Thumbnail inside event bar (month view is slightly larger) */
+.rbc-event img {
+  width: 20px;
+  height: 26px;
+  object-fit: cover;
+  border-radius: 6px;
+  flex: 0 0 40px;
+}
+
+/* Smaller thumbnails for time/week/day views */
+.rbc-time-view .rbc-event img,
+.rbc-day-slot .rbc-event img {
+  width: 28px;
+  height: 18px;
+  border-radius: 4px;
+  flex: 0 0 28px;
+}
+
+/* ensure labels fit next to thumbnail */
+.rbc-event .rbc-event-label,
+.rbc-event span {
+  font-size: 0.9rem !important;
+  line-height: 1 !important;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* ============================================================================
+   10. MONTH VIEW - SHOW UP TO 3 BARS PER CELL
+   ============================================================================ */
+/* Make event bars narrower and increase cell height so 3 stacked bars fit reliably. */
+/* Narrower events: smaller thumbnail + reduced horizontal padding/gap. */
+/* Taller cells: increase date-cell and row min-height on desktop, with a reduced value on mobile. */
+
+.rbc-month-view .rbc-event {
+  padding: 4px 8px !important;       /* less horizontal padding */
+  border-radius: 8px !important;
+  font-weight: 600;
+  color: white !important;
+  font-size: 0.9rem !important;
+  line-height: 1;
+  display: flex !important;
+  align-items: center !important;
+  gap: 6px !important;
+  box-sizing: border-box;
+  max-height: 32px;                  /* visual cap per bar */
+  min-height: 32px;                  /* ensure consistent height */
+  overflow: hidden;
+  margin-bottom: 4px;                /* space between stacked events */
+}
+
+.rbc-month-view .rbc-event img {
+  width: 28px;
+  height: 18px;
+  border-radius: 6px;
+  flex: 0 0 28px;                    /* narrow thumbnail to save horizontal space */
+}
+
+/* Ensure multi-day events continue across cells */
+.rbc-month-view .rbc-event-continues-prior {
+  border-top-left-radius: 0 !important;
+  border-bottom-left-radius: 0 !important;
+  padding-left: 4px !important;
+}
+
+.rbc-month-view .rbc-event-continues-after {
+  border-top-right-radius: 0 !important;
+  border-bottom-right-radius: 0 !important;
+  padding-right: 4px !important;
+}
+
+/* Visual indicator for continued events */
+.rbc-month-view .rbc-event-continues-prior::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  background: rgba(255,255,255,0.4);
+}
+
+.rbc-month-view .rbc-event-continues-after::after {
+  content: '→';
+  margin-left: auto;
+  font-size: 0.8rem;
+  opacity: 0.8;
+}
+
+/* Reserve vertical space for event bars without date taking up space */
+.rbc-month-view .rbc-row {
+  min-height: 60px;
+  max-height: 60px;
+  overflow: visible;
+  position: relative;
+  background: transparent !important;
+}
+
+/* Specific row that contains date cells should be transparent */
+.rbc-month-view .rbc-row:has(.rbc-date-cell) {
+  background: transparent !important;
+}
+
+/* Make each date cell allow the reserved height */
+.rbc-month-view .rbc-row-content > div,
+.rbc-month-view .rbc-date-cell {
+  min-height: 60px;
+  max-height: 60px;
+  overflow: visible;
+  box-sizing: border-box;
+}
+
+/* Row content wrapper - ensure it can show positioned events */
+.rbc-month-view .rbc-row-content {
+  position: relative;
+  overflow: visible;
+  padding-top: 4px;
+  background: transparent !important;
+}
+
+/* All children of row content should be transparent */
+.rbc-month-view .rbc-row-content > * {
+  background: transparent !important;
+}
+
+/* Override all possible white backgrounds in today's column */
+.rbc-month-view .rbc-day-bg.rbc-today ~ .rbc-row-content,
+.rbc-month-view .rbc-day-bg.rbc-today ~ .rbc-row-content > div {
+  background: transparent !important;
+}
+
+/* Target the specific cell content area for today */
+.rbc-month-view .rbc-row .rbc-row-content .rbc-date-cell.rbc-now {
+  background: transparent !important;
+}
+
+/* Also target by column index if needed */
+.rbc-month-view .rbc-row-content > div {
+  background: transparent !important;
+}
+
+/* Event container within each cell */
+.rbc-month-view .rbc-row-segment {
+  padding: 2px 4px;
+}
+
+/* Show-more link visual style */
+.rbc-month-view .rbc-show-more {
+  color: var(--accent);
+  font-weight: 600;
+  font-size: 0.85rem;
+  margin-top: 4px;
+  padding: 4px 8px;
+  cursor: pointer;
+  background: transparent !important;
+  border-radius: 6px;
+  display: inline-block;
+  transition: all 0.2s ease;
+}
+
+.rbc-month-view .rbc-show-more:hover {
+  background: rgba(139,120,255,0.15) !important;
+  color: var(--accent);
+}
+
+/* Remove background from show-more container */
+.rbc-month-view .rbc-row-content-scroll-container {
+  background: transparent !important;
+}
+
+/* Remove any overlay backgrounds */
+.rbc-overlay,
+.rbc-overlay-header {
+  background: transparent !important;
+}
+
+/* Ensure the row segment containing show-more has no background */
+.rbc-month-view .rbc-row-segment .rbc-show-more {
+  background: transparent !important;
+}
+
+/* Ensure event content doesn't get cut off */
+.rbc-month-view .rbc-event-content {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  width: 100%;
+  overflow: hidden;
+}
+
+/* ============================================================================
+   11. RESPONSIVE ADJUSTMENTS
+   ============================================================================ */
+
+/* Large screens and above (1270px+) - 3 column layout */
+
+/* Medium screens (881px - 1269px) - 2 column layout */
+
+/* Tablet and smaller desktop (880px - 1024px) */
+
+/* Tablet landscape and medium screens (551px - 880px) - 2 column layout */
+
+/* ===============================================
+   TABLET RESPONSIVE (551px - 1024px)
+   =============================================== */
+
+/* ===============================================
+   MOBILE RESPONSIVE (below 551px)
+   Professional mobile-first design
+   =============================================== */
+
+/* Show more list scrollbar - match card scrollbar design */
+.show-more-list {
+  overflow-y: auto;
+  overflow-x: hidden;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(139, 120, 255, 0.4) transparent;
+}
+
+/* Chrome / Edge / Safari */
+.show-more-list::-webkit-scrollbar {
+  width: 2px;
+}
+
+.show-more-list::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.show-more-list::-webkit-scrollbar-thumb {
+  background: rgba(139, 120, 255, 0.4);
+  border-radius: 1px;
+}
+
+.show-more-list::-webkit-scrollbar-thumb:hover {
+  background: rgba(139, 120, 255, 0.6);
+}
+
+/* Show more event card hover effect */
+.show-more-event-card {
+  position: relative;
+  overflow: hidden;
+}
+
+.show-more-event-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(139, 120, 255, 0.15), transparent);
+  transition: left 0.5s ease;
+  z-index: 0;
+}
+
+.show-more-event-card:hover::before {
+  left: 100%;
+}
+
+.show-more-event-card:hover {
+  background: linear-gradient(135deg, rgba(139, 120, 255, 0.12) 0%, rgba(59, 130, 246, 0.12) 100%) !important;
+  border-color: rgba(139, 120, 255, 0.5) !important;
+  transform: translateX(4px) translateY(-2px);
+  box-shadow: 0 8px 24px rgba(139, 120, 255, 0.35), 0 0 0 1px rgba(139, 120, 255, 0.2);
+}
+
+.show-more-event-card:active {
+  transform: translateX(2px) translateY(0);
+  transition: all 0.1s ease;
+}
+
+/* Ensure content stays above the shimmer effect */
+.show-more-event-card > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* Show more list: Keep horizontal layout with image on left for 2-column and 3-column layouts ONLY */
+
+/* Show more list text content - scrollable, matches image height */
+.show-more-list .media-text {
+  overflow-y: auto !important;
+  overflow-x: hidden !important;
+  scrollbar-width: thin !important;
+  scrollbar-color: rgba(139,120,255,0.3) transparent !important;
+  flex: 1 !important;
+  min-height: 0 !important;
+  max-height: 90px !important; /* Match default image height */
+}
+
+/* In 2-column layouts, match the smaller image heights */
+/* Moved to consolidated media queries section at end of file */
+
+/* Moved to consolidated media queries section at end of file */
+
+.show-more-list .media-text::-webkit-scrollbar {
+  width: 6px;
+}
+
+.show-more-list .media-text::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.show-more-list .media-text::-webkit-scrollbar-thumb {
+  background: rgba(139,120,255,0.3);
+  border-radius: 3px;
+}
+
+.show-more-list .media-text::-webkit-scrollbar-thumb:hover {
+  background: rgba(139,120,255,0.5);
+}
+
+.show-more-list .media-text p {
+  font-size: 0.9rem !important;
+  margin-bottom: 4px !important;
+}
+
+.show-more-list .media-text > div {
+  margin-top: 6px !important;
+}
+
+.show-more-list .media-text small {
+  font-size: 0.85rem !important;
+}
+
+/* Responsive layout fixes so calendar fits the viewport */
+
+/* Allow grid children to shrink (prevents overflow) */
+.content > * {
+  min-width: 0;
+  box-sizing: border-box;
+}
+
+/* Make calendar-area shrinkable and avoid page horizontal scroll */
+.calendar-area {
+  background: var(--card);
+  padding: 12px; /* slightly reduced padding so calendar fits better */
+  border-radius: 12px;
+  border: 1px solid rgba(15,23,36,0.04);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  overflow-x: hidden; /* prevent calendar from forcing horizontal page scroll */
+  min-width: 0;
+}
+
+/* Ensure react-big-calendar content can shrink to the container */
+.rbc-calendar {
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+/* Ensure month-row cells do not force a larger min-width */
+.rbc-month-view .rbc-row,
+.rbc-month-view .rbc-row-content,
+.rbc-month-view .rbc-row-content > div,
+.rbc-month-view .rbc-date-cell {
+  min-width: 0;
+  box-sizing: border-box;
+}
+
+/* Make month table layout fixed so columns distribute within container */
+.rbc-month-view .rbc-row table {
+  table-layout: fixed;
+  width: 100%;
+}
+
+/* Reduce toolbar wrapping risk on narrow screens */
+.rbc-toolbar {
+  gap: 8px;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+/* Ensure toolbar stays organized on mobile */
+
+/* Small extra: reduce overall app horizontal padding on narrower screens */
+
+/* Ensure month events are visible: stacking, min-height and overflow fixes */
+.rbc-month-view .rbc-event {
+  position: relative;
+  z-index: 5;               /* bring events in front of cell backgrounds */
+  min-height: 28px;         /* ensure event has visible height */
+  display: flex !important; /* keep your layout */
+  align-items: center !important;
+  overflow: visible !important;
+}
+
+/* Make sure date-cell doesn't cover events */
+.rbc-month-view .rbc-date-cell {
+  position: relative;
+  z-index: 1;
+  overflow: visible;
+}
+
+/* Ensure row-content won't clip positioned children */
+.rbc-month-view .rbc-row-content,
+.rbc-month-view .rbc-row {
+  overflow: visible;
+}
+
+/* Debug: force month events visible (temporary) */
+.rbc-month-view .rbc-event {
+  position: relative !important;
+  z-index: 9999 !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  min-height: 28px !important;
+  display: flex !important;
+  align-items: center !important;
+  overflow: visible !important;
+  pointer-events: auto !important;
+}
+
+/* Make row backgrounds and cells sit behind events */
+.rbc-month-view .rbc-row-bg,
+.rbc-month-view .rbc-date-cell,
+.rbc-month-view .rbc-row-content {
+  position: relative;
+  z-index: 1;
+  overflow: visible !important;
+}
+
+/* Ensure table layout doesn't clip */
+.rbc-month-view .rbc-row table {
+  table-layout: fixed;
+  width: 100%;
+}
+
+/* If still invisible, run this in DevTools console and paste output:
+   const el = document.querySelector('.rbc-event');
+   getComputedStyle(el) && console.log({
+     bg: getComputedStyle(el).backgroundColor,
+     z: getComputedStyle(el).zIndex,
+     disp: getComputedStyle(el).display,
+     vis: getComputedStyle(el).visibility,
+     op: getComputedStyle(el).opacity,
+     h: getComputedStyle(el).height
+   });
+*/
+
+/* Temporary: allow month events to escape ancestor clipping (debug) */
+.calendar-area,
+.rbc-month-view .rbc-row,
+.rbc-month-view .rbc-row-content,
+.rbc-month-view .rbc-row-content > div,
+.rbc-month-view .rbc-date-cell,
+.rbc-month-view .rbc-day-slot,
+.rbc-month-view .rbc-row table {
+  overflow: visible !important;
+  min-height: 0 !important;
+  box-sizing: border-box !important;
+}
+
+/* Ensure the table does not force weird sizing while debugging */
+.rbc-month-view .rbc-row table {
+  table-layout: auto !important;
+  width: 100% !important;
+}
+
+/* Minimal targeted rules to avoid clipping month events and allow up to ~3 stacked bars.
+   These replace the temporary broad debug overrides. */
+
+.rbc-month-view .rbc-row {
+  /* reserve vertical space so up to three stacked bars can fit reliably */
+  min-height: 60px;
+  max-height: 60px;
+  box-sizing: border-box;
+}
+
+/* Ensure each date cell allows the reserved height and doesn't clip positioned children */
+.rbc-month-view .rbc-row-content > div,
+.rbc-month-view .rbc-date-cell {
+  min-height: 60px;
+  max-height: 60px;
+  overflow: visible;
+  box-sizing: border-box;
+}
+
+/* Allow month row and row content to show positioned event bars (avoid clipping) */
+.rbc-month-row,
+.rbc-month-view .rbc-row,
+.rbc-month-view .rbc-row-content {
+  overflow: visible;
+}
+
+/* Keep events above cells */
+.rbc-month-view .rbc-event {
+  position: relative;
+  z-index: 5;
+  min-height: 28px;
+}
+
+/* Smaller tweak: reduce month event horizontal padding so 3 fit more easily */
+.rbc-month-view .rbc-event {
+  padding: 4px 8px;
+  font-size: 0.9rem;
+}
+
+
+/* ============================================================================
+   12. FLOATING NAVIGATION (MOBILE ONLY)
+   ============================================================================ */
+.floating-nav-button {
+  display: none;
+}
+
+.nav-menu-overlay {
+  display: none;
+}
+
+.nav-menu {
+  display: none;
+}
+
+/* Show floating nav only on single column layout (≤550px) */
+
+
+/* ============================================================================
+   13. FOOTER
+   ============================================================================ */
+.app-footer {
+  margin-top: 48px;
+  padding: 32px 24px;
+  text-align: center;
+  border-top: 1px solid var(--border);
+  color: #9ca3af;
+  font-size: 0.9rem;
+  background: transparent;
+}
+
+.app-footer p {
+  margin: 8px 0;
+  line-height: 1.6;
+}
+
+.footer-credit {
+  font-size: 1rem;
+  margin-bottom: 12px !important;
+}
+
+.footer-sources {
+  font-size: 0.85rem;
+  color: #6b7280;
+}
+
+.footer-disclaimer {
+  font-size: 0.85rem;
+  color: #6b7280;
+  font-style: italic;
+}
+
+.footer-copyright {
+  font-size: 0.8rem;
+  color: #6b7280;
+  margin-top: 12px !important;
+}
+
+.footer-link {
+  color: #60a5fa;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.2s ease;
+}
+
+.footer-link:hover {
+  color: #93c5fd;
+  text-decoration: underline;
+}
+
+/* Info icon hover effect */
+.info-icon:hover {
+  background-color: rgba(107, 114, 128, 0.1);
+  border-color: #9ca3af;
+  color: #9ca3af;
+}
+
+/* Show More View Toggle */
+.show-more-view-toggle {
+  display: flex;
+  gap: 4px;
+  padding: 4px;
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 6px;
+  border: 1px solid var(--border);
+}
+
+.show-more-view-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6px;
+  background: transparent;
+  border: none;
+  border-radius: 4px;
+  color: var(--muted);
+  cursor: pointer;
+  transition: all 0.2s;
+  width: 32px;
+  height: 32px;
+}
+
+.show-more-view-btn:hover {
+  color: var(--text);
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.show-more-view-btn.active {
+  background: var(--accent);
+  color: white;
+  box-shadow: 0 2px 6px rgba(59, 130, 246, 0.3);
+}
+
+.show-more-view-btn svg {
+  flex-shrink: 0;
+}
+
+/* Show more list scrollbar - hidden but functional */
+.show-more-list {
+  overflow-y: auto;
+  overflow-x: hidden;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.show-more-list::-webkit-scrollbar {
+  display: none;
+}
+
+/* Card View Layout - Premium design */
+.show-more-list.card-view .show-more-event-card.card-layout {
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+}
+
+.show-more-list.card-view .show-more-event-card.card-layout:hover {
+  box-shadow: 0 12px 32px rgba(139, 120, 255, 0.25), 0 0 0 1px rgba(139, 120, 255, 0.4);
+  transform: translateY(-6px) scale(1.015);
+}
+
+.show-more-list.card-view .show-more-event-card.card-layout:hover .hover-gradient {
+  opacity: 1;
+}
+
+.show-more-list.card-view .show-more-event-card.card-layout:hover .event-image {
+  transform: scale(1.05);
+}
+
+/* Row View Layout - Sleek and efficient */
+.show-more-list.row-view .show-more-event-card.row-layout {
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+}
+
+.show-more-list.row-view .show-more-event-card.row-layout:hover {
+  box-shadow: 0 6px 20px rgba(139, 120, 255, 0.2), 0 0 0 1px rgba(139, 120, 255, 0.3);
+  transform: translateX(6px);
+}
+
+.show-more-list.row-view .show-more-event-card.row-layout:hover .hover-gradient {
+  opacity: 1;
+}
+
+.show-more-list.row-view .show-more-event-card.row-layout:hover .event-image {
+  transform: scale(1.08);
+}
+
+/* Pulse animation for live badge */
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.7;
+    transform: scale(1.1);
+  }
+}
+
+/* Focus visible for keyboard navigation */
+*:focus-visible {
+  outline: 2px solid #8b78ff;
+  outline-offset: 2px;
+}
+
+button:focus-visible,
+.toolbar-btn:focus-visible,
+.filter-btn:focus-visible {
+  outline: 2px solid #8b78ff;
+  outline-offset: 2px;
+}
+
+
+/* ============================================================================
+   RESPONSIVE DESIGN - MOBILE & TABLET
+   Production-ready responsive breakpoints for professional UI/UX
+   ============================================================================ */
+
+/* Default desktop behavior - hide mobile toggle, show navbar toggle */
+.view-toggle-mobile {
+  display: none !important;
+}
+
+.header-title {
+  display: flex !important;
+}
+
+/* Large Tablet / Small Desktop (1025px - 1269px) */
+@media (max-width: 1269px) and (min-width: 1025px) {
+  .app-header {
+    padding: 14px 20px;
+    gap: 20px;
+  }
+
+  .app-header h1 {
+    font-size: 1.5rem;
+  }
+
+  .header-title button,
+  .header-title .calendar-btn {
+    padding: 9px 14px;
+    font-size: 13px;
+  }
+
+  .back-to-welcome-btn,
+  .donate-btn {
+    padding: 9px 16px;
+    font-size: 13px;
+  }
+
+  .content {
+    grid-template-columns: minmax(260px, 300px) minmax(0, 1fr) minmax(300px, 360px);
+  }
+}
+
+/* Tablet Landscape (768px - 1024px) */
+@media (max-width: 1024px) and (min-width: 768px) {
+  body {
+    overflow-y: auto;
+    background: #0f1724;
+  }
+
+  .app {
+    height: auto;
+    min-height: 100vh;
+    overflow: visible;
+  }
+
+  .app-header {
+    padding: 12px 16px;
+    gap: 16px;
+    flex-wrap: wrap;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    background: rgba(10, 14, 26, 0.95);
+    backdrop-filter: blur(10px);
+  }
+
+  .app-header h1 {
+    font-size: 1.3rem;
+  }
+
+  .header-title {
+    gap: 12px;
+  }
+
+  .header-title button,
+  .header-title .calendar-btn {
+    padding: 8px 12px;
+    font-size: 12px;
+  }
+
+  .header-logo {
+    width: 36px;
+    height: 36px;
+  }
+
+  .back-to-welcome-btn,
+  .donate-btn {
+    padding: 8px 14px;
+    font-size: 12px;
+  }
+
+  /* Tablet landscape (2-column): Show navbar toggle, hide mobile toggle */
+  .header-title {
+    display: flex !important;
+  }
+
+  .view-toggle-mobile {
+    display: none !important;
+  }
+
+  /* Grid layout for tablet - Calendar on top, then 2-column card layout */
+  .content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto auto auto auto;
+    gap: 12px;
+    padding: 12px;
+    height: auto;
+  }
+
+  /* Calendar spans full width at top (row 1) */
+  .calendar-area {
+    grid-column: 1 / -1;
+    grid-row: 1;
+    min-height: 1000px;
+    height: auto;
+    border: none;
+    overflow: visible;
+    background: var(--card);
+    border-radius: var(--radius);
+    padding: 12px;
+  }
+
+  /* Calendar wrapper needs proper height */
+  .calendar-area > div {
+    height: auto;
+  }
+
+  /* Reduce calendar wrapper padding for tablet */
+  .calendar-wrapper {
+    padding: 4px 0 16px 0;
+  }
+
+  /* Sidebar takes left column (rows 2-4) */
+  .sidebar {
+    grid-column: 1;
+    grid-row: 2 / 5;
+    border: none;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    overflow: visible;
+    height: auto;
+  }
+
+  .sidebar .card {
+    padding: 14px;
+    margin-bottom: 0;
+    background: var(--card);
+    border-radius: var(--radius);
+    border: 1px solid var(--border);
+    min-height: 300px;
+    max-height: none;
+  }
+
+  /* Make games card (first card) match event details height */
+  .sidebar .card:first-child {
+    min-height: 500px;
+    max-height: 500px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* Details card takes right column (rows 2-4) */
+  .details-card {
+    grid-column: 2;
+    grid-row: 2 / 5;
+    border: none;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    overflow: visible;
+    height: auto;
+  }
+
+  .details-card .card {
+    padding: 14px;
+    background: var(--card);
+    border-radius: var(--radius);
+    border: 1px solid var(--border);
+    min-height: 300px;
+    max-height: none;
+  }
+
+  /* Event details card should match games card height */
+  .details-card .card:first-child {
+    min-height: 500px;
+    max-height: 500px;
+  }
+
+  /* Consistent card headers */
+  .sidebar .card h3,
+  .details-card .card h3 {
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--text-secondary);
+    margin-bottom: 12px;
+  }
+
+  /* Make event detail card match games card height with internal scrolling */
+  .details-card .card:first-child {
+    height: 100%;
+    min-height: 500px;
+    max-height: 500px;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+
+  .event-detail-card {
+    height: 100%;
+    max-height: 500px;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+
+  .event-detail-content {
+    flex: 1;
+    overflow-y: auto;
+    overflow-x: hidden;
+    min-height: 0;
+  }
+
+  /* Show more list - make scrollable inside fixed height */
+  .show-more-list {
+    max-height: 350px !important;
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+  }
+
+  /* Compact media rows - removed, using single column override below */
+
+  /* Smaller legend dots */
+  .legend-list li {
+    font-size: 0.9rem;
+    padding: 5px 6px;
+  }
+
+  .dot {
+    width: 10px;
+    height: 10px;
+  }
+
+  /* Compact view toggle */
+  .view-toggle-btn {
+    padding: 7px 14px;
+    font-size: 12px;
+  }
+}
+
+/* SINGLE COLUMN RESPONSIVE: Apply larger card sizes to ALL single column layouts (320px - 767px) */
+@media (max-width: 767px) {
+  /* Optimize page scrolling performance */
+  body {
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .app {
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .content {
+    -webkit-overflow-scrolling: touch;
+  }
+
+  /* Optimize card rendering with containment - removed content-visibility */
+  .sidebar .card,
+  .details-card .card {
+    contain: layout style paint;
+  }
+
+  /* Remove expensive hover effects on mobile */
+  .sidebar .card:hover,
+  .details-card .card:hover {
+    background: transparent;
+    border-bottom-color: var(--border);
+    box-shadow: none;
+    transform: none;
+  }
+
+  .media-row {
+    padding: 12px !important;
+    min-height: 110px !important;
+    gap: 14px !important;
+    /* Containment for better performance */
+    contain: layout style paint;
+    /* Remove transitions for smoother scrolling */
+    transition: none !important;
+  }
+
+  /* Remove expensive pseudo-elements during scroll */
+  .media-row::before {
+    display: none !important;
+  }
+
+  /* Disable hover effects on touch devices */
+  .media-row:hover {
+    background: rgba(255, 255, 255, 0.02) !important;
+    border-color: rgba(255, 255, 255, 0.05) !important;
+    transform: none !important;
+    box-shadow: none !important;
+  }
+
+  .media-row:hover .placeholder-img {
+    transform: none !important;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2) !important;
+    filter: none !important;
+  }
+
+  /* Optimize images for scrolling */
+  .placeholder-img {
+    width: 160px !important;
+    height: 96px !important;
+    flex: 0 0 160px !important;
+    /* Remove transitions */
+    transition: none !important;
+    /* Optimize rendering */
+    image-rendering: -webkit-optimize-contrast;
+    /* Don't use strict containment - it causes images to unload */
+  }
+
+  img.placeholder-img {
+    width: 160px !important;
+    height: 96px !important;
+    flex: 0 0 160px !important;
+    transition: none !important;
+    /* Don't use strict containment - it causes images to unload */
+  }
+
+  .media-text p {
+    font-size: 1rem !important;
+    line-height: 1.5 !important;
+    -webkit-line-clamp: 3 !important;
+    font-weight: 600 !important;
+  }
+
+  .media-text .game-name {
+    font-size: 0.85rem !important;
+    margin-top: 6px !important;
+  }
+
+  /* Optimize legend list */
+  .legend-list li {
+    transition: none !important;
+    contain: layout style;
+  }
+
+  .legend-list li::before {
+    display: none !important;
+  }
+
+  .legend-list li:hover {
+    background: transparent !important;
+    transform: none !important;
+    box-shadow: none !important;
+  }
+
+  /* Optimize countdown badges */
+  .countdown-badge {
+    contain: layout style paint;
+  }
+
+  .countdown-badge.live {
+    animation: none !important;
+  }
+
+  /* Optimize media rows container */
+  .media-rows-container {
+    contain: layout style;
+  }
+
+  /* Simplify card borders and backgrounds for smoother scrolling */
+  .sidebar .card,
+  .details-card .card {
+    border-bottom: 1px solid var(--border) !important;
+    background: transparent !important;
+    box-shadow: none !important;
+  }
+}
+
+/* Tablet Portrait (481px - 767px) */
+@media (max-width: 767px) and (min-width: 481px) {
+  body {
+    overflow-y: auto;
+    background: #0f1724;
+  }
+
+  .app {
+    height: auto;
+    min-height: 100vh;
+    overflow: visible;
+  }
+
+  .app-header {
+    padding: 10px 12px;
+    gap: 12px;
+    flex-wrap: nowrap;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    background: rgba(10, 14, 26, 0.95);
+    backdrop-filter: blur(10px);
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  /* Show header-title on tablet portrait with icon and app name */
+  .header-title {
+    display: flex !important;
+    align-items: center;
+    gap: 10px;
+    flex: 0 0 auto;
+  }
+
+  .app-header h1 {
+    font-size: 1.1rem;
+    text-align: left;
+    margin: 0;
+  }
+
+  /* Hide buttons inside header-title */
+  .header-title button,
+  .header-title .calendar-btn {
+    display: none !important;
+  }
+
+  /* Hide the navbar view toggle on tablet portrait */
+  .app-header .view-toggle:not(.view-toggle-mobile) {
+    display: none !important;
+  }
+
+  .view-toggle-mobile {
+    display: flex !important;
+  }
+
+  /* Show inline toggle in calendar toolbar on tablet portrait */
+  .view-toggle-mobile-inline {
+    display: flex !important;
+  }
+
+  /* Show calendar top bar on tablet portrait */
+  .calendar-top-bar {
+    display: block !important;
+    padding: 8px 10px;
+  }
+
+  /* Smaller view toggle buttons on tablet portrait */
+  .view-toggle {
+    padding: 3px;
+    gap: 3px;
+  }
+
+  .view-toggle-btn {
+    padding: 6px 12px !important;
+    font-size: 0.75rem !important;
+    gap: 5px;
+  }
+
+  .view-toggle-btn svg {
+    width: 15px;
+    height: 15px;
+  }
+
+  .header-logo {
+    width: 32px;
+    height: 32px;
+  }
+
+  .header-actions {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+  }
+
+  .back-to-welcome-btn,
+  .donate-btn {
+    padding: 7px 12px;
+    font-size: 10px;
+  }
+
+  /* Single column layout */
+  .content {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding: 12px 0;
+    height: auto;
+  }
+
+  .sidebar,
+  .details-card {
+    width: 100%;
+    border: none;
+    overflow: visible;
+    display: contents; /* Make children direct flex items */
+  }
+
+  .calendar-area {
+    order: 1;
+    min-height: 750px;
+    height: auto;
+    overflow: visible;
+    background: var(--card);
+    border-radius: var(--radius);
+    padding: 12px 0;
+  }
+  
+  .calendar-area:has(.has-six-rows) {
+    min-height: 850px;
+  }
+
+  /* Reorder individual cards */
+  #games-section {
+    order: 2;
+  }
+
+  #event-details-section {
+    order: 3;
+  }
+
+  #filters-section {
+    order: 4;
+  }
+
+  #upcoming-events-section {
+    order: 5;
+  }
+
+  #banners-section {
+    order: 6;
+  }
+
+  #upcoming-banners-section {
+    order: 7;
+  }
+
+  #endgame-content-section {
+    order: 8;
+  }
+
+  #permanent-events-section {
+    order: 9;
+  }
+
+  /* Card styling */
+  .sidebar .card,
+  .details-card .card {
+    padding: 12px;
+    margin-bottom: 12px;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    background: var(--card);
+  }
+
+  /* Compact media rows - removed, using single column override below */
+
+  /* Increase calendar cell height on mobile to fit more events */
+  .rbc-month-view .rbc-row {
+    min-height: 110px !important;
+    max-height: 110px !important;
+  }
+
+  .rbc-month-view .rbc-row-content > div,
+  .rbc-month-view .rbc-date-cell {
+    min-height: 110px !important;
+    max-height: 110px !important;
+  }
+
+  /* Legend styling */
+  .legend-list li {
+    font-size: 0.85rem;
+    padding: 4px 6px;
+  }
+
+  /* View toggle */
+  .view-toggle {
+    padding: 3px;
+  }
+
+  .view-toggle-btn {
+    padding: 6px 12px;
+    font-size: 11px;
+  }
+
+  /* Countdown badges */
+  .countdown-badge {
+    font-size: 0.55rem;
+    padding: 2px 4px;
+  }
+}
+
+/* Mobile (320px - 480px) */
+@media (max-width: 480px) {
+  body {
+    overflow-y: auto;
+    padding: 0;
+    background: #0f1724;
+    box-sizing: border-box;
+  }
+
+  .app {
+    height: auto;
+    min-height: 100vh;
+    overflow: visible;
+    box-sizing: border-box;
+  }
+
+  .app-header {
+    padding: 8px 10px;
+    gap: 8px;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    background: rgba(10, 14, 26, 0.98);
+    backdrop-filter: blur(12px);
+    border-bottom: 2px solid rgba(139, 120, 255, 0.2);
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  /* Show header-title on mobile with icon and app name */
+  .header-title {
+    display: flex !important;
+    align-items: center;
+    gap: 8px;
+    flex: 0 0 auto;
+  }
+
+  .app-header h1 {
+    font-size: 0.9rem;
+    text-align: left;
+    margin: 0;
+  }
+
+  /* Hide buttons inside header-title */
+  .header-title button,
+  .header-title .calendar-btn {
+    display: none !important;
+  }
+
+  /* Hide the navbar view toggle on mobile */
+  .app-header .view-toggle:not(.view-toggle-mobile) {
+    display: none !important;
+  }
+
+  .view-toggle-mobile {
+    display: flex !important;
+  }
+
+  /* Show inline toggle in calendar toolbar on mobile */
+  .view-toggle-mobile-inline {
+    display: flex !important;
+  }
+
+  /* Show calendar top bar on mobile */
+  .calendar-top-bar {
+    display: block !important;
+    padding: 4px 6px;
+  }
+
+  /* Smaller view toggle buttons on mobile */
+  .view-toggle {
+    padding: 3px;
+    gap: 4px;
+    background: rgba(30, 41, 59, 0.4);
+    border: 1px solid rgba(71, 85, 105, 0.4);
+    border-radius: 10px;
+  }
+
+  .view-toggle-btn {
+    padding: 8px 14px !important;
+    font-size: 0.75rem !important;
+    gap: 6px;
+    background: rgba(30, 41, 59, 0.6);
+    border: 1px solid rgba(139, 120, 255, 0.3);
+    border-radius: 8px;
+    font-weight: 600;
+    transition: all 0.2s ease;
+  }
+
+  .view-toggle-btn:hover {
+    background: rgba(139, 120, 255, 0.2);
+    border-color: rgba(139, 120, 255, 0.5);
+  }
+
+  .view-toggle-btn.active {
+    background: rgba(139, 120, 255, 0.3) !important;
+    border-color: rgba(139, 120, 255, 0.6) !important;
+    color: #c4b5fd !important;
+  }
+
+  .view-toggle-btn svg {
+    width: 12px;
+    height: 12px;
+  }
+
+  .header-logo {
+    width: 28px;
+    height: 28px;
+  }
+
+  .header-actions {
+    display: flex;
+    gap: 4px;
+    align-items: center;
+  }
+
+  .back-to-welcome-btn,
+  .donate-btn {
+    padding: 4px 8px;
+    font-size: 8px;
+  }
+
+  .back-to-welcome-btn svg,
+  .donate-btn svg {
+    width: 14px;
+    height: 14px;
+  }
+
+  /* Single column mobile layout */
+  .content {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 10px 0 10px 0;
+    height: auto;
+    box-sizing: border-box;
+  }
+
+  .sidebar,
+  .details-card {
+    width: 100%;
+    border: none;
+    overflow: visible;
+    display: contents; /* Make children direct flex items */
+  }
+
+  .calendar-area {
+    order: 1;
+    min-height: 1800px;
+    height: auto;
+    overflow: visible;
+    background: var(--card);
+    border-radius: var(--radius);
+    padding: 10px 0;
+  }
+
+  /* Remove calendar wrapper padding on mobile */
+  .calendar-wrapper {
+    padding: 4px 0 16px 0;
+  }
+
+  /* Reorder individual cards */
+  #games-section {
+    order: 2;
+  }
+
+  #event-details-section {
+    order: 3;
+  }
+
+  #filters-section {
+    order: 4;
+  }
+
+  #upcoming-events-section {
+    order: 5;
+  }
+
+  #banners-section {
+    order: 6;
+  }
+
+  #upcoming-banners-section {
+    order: 7;
+  }
+
+  #endgame-content-section {
+    order: 8;
+  }
+
+  #permanent-events-section {
+    order: 9;
+  }
+
+  /* Compact cards */
+  .sidebar .card,
+  .details-card .card {
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 6px;
+    border: 1px solid var(--border);
+    background: var(--card);
+  }
+
+  /* Limit show-more list to 10 rows */
+  .show-more-list {
+    max-height: 600px !important;
+  }
+
+  .sidebar .card h3,
+  .details-card .card h3 {
+    font-size: 0.7rem;
+    margin-bottom: 8px;
+  }
+
+  /* Very compact media rows - removed, using single column override below */
+
+  /* Increase calendar cell height on smaller mobile to fit more events */
+  .rbc-month-view .rbc-row {
+    min-height: 100px !important;
+    max-height: 100px !important;
+  }
+
+  .rbc-month-view .rbc-row-content > div,
+  .rbc-month-view .rbc-date-cell {
+    min-height: 100px !important;
+    max-height: 100px !important;
+  }
+
+  /* Compact legend */
+  .legend-list {
+    padding-bottom: 8px;
+    margin-top: 4px;
+  }
+
+  .legend-list li {
+    font-size: 0.7rem;
+    padding: 4px 6px;
+    margin-bottom: 4px;
+    gap: 6px;
+  }
+
+  .dot {
+    width: 8px;
+    height: 8px;
+  }
+
+  /* View toggle */
+  .view-toggle {
+    padding: 2px;
+  }
+
+  .view-toggle-btn {
+    padding: 5px 10px;
+    font-size: 10px;
+    gap: 4px;
+  }
+
+  .view-toggle-btn svg {
+    width: 12px;
+    height: 12px;
+  }
+
+  /* Countdown badges */
+  .countdown-badge {
+    font-size: 0.5rem;
+    padding: 1px 3px;
+  }
+
+  /* Icon buttons */
+  .icon-btn {
+    width: 32px;
+    height: 32px;
+  }
+
+  .icon-btn svg {
+    width: 14px;
+    height: 14px;
+  }
+
+  /* Event detail images - full height on mobile */
+}
+
+/* Extra Small Mobile (< 320px) */
+@media (max-width: 319px) {
+  .app-header {
+    padding: 6px 8px;
+  }
+
+  .app-header h1 {
+    font-size: 0.9rem;
+  }
+
+  .header-title button,
+  .header-title .calendar-btn {
+    padding: 5px 8px;
+    font-size: 9px;
+  }
+
+  .back-to-welcome-btn,
+  .donate-btn {
+    padding: 5px 8px;
+    font-size: 9px;
+  }
+
+  .content {
+    padding: 8px;
+    gap: 8px;
+  }
+
+  .sidebar .card,
+  .details-card .card {
+    padding: 8px;
+  }
+
+  /* Placeholder-img removed, using single column override below */
+}
+
+/* Landscape orientation optimization for mobile */
+@media (max-height: 500px) and (orientation: landscape) {
+  .app-header {
+    padding: 6px 12px;
+  }
+
+  .app-header h1 {
+    font-size: 0.95rem;
+  }
+
+  .calendar-area {
+    min-height: 350px;
+  }
+
+  .sidebar .card,
+  .details-card .card {
+    padding: 8px;
+  }
+}
+
+/* Touch device optimizations */
+@media (hover: none) and (pointer: coarse) {
+  /* Larger touch targets */
+  .header-title button,
+  .header-title .calendar-btn,
+  .back-to-welcome-btn,
+  .donate-btn,
+  .view-toggle-btn,
+  .icon-btn,
+  .media-row,
+  .legend-list li {
+    min-height: 44px;
+    min-width: 44px;
+  }
+
+  /* Remove hover effects on touch devices */
+  .media-row:hover,
+  .legend-list li:hover,
+  .icon-btn:hover {
+    transform: none;
+  }
+
+  /* Add active states instead */
+  .media-row:active {
+    transform: scale(0.98);
+    background: rgba(139, 120, 255, 0.1);
+  }
+
+  .icon-btn:active {
+    transform: scale(0.95);
+  }
+}
+
+/* Desktop Calendar Override (> 1024px) */
+@media (min-width: 1025px) {
+  .calendar-area {
+    height: auto !important;
+    max-height: none !important;
+    overflow-y: auto !important;
+  }
+  
+  .content {
+    height: 100% !important;
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+  }
+  
+  .calendar-wrapper {
+    height: auto !important;
+    min-height: 100% !important;
+  }
+}

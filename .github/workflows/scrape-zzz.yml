@@ -1,0 +1,58 @@
+name: Scrape Zenless Zone Zero
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  scrape-zzz:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          persist-credentials: true
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Install Puppeteer browser
+        run: npx puppeteer browsers install chrome
+
+      - name: Scrape ZZZ Current & Upcoming Events
+        env:
+          FANDOM_USERNAME: ${{ secrets.FANDOM_USERNAME }}
+          FANDOM_PASSWORD: ${{ secrets.FANDOM_PASSWORD }}
+        run: node scripts/scrapeZZZCurrentUpcoming.js
+        continue-on-error: true
+
+      - name: Scrape ZZZ Banners
+        env:
+          FANDOM_USERNAME: ${{ secrets.FANDOM_USERNAME }}
+          FANDOM_PASSWORD: ${{ secrets.FANDOM_PASSWORD }}
+        run: node scripts/scrapeZZZBanners.js
+        continue-on-error: true
+
+      - name: Check for changes
+        id: git-check
+        run: |
+          git add src/data/*.js src/data/*.json public/images/
+          git diff --cached --exit-code || echo "changes=true" >> $GITHUB_OUTPUT
+
+      - name: Commit and push if changes
+        if: steps.git-check.outputs.changes == 'true'
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git commit -m "chore: scrape Zenless Zone Zero - $(date +'%Y-%m-%d %H:%M UTC')"
+          git push origin main

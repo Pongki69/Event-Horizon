@@ -1,0 +1,46 @@
+{
+  "name": "my-react-app",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "lint": "eslint .",
+    "preview": "vite preview",
+    "scrape:genshin": "node scripts/scrapeGenshinCurrentUpcoming.js",
+    "scrape:genshin-banners": "node scripts/scrapeGenshinBanners.js",
+    "scrape:starrail": "node scripts/scrapeStarRailCurrentUpcoming.js",
+    "scrape:starrail-banners": "node scripts/scrapeStarRailBanners.js",
+    "scrape:starrail-endgame": "node scripts/scrapeStarRailEndgame.js",
+    "scrape:zzz": "node scripts/scrapeZZZCurrentUpcoming.js",
+    "scrape:zzz-banners": "node scripts/scrapeZZZBanners.js",
+    "scrape:wuwa": "node scripts/scrapeWuwaCurrentUpcoming.js",
+    "scrape:wuwa-banners": "node scripts/scrapeWuwaBanners.js",
+    "archive": "node scripts/archiveEndedEvents.js",
+    "migrate:images": "node scripts/migrateImages.js",
+    "update:image-paths": "node scripts/updateImagePaths.js",
+    "fix:history-paths": "node scripts/fixGenshinHistoryPaths.js && node scripts/fixStarRailHistoryPaths.js",
+    "cleanup:old-folders": "node scripts/cleanupOldImageFolders.js"
+  },
+  "dependencies": {
+    "date-fns": "^4.1.0",
+    "puppeteer": "^23.11.1",
+    "puppeteer-extra": "^3.3.6",
+    "puppeteer-extra-plugin-stealth": "^2.11.2",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0",
+    "react-window": "^2.2.7"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.39.1",
+    "@types/react": "^19.2.5",
+    "@types/react-dom": "^19.2.3",
+    "@vitejs/plugin-react": "^5.1.1",
+    "eslint": "^9.39.1",
+    "eslint-plugin-react-hooks": "^7.0.1",
+    "eslint-plugin-react-refresh": "^0.4.24",
+    "globals": "^16.5.0",
+    "vite": "^7.2.4"
+  }
+}
