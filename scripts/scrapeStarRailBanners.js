@@ -2,11 +2,14 @@
 // Script to scrape Honkai: Star Rail banners from Game8
 // Run with: node scripts/scrapeStarRailBanners.js
 
-import puppeteer from 'puppeteer';
+import puppeteer from 'puppeteer-extra';
+import StealthPlugin from 'puppeteer-extra-plugin-stealth';
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { downloadImage, loadExistingImages, resolveImage } from './archiveUtils.js';
+
+puppeteer.use(StealthPlugin());
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -125,7 +128,12 @@ async function fetchCharacterImage(characterName) {
 
   const browser = await puppeteer.launch({
     headless: true,
-    args: ['--no-sandbox', '--disable-setuid-sandbox']
+    args: [
+      '--no-sandbox',
+      '--disable-setuid-sandbox',
+      '--disable-blink-features=AutomationControlled',
+      '--disable-dev-shm-usage'
+    ]
   });
 
   const extractImage = async (page) => page.evaluate(() => {
@@ -188,7 +196,12 @@ async function fetchCharacterImage(characterName) {
 async function fetchCharacterDescription(characterName) {
   const browser = await puppeteer.launch({
     headless: true,
-    args: ['--no-sandbox', '--disable-setuid-sandbox']
+    args: [
+      '--no-sandbox',
+      '--disable-setuid-sandbox',
+      '--disable-blink-features=AutomationControlled',
+      '--disable-dev-shm-usage'
+    ]
   });
 
   const extractData = async (page) => page.evaluate(() => {
@@ -235,7 +248,12 @@ async function scrapeStarRailBanners() {
 
   const browser = await puppeteer.launch({
     headless: true,
-    args: ['--no-sandbox', '--disable-setuid-sandbox']
+    args: [
+      '--no-sandbox',
+      '--disable-setuid-sandbox',
+      '--disable-blink-features=AutomationControlled',
+      '--disable-dev-shm-usage'
+    ]
   });
 
   try {

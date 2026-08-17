@@ -274,7 +274,8 @@ async function scrapeWuwaBanners() {
       let description = 'Click the photo to see the banner description';
       
       try {
-        const wikiUrl = `https://wutheringwaves.fandom.com/wiki/${encodeURIComponent(banner.characterName)}/Backstory`;
+        // Try the main character page first (not /Backstory)
+        const wikiUrl = `https://wutheringwaves.fandom.com/wiki/${encodeURIComponent(banner.characterName)}`;
         console.log(`    Fetching description from: ${wikiUrl}`);
         
         const wikiPage = await browser.newPage();
@@ -293,9 +294,21 @@ async function scrapeWuwaBanners() {
           const pullQuoteDiv = document.querySelector('.pull-quote__text');
           
           if (pullQuoteDiv) {
-            const p = pullQuoteDiv.querySelector('p');
-            if (p) {
-              return p.textContent.trim();
+            // Get all paragraphs
+            const paragraphs = pullQuoteDiv.querySelectorAll('p');
+            
+            console.log(`[DEBUG] Found ${paragraphs.length} paragraphs in pull-quote__text`);
+            
+            // We want the second paragraph (index 1) if it exists
+            if (paragraphs.length >= 2) {
+              console.log(`[DEBUG] Returning second paragraph:`, paragraphs[1].textContent.substring(0, 50));
+              return paragraphs[1].textContent.trim();
+            }
+            
+            // Fallback to first paragraph if only one exists
+            if (paragraphs.length === 1) {
+              console.log(`[DEBUG] Only one paragraph, returning it:`, paragraphs[0].textContent.substring(0, 50));
+              return paragraphs[0].textContent.trim();
             }
           }
           

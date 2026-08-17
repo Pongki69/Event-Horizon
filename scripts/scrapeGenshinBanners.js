@@ -1,12 +1,15 @@
 // scrapeGenshinBanners.js
-// Script to scrape Genshin Impact banners from Game8
+// Script to scrape Genshin Impact banners from Game8 with wiki API enhancements
 // Run with: node scripts/scrapeGenshinBanners.js
 
-import puppeteer from 'puppeteer';
+import puppeteer from 'puppeteer-extra';
+import StealthPlugin from 'puppeteer-extra-plugin-stealth';
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { downloadImage, loadExistingImages, resolveImage } from './archiveUtils.js';
+
+puppeteer.use(StealthPlugin());
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -40,18 +43,15 @@ function monthToIndex(monthName) {
  * Genshin banners end at 14:59 Asia time (UTC+8) = 06:59 UTC
  */
 function parseBannerDate(dateText, isEndDate = false) {
-  // Match format: "Month Day, Year" or "Mon. Day, Year"
   const dateMatch = dateText.match(/([A-Za-z]+)\.?\s+(\d{1,2}),\s+(\d{4})/);
   
   if (dateMatch) {
     const [, monthName, day, year] = dateMatch;
     const month = monthToIndex(monthName);
 
-    // Sanity check: clamp years that are clearly typos (e.g. 2206 → 2026)
     let parsedYear = parseInt(year);
     const currentYear = new Date().getFullYear();
     if (parsedYear > currentYear + 5) {
-      // Likely a digit transposition (e.g. 2206 → 2026) — fix the two middle digits
       const yearStr = String(parsedYear);
       const fixed = yearStr[0] + yearStr[2] + yearStr[1] + yearStr[3];
       const fixedYear = parseInt(fixed);
@@ -62,70 +62,104 @@ function parseBannerDate(dateText, isEndDate = false) {
     }
     
     if (isEndDate) {
-      // Banner ends at 14:59 Asia time (UTC+8) = 06:59 UTC
-      console.log(`Parsed banner end date: ${monthName} ${day}, ${parsedYear} 14:59 UTC+8`);
       return Date.UTC(parsedYear, month, parseInt(day), 6, 59, 0);
     } else {
-      // Banner starts at 11:00 AM Asia time (UTC+8) = 03:00 UTC
-      console.log(`Parsed banner start date: ${monthName} ${day}, ${parsedYear} 11:00 UTC+8`);
       return Date.UTC(parsedYear, month, parseInt(day), 3, 0, 0);
     }
   }
   
-  console.log(`Could not parse banner date from: ${dateText}`);
   return null;
 }
 
 /**
- * Fetch character description from Genshin Impact Fandom wiki
- * @param {string} characterName - Character name (e.g., "Zibai" or "Kamisato Ayato")
- * @returns {Promise<string>} Character description from profile page
+ * Fetch image from wiki API
  */
-async function fetchCharacterDescription(characterName) {
+async function fetchWikiImage(name, isWeapon = false) {
   try {
-    // Format character name for URL (replace spaces with underscores)
-    const formattedName = characterName.trim().replace(/\s+/g, '_');
-    const profileUrl = `https://genshin-impact.fandom.com/wiki/${formattedName}/Profile`;
+    const candidates = isWeapon 
+      ? [`${name}.png`, `Weapon_${name}.png`]
+      : [`${name}_Splash_Art.png`, `${name}_Card.png`];
     
-    console.log(`  Fetching description from: ${profileUrl}`);
-    
-    const browser = await puppeteer.launch({
-      headless: true,
-      args: ['--no-sandbox', '--disable-setuid-sandbox']
-    });
-    
-    const page = await browser.newPage();
-    await page.setUserAgent('Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36');
-    
-    await page.goto(profileUrl, {
-      waitUntil: 'domcontentloaded',
-      timeout: 15000
-    });
-    
-    // Extract description from <blockquote><p>
-    const description = await page.evaluate(() => {
-      const blockquote = document.querySelector('blockquote');
-      if (blockquote) {
-        const p = blockquote.querySelector('p');
-        if (p) {
-          return p.textContent.trim();
-        }
+    for (const filename of candidates) {
+      const apiUrl = `https://genshin-impact.fandom.com/api.php?action=query&titles=File:${encodeURIComponent(filename)}&prop=imageinfo&iiprop=url&format=json&origin=*`;
+      const res = await fetch(apiUrl);
+      if (!res.ok) continue;
+      const json = await res.json();
+      const page = Object.values(json?.query?.pages || {})[0];
+      if (page?.imageinfo?.[0]?.url) {
+        return page.imageinfo[0].url.split('/revision')[0];
       }
-      return '';
-    });
-    
-    await browser.close();
-    
-    if (description) {
-      console.log(`  ✓ Found description (${description.length} chars)`);
-      return description;
-    } else {
-      console.log(`  ✗ No description found`);
-      return `${characterName} character banner.`;
     }
+    return null;
+  } catch {
+    return null;
+  }
+}
+
+/**
+ * Fetch description from wiki API - gets profile text
+ */
+async function fetchWikiDescription(name, isWeapon = false) {
+  try {
+    const pageName = isWeapon ? name : `${name}/Profile`;
+    
+    // Use parse API to get the Profile page content
+    const apiUrl = `https://genshin-impact.fandom.com/api.php?action=parse&page=${encodeURIComponent(pageName)}&prop=text&section=0&format=json&origin=*`;
+    const res = await fetch(apiUrl);
+    const json = await res.json();
+    const html = json?.parse?.text?.['*'] || '';
+    
+    if (!html) return '';
+    
+    // Look for the profile text section - usually after "In-game character attributes and profile page text"
+    // The text is in a blockquote or after specific headers
+    
+    // Try to find blockquote with the profile description
+    const blockquoteMatch = html.match(/<blockquote[^>]*>([\s\S]*?)<\/blockquote>/i);
+    if (blockquoteMatch) {
+      let description = blockquoteMatch[1]
+        .replace(/<[^>]+>/g, '')
+        .replace(/&#91;/g, '[')
+        .replace(/&#93;/g, ']')
+        .replace(/\[[0-9]+\]/g, '') // Remove reference numbers
+        .replace(/&quot;/g, '"')
+        .replace(/&amp;/g, '&')
+        .replace(/—Description from the Official Website/gi, '') // Remove official website attribution
+        .replace(/\s+/g, ' ')
+        .trim();
+      
+      if (description.length > 0) {
+        return description;
+      }
+    }
+    
+    // Fallback: look for paragraph with character description
+    const paragraphMatch = html.match(/<p[^>]*>((?:(?!<\/p>).)*?playable.*?character.*?<\/p>)/is);
+    if (paragraphMatch) {
+      let description = paragraphMatch[1]
+        .replace(/<[^>]+>/g, '')
+        .replace(/\[[^\]]+\]/g, '')
+        .replace(/&#91;/g, '[')
+        .replace(/&#93;/g, ']')
+        .replace(/\[[0-9]+\]/g, '')
+        .replace(/&quot;/g, '"')
+        .replace(/&amp;/g, '&')
+        .replace(/\s+/g, ' ')
+        .trim();
+      
+      // Limit to first 2 sentences
+      const sentences = description.match(/[^.!?]+[.!?]+/g) || [description];
+      if (sentences.length > 2) {
+        description = sentences.slice(0, 2).join(' ');
+      }
+      
+      return description;
+    }
+    
+    return '';
   } catch (error) {
-    console.log(`  ✗ Error fetching description: ${error.message}`);
-    return `${characterName} character banner.`;
+    console.log(`  Error fetching description: ${error.message}`);
+    return '';
   }
 }
 
@@ -134,14 +168,18 @@ async function scrapeGenshinBanners() {
 
   const browser = await puppeteer.launch({
     headless: true,
-    args: ['--no-sandbox', '--disable-setuid-sandbox']
+    args: [
+      '--no-sandbox',
+      '--disable-setuid-sandbox',
+      '--disable-blink-features=AutomationControlled',
+      '--disable-dev-shm-usage'
+    ]
   });
 
   try {
     const page = await browser.newPage();
     await page.setUserAgent('Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36');
 
-    // Navigate to Game8 banner schedule page
     await page.goto('https://game8.co/games/Genshin-Impact/archives/305012', {
       waitUntil: 'domcontentloaded',
       timeout: 30000
@@ -149,41 +187,9 @@ async function scrapeGenshinBanners() {
 
     console.log('Page loaded, extracting banner data...');
     
-    // Add debug logging
-    await page.evaluate(() => {
-      console.log('=== DEBUG: Looking for tables ===');
-      const tables = document.querySelectorAll('table');
-      console.log(`Found ${tables.length} tables`);
-      
-      tables.forEach((table, i) => {
-        if (table.textContent.includes('Banner Dates')) {
-          console.log(`\nTable ${i} contains Banner Dates`);
-          const rows = table.querySelectorAll('tr');
-          console.log(`  Rows: ${rows.length}`);
-          
-          rows.forEach((row, j) => {
-            const tds = row.querySelectorAll('td');
-            console.log(`  Row ${j}: ${tds.length} td elements`);
-            
-            tds.forEach((td, k) => {
-              const imgs = td.querySelectorAll('img');
-              console.log(`    TD ${k}: ${imgs.length} images`);
-              if (imgs.length > 0) {
-                imgs.forEach((img, m) => {
-                  const src = img.src || img.getAttribute('data-src') || '';
-                  console.log(`      Image ${m}: ${src.substring(0, 80)}`);
-                });
-              }
-            });
-          });
-        }
-      });
-    });
-
-    // Wait for content to load and scroll to trigger lazy loading
     await page.waitForSelector('body', { timeout: 10000 });
     
-    // Scroll down to load lazy images
+    // Scroll to load lazy images
     await page.evaluate(async () => {
       await new Promise((resolve) => {
         let totalHeight = 0;
@@ -201,30 +207,25 @@ async function scrapeGenshinBanners() {
       });
     });
     
-    // Wait a bit more for images to load
     await new Promise(resolve => setTimeout(resolve, 2000));
 
-    // Extract banner data from the page
+    // Extract banner data
     const banners = await page.evaluate(() => {
       const bannerData = [];
-      const seen = new Set(); // Track unique banners
+      const seen = new Set();
       
-      // Find all tables on the page
       const tables = document.querySelectorAll('table');
       
       for (const table of tables) {
-        // Check if this table contains banner information
         if (!table.textContent.includes('Banner Dates') || !table.textContent.includes('5 Star Rate-Up')) {
           continue;
         }
         
-        // Process each row in the table
         const rows = table.querySelectorAll('tr');
         
         for (const row of rows) {
           const text = row.textContent;
           
-          // Skip rows that don't have the required information
           if (!text.includes('Banner Dates') || !text.includes('5 Star Rate-Up')) {
             continue;
           }
@@ -235,52 +236,71 @@ async function scrapeGenshinBanners() {
           
           const [, startDate, endDate] = dateMatch;
           
-          // Extract character name after "5 Star Rate-Up:"
-          const charMatch = text.match(/5 Star Rate-Up:\s*([A-Za-z\s]+?)(?:\n|4 Star|Banner|Version|$)/);
-          if (!charMatch) continue;
+          // Check for character or weapon banner
+          const isWeaponBanner = text.includes('Epitome Invocation') || text.includes('Weapon Rate-Up');
           
-          const characterName = charMatch[1].trim();
-          if (!characterName || characterName.length < 2) continue;
-          
-          // Create unique key
-          const key = `${characterName}-${startDate}-${endDate}`;
-          if (seen.has(key)) continue;
-          seen.add(key);
-          
-          // Get the first <td> which contains the banner image and name
-          const firstTd = row.querySelector('td');
-          if (!firstTd) continue;
-          
-          // Get banner name from <a> tag in first <td>
-          let bannerNameFromLink = '';
-          const link = firstTd.querySelector('a');
-          if (link) {
-            bannerNameFromLink = link.textContent.trim();
-          }
-          
-          // Get image from first <td>
-          let imageUrl = '';
-          const img = firstTd.querySelector('img');
-          if (img) {
-            const src = img.src || img.getAttribute('data-src') || img.getAttribute('data-lazy-src') || '';
-            if (src && !src.startsWith('data:')) {
-              imageUrl = src.split('/revision')[0];
+          if (isWeaponBanner) {
+            // Parse weapon banner
+            const weaponMatch = text.match(/5 Star Rate-Up:\s*([A-Za-z\s',]+?)(?:\n|4 Star|Banner|Version|$)/);
+            if (!weaponMatch) continue;
+            
+            const weaponNames = weaponMatch[1].split(/\s*,\s*/).map(w => w.trim()).filter(w => w.length > 2);
+            if (weaponNames.length === 0) continue;
+            
+            const key = `weapon-${weaponNames.join('-')}-${startDate}`;
+            if (seen.has(key)) continue;
+            seen.add(key);
+            
+            const now = new Date();
+            const start = new Date(startDate);
+            const type = start > now ? 'upcoming' : 'test-run';
+            
+            bannerData.push({
+              name: weaponNames.join(' & '),
+              weapons: weaponNames,
+              startDate,
+              endDate,
+              type,
+              isWeapon: true,
+              rarity: 5
+            });
+          } else {
+            // Parse character banner
+            const charMatch = text.match(/5 Star Rate-Up:\s*([A-Za-z\s]+?)(?:\n|4 Star|Banner|Version|$)/);
+            if (!charMatch) continue;
+            
+            const characterName = charMatch[1].trim();
+            if (!characterName || characterName.length < 2) continue;
+            
+            const key = `char-${characterName}-${startDate}`;
+            if (seen.has(key)) continue;
+            seen.add(key);
+            
+            const now = new Date();
+            const start = new Date(startDate);
+            const type = start > now ? 'upcoming' : 'test-run';
+            
+            // Extract signature weapon
+            let signatureWeapon = '';
+            const weaponMatch = text.match(/5 Star Weapon Rate-Up:\s*([A-Za-z\s',]+?)(?:\n|4 Star|Banner|Version|$)/);
+            if (weaponMatch) {
+              const weaponNames = weaponMatch[1].split(/\s*,\s*/).map(w => w.trim()).filter(w => w.length > 2);
+              if (weaponNames.length > 0) {
+                signatureWeapon = weaponNames[0]; // First weapon is usually the signature
+              }
             }
+            
+            bannerData.push({
+              name: characterName,
+              characters: [characterName],
+              signatureWeapon: signatureWeapon,
+              startDate,
+              endDate,
+              type,
+              isWeapon: false,
+              rarity: 5
+            });
           }
-          
-          // Determine if this is current or upcoming
-          const now = new Date();
-          const start = new Date(startDate);
-          const type = start > now ? 'upcoming' : 'test-run';
-          
-          bannerData.push({
-            name: characterName,
-            bannerNameFromLink: bannerNameFromLink,
-            startDate: startDate,
-            endDate: endDate,
-            imageUrl: imageUrl,
-            type: type
-          });
         }
       }
       
@@ -293,69 +313,77 @@ async function scrapeGenshinBanners() {
     const processedBanners = [];
     
     for (const banner of banners) {
-      console.log(`\nProcessing banner: ${banner.name}`);
+      console.log(`\nProcessing: ${banner.name} (${banner.rarity}★ ${banner.isWeapon ? 'weapon' : 'character'})`);
       
-      // Parse dates
       const startDate = parseBannerDate(banner.startDate, false);
       const endDate = parseBannerDate(banner.endDate, true);
       
       if (!startDate || !endDate) {
-        console.log(`  ✗ Skipping ${banner.name}: invalid dates`);
+        console.log(`  ✗ Skipping: invalid dates`);
         continue;
       }
       
-      // Download banner image
+      const isWeapon = banner.isWeapon;
+      const primaryName = isWeapon ? banner.weapons[0] : banner.characters[0];
+      
+      // Fetch image from wiki
       let localImage = '';
-      if (banner.imageUrl && !banner.imageUrl.startsWith('data:')) {
-        console.log(`  Downloading image for ${banner.name}...`);
-        localImage = await downloadImage(
-          banner.imageUrl,
-          'genshin-impact',
-          banner.name,
-          'banners'
-        );
-        
-        if (localImage) {
-          console.log(`  ✓ Image saved: ${localImage}`);
-        }
-      } else if (banner.imageUrl && banner.imageUrl.startsWith('data:')) {
-        console.log(`  ✗ Skipping data: URL for ${banner.name}`);
+      const imageUrl = await fetchWikiImage(primaryName, isWeapon);
+      if (imageUrl) {
+        console.log(`  ✓ Found wiki image`);
+        localImage = await downloadImage(imageUrl, 'genshin-impact', primaryName, 'banners');
+        if (localImage) console.log(`  ✓ Saved: ${localImage}`);
       }
       
-      // Fetch character description from wiki
-      const description = await fetchCharacterDescription(banner.name);
-      
-      // Create title: "Character Name - Banner Name"
-      const title = banner.bannerNameFromLink 
-        ? `${banner.name} - ${banner.bannerNameFromLink}`
-        : banner.name;
+      // Fetch description from wiki
+      let description = await fetchWikiDescription(primaryName, isWeapon);
+      if (!description) {
+        console.log(`  ⚠ No wiki description found, using fallback`);
+        description = isWeapon ? `${banner.name} weapon banner.` : `${banner.name} character banner.`;
+      } else {
+        console.log(`  ✓ Description: ${description.substring(0, 80)}...`);
+      }
       
       // Create wiki URL
-      const wikiName = banner.name.trim().replace(/\s+/g, '_');
+      const wikiName = primaryName.replace(/\s+/g, '_');
       const wikiUrl = `https://genshin-impact.fandom.com/wiki/${wikiName}`;
       
+      // Create title without stars - just name with optional weapon icon
+      const typeBadge = isWeapon ? '🗡️' : '';
+      const title = isWeapon ? `${typeBadge} ${banner.name}` : banner.name;
+      
       processedBanners.push({
-        title: title,
+        title: title.trim(),
         start: new Date(startDate).toISOString(),
         end: new Date(endDate).toISOString(),
         image: localImage || '',
         type: banner.type,
+        rarity: banner.rarity,
+        bannerType: isWeapon ? 'weapon' : 'character',
         game: 'Genshin Impact',
-        description: description,
-        wikiUrl: wikiUrl
+        description,
+        wikiUrl
       });
     }
 
-    console.log(`\nProcessed ${processedBanners.length} banners`);
+    console.log(`\nProcessed ${processedBanners.length} total banner entries`);
 
-    // Generate JavaScript code
+    await browser.close();
+
+    // Write to file
+    const outputPath = path.join(__dirname, '..', 'src', 'data', 'scrapedGenshinBanners.js');
+    const existingImageMap = await loadExistingImages(outputPath, 'scrapedGenshinBanners');
+
     const bannersCode = processedBanners.map(banner => {
+      const img = resolveImage(banner.image, banner.title, existingImageMap);
       return `  {
     title: '${banner.title.replace(/'/g, "\\'")}',
     start: new Date('${banner.start}'),
     end: new Date('${banner.end}'),
-    image: '${banner.image}',
+    image: '${img.replace(/'/g, "\\'")}',
     type: '${banner.type}',
+    rarity: ${banner.rarity},
+    bannerType: '${banner.bannerType}',
     game: '${banner.game}',
     description: '${banner.description.replace(/'/g, "\\'")}',
     wikiUrl: '${banner.wikiUrl}',
@@ -371,39 +399,11 @@ ${bannersCode}
 ];
 `;
 
-    // Write to file
-    const outputPath = path.join(__dirname, '..', 'src', 'data', 'scrapedGenshinBanners.js');
-    const existingImageMap = await loadExistingImages(outputPath, 'scrapedGenshinBanners');
+    fs.writeFileSync(outputPath, jsCode);
 
-    const bannersCodeFinal = processedBanners.map(banner => {
-      const img = resolveImage(banner.image, banner.title, existingImageMap);
-      return `  {
-    title: '${banner.title.replace(/'/g, "\\'")}',
-    start: new Date('${banner.start}'),
-    end: new Date('${banner.end}'),
-    image: '${img.replace(/'/g, "\\'")}',
-    type: '${banner.type}',
-    game: '${banner.game}',
-    description: '${banner.description.replace(/'/g, "\\'")}',
-    wikiUrl: '${banner.wikiUrl}',
-  }`;
-    }).join(',\n');
+    console.log(`\n✅ Saved to: ${outputPath}`);
+    console.log(`📊 Total: ${processedBanners.length} banners`);
 
-    const jsCodeFinal = `// scrapedGenshinBanners.js
-// Auto-generated by scrapeGenshinBanners.js
-// Last updated: ${new Date().toISOString()}
-
-export const scrapedGenshinBanners = [
-${bannersCodeFinal}
-];
-`;
-
-    fs.writeFileSync(outputPath, jsCodeFinal);
-
-    console.log(`\n✅ Banners saved to: ${outputPath}`);
-    console.log(`📊 Total banners: ${processedBanners.length}`);
-
-    await browser.close();
   } catch (error) {
     console.error('Error during scraping:', error);
     await browser.close();
