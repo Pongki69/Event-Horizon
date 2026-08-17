@@ -29,6 +29,20 @@ jobs:
       - name: Install Puppeteer browser
         run: npx puppeteer browsers install chrome
 
+      - name: Test Game8 access with curl
+        run: |
+          echo "Testing direct HTTP access to Game8..."
+          echo "=== curl with follow redirects and verbose output ==="
+          curl -I -L -v https://game8.co/games/Genshin-Impact/archives/305012 || true
+          echo ""
+          echo "=== Testing with different User-Agent ==="
+          curl -I -L -A "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36" https://game8.co/games/Genshin-Impact/archives/305012 || true
+          echo ""
+          echo "=== IP address of this runner ==="
+          curl -s https://api.ipify.org
+          echo ""
+        continue-on-error: true
+
       - name: Scrape Genshin Current & Upcoming Events
         env:
           FANDOM_USERNAME: ${{ secrets.FANDOM_USERNAME }}
