@@ -109,11 +109,13 @@ async function scrapeZZZEvents() {
   console.log('Starting Zenless Zone Zero events scraping...');
 
   const browser = await puppeteer.launch({
-    headless: true, // Run headless for production
+    headless: true,
     args: [
       '--no-sandbox', 
       '--disable-setuid-sandbox',
-      '--disable-blink-features=AutomationControlled', // Hide automation
+      '--disable-blink-features=AutomationControlled',
+      '--disable-dev-shm-usage',
+      '--disable-web-security',
       '--disable-features=IsolateOrigins,site-per-process'
     ]
   });
