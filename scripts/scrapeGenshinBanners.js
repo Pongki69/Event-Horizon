@@ -216,9 +216,8 @@ async function scrapeGenshinBanners() {
         console.log(`Response: ${status} ${url}`);
         if (status === 403) {
           console.log('  ❌ 403 Forbidden detected');
-          response.headers().then(headers => {
-            console.log('  Response headers:', JSON.stringify(headers, null, 2));
-          });
+          const headers = response.headers();
+          console.log('  Response headers:', JSON.stringify(headers, null, 2));
         }
       }
     });
