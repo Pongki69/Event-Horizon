@@ -208,16 +208,43 @@ async function scrapeGenshinBanners() {
       'Cache-Control': 'max-age=0'
     });
     
-    // Log all responses
-    page.on('response', response => {
+    // Log all responses with detailed debugging for errors
+    page.on('response', async response => {
       const url = response.url();
       const status = response.status();
+      
       if (url.includes('game8.co')) {
         console.log(`Response: ${status} ${url}`);
-        if (status === 403) {
-          console.log('  ❌ 403 Forbidden detected');
+        
+        // Log detailed information for error responses
+        if (status >= 400) {
+          console.log(`  ❌ Error response detected`);
+          console.log(`  Status: ${status}`);
+          console.log(`  URL: ${url}`);
+          
           const headers = response.headers();
-          console.log('  Response headers:', JSON.stringify(headers, null, 2));
+          console.log(`  Response headers:`, JSON.stringify(headers, null, 2));
+          
+          const contentType = headers['content-type'] || 'unknown';
+          console.log(`  Content-Type: ${contentType}`);
+          
+          // Try to get response body (limited to first 500 chars)
+          try {
+            const body = await response.text();
+            const preview = body.substring(0, 500);
+            console.log(`  Response body preview (first 500 chars):`);
+            console.log(preview);
+            
+            // Check for Cloudflare indicators
+            if (body.toLowerCase().includes('cloudflare')) {
+              console.log(`  ⚠️  Response contains 'cloudflare' keyword`);
+            }
+            if (body.toLowerCase().includes('challenge')) {
+              console.log(`  ⚠️  Response contains 'challenge' keyword`);
+            }
+          } catch (e) {
+            console.log(`  Could not read response body: ${e.message}`);
+          }
         }
       }
     });
@@ -240,15 +267,35 @@ async function scrapeGenshinBanners() {
     
     const finalStatus = response.status();
     const finalUrl = response.url();
-    console.log(`Final response: ${finalStatus} ${finalUrl}`);
+    const currentPageUrl = page.url();
+    
+    console.log(`Navigation complete:`);
+    console.log(`  Initial response status: ${finalStatus}`);
+    console.log(`  Initial response URL: ${finalUrl}`);
+    console.log(`  Current page URL: ${currentPageUrl}`);
+    
+    if (finalUrl !== currentPageUrl) {
+      console.log(`  ⚠️  URL changed during navigation (redirect detected)`);
+    }
     
     if (finalStatus === 403) {
       console.log('❌ Received 403 Forbidden from Game8');
-      console.log('Response headers:', await response.headers());
-      const body = await response.text();
-      if (body.includes('cloudflare') || body.includes('Cloudflare')) {
-        console.log('⚠️  Cloudflare challenge detected in response body');
+      const headers = response.headers();
+      console.log('Main response headers:', JSON.stringify(headers, null, 2));
+      
+      try {
+        const body = await response.text();
+        console.log('Response body length:', body.length);
+        if (body.includes('cloudflare') || body.includes('Cloudflare')) {
+          console.log('⚠️  Cloudflare challenge detected in response body');
+        }
+        if (body.includes('403') || body.includes('Forbidden')) {
+          console.log('⚠️  403/Forbidden keywords found in body');
+        }
+      } catch (e) {
+        console.log('Could not read response body:', e.message);
       }
+      
       throw new Error('403 Forbidden - likely IP/network-based blocking by Game8/Cloudflare');
     }
     
