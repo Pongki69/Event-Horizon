@@ -165,6 +165,7 @@ async function fetchWikiDescription(name, isWeapon = false) {
 
 async function scrapeGenshinBanners() {
   console.log('Fetching banners from Game8...');
+  console.log('Environment:', process.env.CI ? 'GitHub Actions' : 'Local');
 
   const browser = await puppeteer.launch({
     headless: true,
@@ -174,20 +175,85 @@ async function scrapeGenshinBanners() {
       '--disable-blink-features=AutomationControlled',
       '--disable-dev-shm-usage',
       '--disable-web-security',
-      '--disable-features=IsolateOrigins,site-per-process'
+      '--disable-features=IsolateOrigins,site-per-process',
+      '--window-size=1920,1080',
+      '--disable-background-timer-throttling',
+      '--disable-backgrounding-occluded-windows',
+      '--disable-renderer-backgrounding'
     ]
   });
 
   try {
     const page = await browser.newPage();
-    await page.setUserAgent('Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36');
-
-    await page.goto('https://game8.co/games/Genshin-Impact/archives/305012', {
-      waitUntil: 'domcontentloaded',
-      timeout: 30000
+    
+    // Set realistic viewport
+    await page.setViewport({ width: 1920, height: 1080 });
+    
+    // Use more recent Chrome version
+    const userAgent = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36';
+    await page.setUserAgent(userAgent);
+    console.log('User-Agent:', userAgent);
+    
+    // Set additional headers that real browsers send
+    await page.setExtraHTTPHeaders({
+      'Accept-Language': 'en-US,en;q=0.9',
+      'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8',
+      'Accept-Encoding': 'gzip, deflate, br',
+      'Connection': 'keep-alive',
+      'Upgrade-Insecure-Requests': '1',
+      'Sec-Fetch-Dest': 'document',
+      'Sec-Fetch-Mode': 'navigate',
+      'Sec-Fetch-Site': 'none',
+      'Sec-Fetch-User': '?1',
+      'Cache-Control': 'max-age=0'
     });
+    
+    // Log all responses
+    page.on('response', response => {
+      const url = response.url();
+      const status = response.status();
+      if (url.includes('game8.co')) {
+        console.log(`Response: ${status} ${url}`);
+        if (status === 403) {
+          console.log('  ❌ 403 Forbidden detected');
+          response.headers().then(headers => {
+            console.log('  Response headers:', JSON.stringify(headers, null, 2));
+          });
+        }
+      }
+    });
+    
+    // Log failed requests
+    page.on('requestfailed', request => {
+      console.log(`Request failed: ${request.url()} - ${request.failure().errorText}`);
+    });
+    
+    // Add random delay before navigation (human-like behavior)
+    const randomDelay = Math.floor(Math.random() * 2000) + 1000;
+    console.log(`Waiting ${randomDelay}ms before navigation...`);
+    await new Promise(resolve => setTimeout(resolve, randomDelay));
 
-    console.log('Page loaded, extracting banner data...');
+    console.log('Navigating to Game8...');
+    const response = await page.goto('https://game8.co/games/Genshin-Impact/archives/305012', {
+      waitUntil: 'networkidle2',
+      timeout: 60000
+    });
+    
+    const finalStatus = response.status();
+    const finalUrl = response.url();
+    console.log(`Final response: ${finalStatus} ${finalUrl}`);
+    
+    if (finalStatus === 403) {
+      console.log('❌ Received 403 Forbidden from Game8');
+      console.log('Response headers:', await response.headers());
+      const body = await response.text();
+      if (body.includes('cloudflare') || body.includes('Cloudflare')) {
+        console.log('⚠️  Cloudflare challenge detected in response body');
+      }
+      throw new Error('403 Forbidden - likely IP/network-based blocking by Game8/Cloudflare');
+    }
+    
+    console.log('✓ Page loaded successfully, extracting banner data...');
     
     await page.waitForSelector('body', { timeout: 10000 });
     
