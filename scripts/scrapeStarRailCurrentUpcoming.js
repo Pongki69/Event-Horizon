@@ -456,32 +456,37 @@ async function scrapeStarRailEvents() {
 
     await loginToFandom(page);
 
-    // First, try to get events from the official wiki API
+    // Use MediaWiki API to bypass Cloudflare - same approach as Genshin scraper
     console.log('Fetching events from HSR Wiki API...');
     let wikiEvents = [];
     
-    // Load the Events page directly in the browser instead of using the API
-    // This way we get the actual HTML with data-image-key attributes
-    console.log('Loading Events page directly...');
-    await page.goto('https://honkai-star-rail.fandom.com/wiki/Events', {
-      waitUntil: 'domcontentloaded',
-      timeout: 90000
-    });
+    await page.goto('about:blank', { waitUntil: 'domcontentloaded' });
     
-    // Get cookies from the Events page to reuse for event pages
-    const cookies = await page.cookies();
-    console.log(`Captured ${cookies.length} cookies from Events page`);
+    const apiUrl = 'https://honkai-star-rail.fandom.com/api.php?action=parse&page=Events&prop=text&format=json&origin=*';
     
-    // Wait for initial page load
-    console.log('Waiting for page to load...');
-    await page.waitForSelector('table', { timeout: 10000 }).catch(() => {
-      console.log('⚠ Table not found');
-    });
+    const apiResponse = await page.evaluate(async (url) => {
+      try {
+        const response = await fetch(url);
+        return await response.json();
+      } catch (error) {
+        return { error: error.message };
+      }
+    }, apiUrl);
+
+    if (!apiResponse || !apiResponse.parse || !apiResponse.parse.text) {
+      console.log('❌ Failed to get wiki content via API');
+      console.log('No events found. Exiting.');
+      return { events: [], historyEvents: [] };
+    }
     
+    console.log('✅ Successfully got wiki content via API');
     console.log('Extracting events from page...');
     
-    // Extract events directly from the loaded page
-    wikiEvents = await page.evaluate(() => {
+    // Extract events directly from the API HTML content
+    wikiEvents = await page.evaluate((htmlContent) => {
+      const tempDiv = document.createElement('div');
+      tempDiv.innerHTML = htmlContent;
+      
       const events = [];
       
       // Find both "Current" and "Upcoming" sections
@@ -491,7 +496,7 @@ async function scrapeStarRailEvents() {
         console.log(`Looking for ${sectionName} section...`);
         
         // Look for h2 with span id="Current" or id="Upcoming"
-        const sectionHeader = Array.from(document.querySelectorAll('h2')).find(h => {
+        const sectionHeader = Array.from(tempDiv.querySelectorAll('h2')).find(h => {
           const span = h.querySelector(`span[id="${sectionName}"]`);
           return span || h.textContent.includes(sectionName);
         });
@@ -605,7 +610,7 @@ async function scrapeStarRailEvents() {
           }
           
           return events;
-        });
+        }, apiResponse.parse.text['*']);
 
     console.log(`\n📋 Found ${wikiEvents.length} events from wiki (Current + Upcoming)\n`);
 

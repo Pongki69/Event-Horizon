@@ -135,6 +135,9 @@ async function scrapeZZZEvents() {
     console.log('Fetching events from ZZZ Wiki API...');
     let wikiEvents = [];
     
+    // Use about:blank to avoid Cloudflare detection
+    await page.goto('about:blank', { waitUntil: 'domcontentloaded' });
+    
     try {
       // Use the MediaWiki API to get the Events page content  
       const apiUrl = 'https://zenless-zone-zero.fandom.com/api.php?action=parse&page=Event&prop=text&format=json&origin=*';
@@ -149,7 +152,7 @@ async function scrapeZZZEvents() {
       }, apiUrl);
 
       if (apiResponse && apiResponse.parse && apiResponse.parse.text) {
-        console.log('Successfully got wiki content via API');
+        console.log('✅ Successfully got wiki content via API');
         
         // Parse the HTML content from the API response
         wikiEvents = await page.evaluate((htmlContent) => {
