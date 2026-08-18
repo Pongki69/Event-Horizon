@@ -84,7 +84,7 @@
     "title": "Summer Waves Roll In",
     "start": "2026-07-29T03:00:00.000Z",
     "end": "2026-09-06T19:59:00.000Z",
-    "image": "",
+    "image": "/images/zenless-zone-zero/events/summer-waves-roll-in.png",
     "description": "Event details coming soon.",
     "game": "Zenless Zone Zero",
     "wikiUrl": ""
@@ -93,7 +93,7 @@
     "title": "Gift From the Clouds",
     "start": "2026-07-29T03:00:00.000Z",
     "end": "2026-09-07T19:59:00.000Z",
-    "image": "",
+    "image": "/images/zenless-zone-zero/events/gift-from-the-clouds.png",
     "description": "Event details coming soon.",
     "game": "Zenless Zone Zero",
     "wikiUrl": ""
@@ -148,6 +148,15 @@
     "start": "2026-07-29T03:00:00.000Z",
     "end": "2026-09-07T19:59:00.000Z",
     "image": "/images/zenless-zone-zero/events/marcel-anniversary-gifts.png",
+    "description": "Event details coming soon.",
+    "game": "Zenless Zone Zero",
+    "wikiUrl": ""
+  },
+  {
+    "title": "The Final Callback",
+    "start": "2026-07-29T03:00:00.000Z",
+    "end": "2026-08-18T19:59:00.000Z",
+    "image": "/images/zenless-zone-zero/events/the-final-callback.png",
     "description": "Event details coming soon.",
     "game": "Zenless Zone Zero",
     "wikiUrl": ""
