@@ -26,29 +26,11 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Install Puppeteer browser
-        run: npx puppeteer browsers install chrome
-
       - name: Scrape HSR Current & Upcoming Events
-        env:
-          FANDOM_USERNAME: ${{ secrets.FANDOM_USERNAME }}
-          FANDOM_PASSWORD: ${{ secrets.FANDOM_PASSWORD }}
         run: node scripts/scrapeStarRailCurrentUpcoming.js
-        continue-on-error: true
 
       - name: Scrape HSR Endgame
-        env:
-          FANDOM_USERNAME: ${{ secrets.FANDOM_USERNAME }}
-          FANDOM_PASSWORD: ${{ secrets.FANDOM_PASSWORD }}
         run: node scripts/scrapeStarRailEndgame.js
-        continue-on-error: true
-
-      - name: Scrape HSR Banners
-        env:
-          FANDOM_USERNAME: ${{ secrets.FANDOM_USERNAME }}
-          FANDOM_PASSWORD: ${{ secrets.FANDOM_PASSWORD }}
-        run: node scripts/scrapeStarRailBanners.js
-        continue-on-error: true
 
       - name: Check for changes
         id: git-check

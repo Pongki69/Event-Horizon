@@ -47,38 +47,130 @@ export async function loginToFandom(page) {
   try {
     console.log('🔐 Logging into Fandom...');
 
+    // Try to navigate to login page with multiple strategies
     await page.goto('https://www.fandom.com/signin', {
-      waitUntil: 'networkidle2',
-      timeout: 60000,
+      waitUntil: 'domcontentloaded',
+      timeout: 45000,
     });
 
-    // Wait for the username field
-    await page.waitForSelector('#usernameInput', { timeout: 15000 });
+    // Wait a bit for any dynamic content to load
+    await new Promise(r => setTimeout(r, 2000));
+
+    // Try multiple possible selectors for the username field
+    const usernameSelectors = [
+      '#usernameInput',
+      'input[name="username"]',
+      'input[type="text"]',
+      'input[placeholder*="sername"]'
+    ];
+
+    let usernameInput = null;
+    for (const selector of usernameSelectors) {
+      try {
+        await page.waitForSelector(selector, { timeout: 5000 });
+        usernameInput = selector;
+        console.log(`Found username input: ${selector}`);
+        break;
+      } catch (e) {
+        continue;
+      }
+    }
+
+    if (!usernameInput) {
+      throw new Error('Could not find username input field');
+    }
+
+    // Try multiple possible selectors for the password field
+    const passwordSelectors = [
+      '#passwordInput',
+      'input[name="password"]',
+      'input[type="password"]',
+      'input[placeholder*="assword"]'
+    ];
+
+    let passwordInput = null;
+    for (const selector of passwordSelectors) {
+      try {
+        await page.waitForSelector(selector, { timeout: 5000 });
+        passwordInput = selector;
+        console.log(`Found password input: ${selector}`);
+        break;
+      } catch (e) {
+        continue;
+      }
+    }
+
+    if (!passwordInput) {
+      throw new Error('Could not find password input field');
+    }
 
     // Fill in credentials
-    await page.type('#usernameInput', username, { delay: 50 });
-    await page.type('#passwordInput', password, { delay: 50 });
+    await page.type(usernameInput, username, { delay: 50 });
+    await page.type(passwordInput, password, { delay: 50 });
 
-    // Submit the form
-    await Promise.all([
-      page.waitForNavigation({ waitUntil: 'networkidle2', timeout: 30000 }),
-      page.click('.login-button'),
-    ]);
+    // Try multiple possible selectors for the login button
+    const buttonSelectors = [
+      '.login-button',
+      'button[type="submit"]',
+      'button:has-text("Sign In")',
+      'input[type="submit"]'
+    ];
+
+    let loginButton = null;
+    for (const selector of buttonSelectors) {
+      try {
+        const button = await page.$(selector);
+        if (button) {
+          loginButton = selector;
+          console.log(`Found login button: ${selector}`);
+          break;
+        }
+      } catch (e) {
+        continue;
+      }
+    }
+
+    if (!loginButton) {
+      // Try submitting the form directly
+      console.log('Trying to submit form directly...');
+      await page.evaluate(() => {
+        const forms = document.querySelectorAll('form');
+        if (forms.length > 0) {
+          forms[0].submit();
+        }
+      });
+      await page.waitForNavigation({ waitUntil: 'domcontentloaded', timeout: 30000 });
+    } else {
+      // Click the button and wait for navigation
+      await Promise.all([
+        page.waitForNavigation({ waitUntil: 'domcontentloaded', timeout: 30000 }),
+        page.click(loginButton),
+      ]);
+    }
+
+    // Wait a bit for login to complete
+    await new Promise(r => setTimeout(r, 2000));
 
     // Verify login succeeded by checking for a logged-in indicator
     const loggedIn = await page.evaluate(() => {
-      // Fandom sets a wgUserName global when logged in
-      return typeof window.mw !== 'undefined' && window.mw.config && !!window.mw.config.get('wgUserName');
+      // Check multiple indicators
+      if (typeof window.mw !== 'undefined' && window.mw.config && window.mw.config.get('wgUserName')) {
+        return true;
+      }
+      // Check for logout link
+      const logoutLink = document.querySelector('a[href*="logout"], a[href*="signout"]');
+      if (logoutLink) {
+        return true;
+      }
+      // Check for user menu/profile
+      const userMenu = document.querySelector('.wds-global-navigation__user-menu, [data-testid="user-menu"]');
+      if (userMenu) {
+        return true;
+      }
+      return false;
     });
 
     if (loggedIn) {
-      console.log('✅ Fandom login successful\n');
-      return true;
-    }
-
-    // Fallback check: look for sign-out link in the DOM
-    const hasSignOut = await page.$('a[href*="logout"]');
-    if (hasSignOut) {
       console.log('✅ Fandom login successful\n');
       return true;
     }

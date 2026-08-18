@@ -1,16 +1,88 @@
-# React + Vite
+# Event Horizon
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A web application that tracks current and upcoming events, banners, and endgame content for popular gacha games:
+- Genshin Impact
+- Honkai: Star Rail
+- Zenless Zone Zero
+- Wuthering Waves
 
-Currently, two official plugins are available:
+## 🚀 Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- Real-time event tracking
+- Current and upcoming banner schedules
+- Endgame content timelines
+- Automated data updates via GitHub Actions
+- Clean, responsive UI built with React + Vite
 
-## React Compiler
+## 📦 Installation
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+```bash
+npm install
+```
 
-## Expanding the ESLint configuration
+## 🛠️ Development
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+```bash
+npm run dev
+```
+
+## 📊 Data Scraping
+
+### Automated (GitHub Actions) ✅
+
+Event data is automatically scraped every 12 hours via GitHub Actions using the Fandom wiki APIs:
+
+- **Genshin Impact Events**: `scripts/scrapeGenshinCurrentUpcoming.js`
+- **Honkai: Star Rail Events & Endgame**: `scripts/scrapeStarRailCurrentUpcoming.js` & `scripts/scrapeStarRailEndgame.js`
+- **Zenless Zone Zero Events**: `scripts/scrapeZZZCurrentUpcoming.js`
+- **Wuthering Waves Events**: `scripts/scrapeWuwaCurrentUpcoming.js`
+
+### Manual (Local Run Required) ⚠️
+
+Banner data requires manual local scraping because Game8.co blocks datacenter IPs (including GitHub Actions runners via AWS WAF).
+
+**Easy Way (Recommended):**
+Run the automated script every ~3 weeks per patch:
+- Double-click **`update-banners.bat`** or **`update-banners.ps1`**
+- Script runs all 4 game scrapers, commits, and pushes automatically
+
+**Manual Way:**
+```bash
+# Run individual scrapers
+node scripts/scrapeGenshinBanners.js
+node scripts/scrapeStarRailBanners.js
+node scripts/scrapeZZZBanners.js
+node scripts/scrapeWuwaBanners.js
+
+# Commit and push
+git add src/data/*.json public/images/
+git commit -m "chore: update banner data"
+git push
+```
+
+### Why Manual Scraping for Banners?
+
+Game8.co (primary source for upcoming banner leaks) uses AWS WAF to block datacenter IP ranges, including all GitHub Actions runners. The block happens at the infrastructure level and cannot be bypassed with code changes. Local residential IPs are not affected.
+
+## 🗂️ Project Structure
+
+```
+├── src/
+│   └── data/          # Game data (events, banners)
+├── scripts/           # Web scraping scripts
+├── public/
+│   └── images/        # Scraped banner images
+├── .github/
+│   └── workflows/     # GitHub Actions (automated event scraping)
+```
+
+## 🔧 Tech Stack
+
+- **Frontend**: React + Vite
+- **Scraping**: Puppeteer (banners) + fetch (events via MediaWiki API)
+- **Automation**: GitHub Actions (events only)
+- **Styling**: CSS
+
+## 📝 License
+
+MIT
