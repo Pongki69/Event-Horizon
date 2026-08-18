@@ -152,6 +152,25 @@ async function scrapeVersionPage(browser, url, versionName) {
 
     console.log(`✅ Found ${events.length} events`);
 
+    // Deduplicate events based on title and URL
+    const seenEvents = new Map();
+    const uniqueEvents = [];
+    
+    for (const event of events) {
+      const eventKey = `${event.title}::${event.href}`;
+      
+      if (seenEvents.has(eventKey)) {
+        console.log(`⚠️  Duplicate detected: "${event.title}" - skipping`);
+        continue;
+      }
+      
+      seenEvents.set(eventKey, event);
+      uniqueEvents.push(event);
+    }
+    
+    console.log(`After deduplication: ${uniqueEvents.length} unique events`);
+    events = uniqueEvents;
+
     const processedEvents = [];
     
     for (let i = 0; i < events.length; i++) {

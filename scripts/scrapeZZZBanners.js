@@ -257,32 +257,127 @@ async function scrapeZZZBanners() {
     }
 
     /**
-     * Get agent description via wiki API — no Puppeteer needed.
-     * Parses the {{Description|...}} template from the Lore page wikitext.
+     * Get agent's official introduction quote from the Lore page.
+     * Fetches the "Official Introduction" section which contains the character's signature quotes.
      */
     async function resolveZZZDescription(name) {
       try {
         const wikiTitle = await resolveZZZWikiTitle(name);
-        const url = `https://zenless-zone-zero.fandom.com/api.php?action=query&titles=${encodeURIComponent(wikiTitle)}/Lore&prop=revisions&rvprop=content&rvslots=main&rvsection=0&format=json&origin=*`;
-        const res = await fetch(url);
+        // Use the parse API to get rendered HTML of the Lore page
+        const loreUrl = `https://zenless-zone-zero.fandom.com/api.php?action=parse&page=${encodeURIComponent(wikiTitle)}/Lore&prop=text&format=json&origin=*`;
+        const res = await fetch(loreUrl);
         const json = await res.json();
-        const p = Object.values(json?.query?.pages || {})[0];
-        const content = p?.revisions?.[0]?.slots?.main?.['*'] || '';
-        if (!content) return '';
-        // Extract text from {{Description|...}} template
-        const match = content.match(/\{\{Description\|(.+?)(?:\}\}|$)/s);
-        if (!match) return '';
-        // Strip wiki markup: bold/italic markers, links [[X|Y]]->Y or [[X]]->X, <tags>, center/big
-        let desc = match[1]
-          .replace(/\[\[([^\]|]+)\|([^\]]+)\]\]/g, '$2')
-          .replace(/\[\[([^\]]+)\]\]/g, '$1')
-          .replace(/'{2,}/g, '')
-          .replace(/<[^>]+>/g, '')
-          .replace(/\{\{[^}]+\}\}/g, '')
-          .replace(/\n+/g, ' ')
-          .trim();
-        return desc;
-      } catch { return ''; }
+        const html = json?.parse?.text?.['*'] || '';
+        
+        if (!html) {
+          console.log(`  ⚠ No Lore page content found`);
+          return '';
+        }
+        
+        // Parse HTML in the browser context using Puppeteer
+        const description = await page.evaluate((htmlContent) => {
+          const tempDiv = document.createElement('div');
+          tempDiv.innerHTML = htmlContent;
+          
+          // Find the "Official Introduction" heading
+          const headings = Array.from(tempDiv.querySelectorAll('h2, h3'));
+          const officialIntroHeading = headings.find(h => 
+            h.textContent.includes('Official Introduction')
+          );
+          
+          if (!officialIntroHeading) {
+            return '';
+          }
+          
+          // Collect quote blocks - look for the special quote formatting
+          const quotes = [];
+          let el = officialIntroHeading.nextElementSibling;
+          let iterCount = 0;
+          
+          while (el && !['H2', 'H3'].includes(el.tagName) && iterCount < 15) {
+            iterCount++;
+            
+            // Look for elements with specific quote styling or blockquotes
+            if (el.classList && (el.classList.contains('quote') || el.classList.contains('pi-data-value'))) {
+              const text = el.textContent.trim();
+              if (text && text.length > 20 && !quotes.includes(text)) {
+                quotes.push(text);
+              }
+            }
+            
+            // Check for direct text content in paragraphs with quotes
+            if (el.tagName === 'P') {
+              const text = el.textContent.trim();
+              // Must start with a quote mark and be substantial
+              if (text.startsWith('"') && text.length > 30 && text.length < 500 && !quotes.includes(text)) {
+                quotes.push(text);
+              }
+            }
+            
+            // Also check nested elements with quote markers
+            const quotedElements = el.querySelectorAll('p, blockquote, .quote, div');
+            for (const qel of quotedElements) {
+              const text = qel.textContent.trim();
+              if (text.startsWith('"') && 
+                  text.length > 30 && 
+                  text.length < 500 &&
+                  !quotes.includes(text) &&
+                  !text.includes('—Agent Record')) {
+                quotes.push(text);
+              }
+            }
+            
+            el = el.nextElementSibling;
+          }
+          
+          // Remove duplicates and clean up
+          const uniqueQuotes = [...new Set(quotes)]
+            .filter(q => 
+              q.startsWith('"') && // Must start with quote
+              !q.includes('—Agent Record') && // Skip attribution
+              !q.includes('Official Introduction') // Skip heading text
+            );
+          
+          // Split combined quotes - they're often in one big string like: "Quote1"Name"Quote2"
+          const splitQuotes = [];
+          for (const quote of uniqueQuotes) {
+            // Try to split on patterns like: }"A or }"" or }Name" where } is closing quote
+            // This regex looks for: closing quote followed by capital letter or another quote
+            const regex = /"([^"]+)"/g;
+            const matches = [...quote.matchAll(regex)];
+            
+            if (matches.length > 1) {
+              // Multiple quotes found, add each separately
+              for (const match of matches) {
+                const extractedQuote = `"${match[1]}"`;
+                if (extractedQuote.length > 30 && !extractedQuote.includes('—Agent Record')) {
+                  splitQuotes.push(extractedQuote);
+                }
+              }
+            } else {
+              // Single quote, keep as is
+              splitQuotes.push(quote);
+            }
+          }
+          
+          const finalQuotes = [...new Set(splitQuotes)]
+            .map(q => q.trim())
+            .filter(q => q.length > 30)
+            .slice(0, 3); // Take first 3 quotes
+          
+          return finalQuotes.join('\n\n');
+        }, html);
+        
+        if (description && description.length > 20) {
+          return description;
+        }
+        
+        console.log(`  ⚠ No quotes found in Official Introduction`);
+        return '';
+      } catch (error) {
+        console.log(`  ✗ Error fetching description: ${error.message}`);
+        return '';
+      }
     }
 
     // ── Process all banners ────────────────────────────────────────────────
@@ -348,7 +443,7 @@ async function scrapeZZZBanners() {
     image: '${banner.image}',
     type: '${banner.type || ''}',${banner.isTBA ? `\n    isTBA: true,` : ''}
     game: '${banner.game}',
-    description: '${banner.description.replace(/'/g, "\\'")}',
+    description: '${banner.description.replace(/'/g, "\\'").replace(/\n/g, '\\n')}',
   }`;
     }).join(',\n');
 
@@ -374,7 +469,7 @@ ${bannersCode}
     image: '${img.replace(/'/g, "\\'")}',
     type: '${banner.type || ''}',${banner.isTBA ? `\n    isTBA: true,` : ''}
     game: '${banner.game}',
-    description: '${banner.description.replace(/'/g, "\\'")}',
+    description: '${banner.description.replace(/'/g, "\\'").replace(/\n/g, '\\n')}',
   }`;
     }).join(',\n');
 

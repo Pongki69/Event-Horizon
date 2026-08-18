@@ -218,11 +218,30 @@ async function scrapeGenshinEvents() {
       return events;
     }, apiResponse?.parse?.text?.['*'] || null);
     
-    console.log(`Found ${wikiEvents.length} events\n`);
+    console.log(`Found ${wikiEvents.length} events`);
+
+    // Deduplicate events based on image URL (same image = same event)
+    const seenImages = new Map();
+    const uniqueEvents = [];
+    
+    for (const event of wikiEvents) {
+      const imageKey = event.imageUrl || event.name;
+      
+      if (seenImages.has(imageKey)) {
+        const existing = seenImages.get(imageKey);
+        console.log(`⚠️  Duplicate detected: "${event.name}" (same image as "${existing.name}") - skipping`);
+        continue;
+      }
+      
+      seenImages.set(imageKey, event);
+      uniqueEvents.push(event);
+    }
+    
+    console.log(`After deduplication: ${uniqueEvents.length} unique events\n`);
 
     const allEvents = [];
 
-    for (const wikiEvent of wikiEvents) {
+    for (const wikiEvent of uniqueEvents) {
       let startDate = null;
       let endDate = null;
       let isPermanent = false;

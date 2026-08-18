@@ -527,27 +527,48 @@ async function scrapeStarRailEvents() {
                     const typeCell = cells[2];
 
                     // Get event name and links
-                    const eventLink = eventCell.querySelector('a');
+                    // Multiple <a> tags may exist: image link, title link, etc.
+                    const allLinks = eventCell.querySelectorAll('a');
                     const eventImage = eventCell.querySelector('img');
 
-                    console.log(`Row ${i} in ${sectionName}: Link found: ${!!eventLink}, Image found: ${!!eventImage}`);
+                    console.log(`Row ${i} in ${sectionName}: Links found: ${allLinks.length}, Image found: ${!!eventImage}`);
 
-                    if (eventLink && durationCell.textContent.trim()) {
-                      // Get event name - prefer text content, fallback to image alt or link title
-                      let eventName = eventLink.textContent.trim();
+                    // Find the best link for the event title (skip image links)
+                    let eventLink = null;
+                    let eventName = '';
+                    
+                    for (const link of allLinks) {
+                      const href = link.getAttribute('href') || '';
+                      const text = link.textContent.trim();
                       
-                      // If event name is empty or looks like a file name, try alternatives
-                      if (!eventName || eventName.includes('File:') || eventName.includes('.png') || eventName.includes('.jpg')) {
-                        if (eventImage && eventImage.getAttribute('alt')) {
-                          eventName = eventImage.getAttribute('alt').trim();
-                        } else if (eventLink.getAttribute('title')) {
-                          eventName = eventLink.getAttribute('title').trim();
-                        }
+                      // Skip image/file links
+                      if (href.includes('/File:') || href.includes('/Special:')) {
+                        continue;
                       }
                       
-                      // Clean up the event name
-                      eventName = eventName.replace(/^File:Event\s+/i, '').replace(/\.(png|jpg|jpeg)$/i, '');
+                      // Skip empty links
+                      if (!text || text.includes('File:') || text.match(/\.(png|jpg|jpeg)$/i)) {
+                        continue;
+                      }
                       
+                      // This should be the event title link
+                      eventLink = link;
+                      eventName = text;
+                      break;
+                    }
+                    
+                    // Fallback: if no good link found, use image alt or first link
+                    if (!eventName && eventImage) {
+                      eventName = eventImage.getAttribute('alt') || '';
+                    }
+                    if (!eventName && allLinks.length > 0) {
+                      eventName = allLinks[0].textContent.trim();
+                    }
+                    
+                    // Clean up the event name
+                    eventName = eventName.replace(/^File:Event\s+/i, '').replace(/\.(png|jpg|jpeg)$/i, '');
+
+                    if (eventLink && eventName && durationCell.textContent.trim()) {
                       // Get the event URL from the <a> tag in the Event column
                       let eventUrl = eventLink.getAttribute('href') || '';
                     
@@ -612,7 +633,27 @@ async function scrapeStarRailEvents() {
           return events;
         }, apiResponse.parse.text['*']);
 
-    console.log(`\n📋 Found ${wikiEvents.length} events from wiki (Current + Upcoming)\n`);
+    console.log(`\n📋 Found ${wikiEvents.length} events from wiki (Current + Upcoming)`);
+
+    // Deduplicate events based on image URL (same image = same event)
+    const seenImages = new Map();
+    const uniqueEvents = [];
+    
+    for (const event of wikiEvents) {
+      const imageKey = event.imageUrl || event.imageKey || event.imageAlt || event.name;
+      
+      if (seenImages.has(imageKey)) {
+        const existing = seenImages.get(imageKey);
+        console.log(`⚠️  Duplicate detected: "${event.name}" (same image as "${existing.name}") - skipping`);
+        continue;
+      }
+      
+      seenImages.set(imageKey, event);
+      uniqueEvents.push(event);
+    }
+    
+    console.log(`📋 After deduplication: ${uniqueEvents.length} unique events\n`);
+    wikiEvents = uniqueEvents;
 
     // Process wiki events only and get detailed descriptions
     const allEvents = [];

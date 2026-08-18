@@ -210,17 +210,50 @@ async function scrapeWuwaHistory() {
 
     console.log(`Found ${eventsByVersion.length} version sections`);
     
-    let totalEvents = 0;
+    // Flatten and deduplicate all events
+    let allEvents = [];
     eventsByVersion.forEach(v => {
       console.log(`  ${v.version}: ${v.events.length} events`);
-      totalEvents += v.events.length;
+      allEvents = allEvents.concat(v.events.map(e => ({ ...e, version: v.version })));
     });
+    
+    // Deduplicate events based on name and href
+    const seenEvents = new Map();
+    const uniqueEvents = [];
+    
+    for (const event of allEvents) {
+      const eventKey = `${event.name}::${event.href}`;
+      
+      if (seenEvents.has(eventKey)) {
+        console.log(`  ⚠️  Duplicate detected: "${event.name}" - skipping`);
+        continue;
+      }
+      
+      seenEvents.set(eventKey, event);
+      uniqueEvents.push(event);
+    }
+    
+    console.log(`After deduplication: ${uniqueEvents.length} unique events`);
+    
+    // Regroup by version
+    const deduplicatedByVersion = [];
+    const versionMap = new Map();
+    
+    for (const event of uniqueEvents) {
+      if (!versionMap.has(event.version)) {
+        versionMap.set(event.version, { version: event.version, events: [] });
+        deduplicatedByVersion.push(versionMap.get(event.version));
+      }
+      versionMap.get(event.version).events.push(event);
+    }
+    
+    let totalEvents = uniqueEvents.length;
     console.log(`Total events to process: ${totalEvents}`);
 
     // Process each event
     const processedEvents = [];
     
-    for (const versionSection of eventsByVersion) {
+    for (const versionSection of deduplicatedByVersion) {
       console.log(`\nProcessing ${versionSection.version}...`);
       
       for (const event of versionSection.events) {

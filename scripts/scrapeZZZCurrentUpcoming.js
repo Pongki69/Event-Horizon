@@ -187,28 +187,51 @@ async function scrapeZZZEvents() {
                       const typeCell = cells.length >= 3 ? cells[2] : null;
 
                       // Get event name and links
-                      const eventLink = eventCell.querySelector('a');
+                      // Multiple <a> tags may exist: image link, title link, etc.
+                      const allLinks = eventCell.querySelectorAll('a');
                       const eventImage = eventCell.querySelector('img');
 
-                      if (eventLink && durationCell.textContent.trim()) {
-                        // Get event name
-                        let eventName = eventLink.textContent.trim();
+                      // Find the best link for the event title (skip image links)
+                      let eventLink = null;
+                      let eventName = '';
+                      
+                      for (const link of allLinks) {
+                        const href = link.getAttribute('href') || '';
+                        const text = link.textContent.trim();
                         
-                        if (!eventName || eventName.includes('File:')) {
-                          if (eventImage && eventImage.getAttribute('alt')) {
-                            eventName = eventImage.getAttribute('alt').trim();
-                          } else if (eventLink.getAttribute('title')) {
-                            eventName = eventLink.getAttribute('title').trim();
-                          }
-                        }
-                        
-                        eventName = eventName.replace(/^File:Event\s+/i, '').replace(/\.(png|jpg|jpeg)$/i, '');
-                        
-                        // Skip if event name is empty or looks like a section header
-                        if (!eventName || eventName === 'Event' || eventName.length < 3) {
+                        // Skip image/file links
+                        if (href.includes('/File:') || href.includes('/Special:')) {
                           continue;
                         }
                         
+                        // Skip empty links
+                        if (!text || text.includes('File:') || text.match(/\.(png|jpg|jpeg)$/i)) {
+                          continue;
+                        }
+                        
+                        // This should be the event title link
+                        eventLink = link;
+                        eventName = text;
+                        break;
+                      }
+                      
+                      // Fallback: if no good link found, use image alt or first link
+                      if (!eventName && eventImage) {
+                        eventName = eventImage.getAttribute('alt') || '';
+                      }
+                      if (!eventName && allLinks.length > 0) {
+                        eventName = allLinks[0].textContent.trim();
+                      }
+                      
+                      // Clean up the event name
+                      eventName = eventName.replace(/^File:Event\s+/i, '').replace(/\.(png|jpg|jpeg)$/i, '');
+                      
+                      // Skip if event name is empty or looks like a section header
+                      if (!eventName || eventName === 'Event' || eventName.length < 3) {
+                        continue;
+                      }
+
+                      if (eventLink && eventName && durationCell.textContent.trim()) {
                         let eventUrl = eventLink.getAttribute('href') || '';
                       
                         if (eventUrl && eventUrl.startsWith('/wiki/')) {
@@ -259,6 +282,26 @@ async function scrapeZZZEvents() {
         }, apiResponse.parse.text['*']);
         
         console.log(`Found ${wikiEvents.length} events from wiki`);
+        
+        // Deduplicate events based on image URL (same image = same event)
+        const seenImages = new Map();
+        const uniqueEvents = [];
+        
+        for (const event of wikiEvents) {
+          const imageKey = event.imageUrl || event.name;
+          
+          if (seenImages.has(imageKey)) {
+            const existing = seenImages.get(imageKey);
+            console.log(`⚠️  Duplicate detected: "${event.name}" (same image as "${existing.name}") - skipping`);
+            continue;
+          }
+          
+          seenImages.set(imageKey, event);
+          uniqueEvents.push(event);
+        }
+        
+        console.log(`After deduplication: ${uniqueEvents.length} unique events`);
+        wikiEvents = uniqueEvents;
         
       } else {
         console.log('Failed to get wiki content via API');
