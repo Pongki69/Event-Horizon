@@ -47,6 +47,11 @@
   --color-arknights: #F87171;
 }
 
+/* Hide mobile-only filter on desktop */
+.mobile-only-filter {
+  display: none;
+}
+
 /* ============================================================================
    2. GLOBAL RESETS & BODY
    ============================================================================ */
@@ -2354,6 +2359,15 @@ button:focus-visible,
 
 /* SINGLE COLUMN RESPONSIVE: Apply larger card sizes to ALL single column layouts (320px - 767px) */
 @media (max-width: 767px) {
+  /* Show mobile-only filter */
+  .mobile-only-filter {
+    display: flex !important;
+  }
+  
+  /* Hide calendar/table when checkbox is checked */
+  .calendar-area.calendar-hidden {
+    display: none !important;
+  }
   /* Optimize page scrolling performance */
   body {
     -webkit-overflow-scrolling: touch;

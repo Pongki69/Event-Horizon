@@ -104,6 +104,12 @@ function App() {
   // Hide ended events in event details card only (not persisted)
   const [hideEndedInDetails, setHideEndedInDetails] = useState(false);
   
+  // Mobile: Hide calendar/table view (only on mobile)
+  const [hideCalendarTable, setHideCalendarTable] = useState(() => {
+    const saved = localStorage.getItem('hideCalendarTable');
+    return saved ? JSON.parse(saved) : false;
+  });
+  
   // Navigation menu state for mobile
   const [showNavMenu, setShowNavMenu] = useState(false);
   
@@ -149,6 +155,11 @@ function App() {
   useEffect(() => {
     localStorage.setItem('hidePermanentEvents', JSON.stringify(hidePermanentEvents));
   }, [hidePermanentEvents]);
+  
+  // Save hideCalendarTable to localStorage whenever it changes
+  useEffect(() => {
+    localStorage.setItem('hideCalendarTable', JSON.stringify(hideCalendarTable));
+  }, [hideCalendarTable]);
   
   // Save viewMode to localStorage whenever it changes
   useEffect(() => {
@@ -546,6 +557,32 @@ function App() {
               flexDirection: 'column',
               gap: '10px'
             }}>
+              {/* Mobile-only: Hide Calendar/Table toggle */}
+              <label 
+                className="mobile-only-filter"
+                style={{ 
+                  display: 'flex', 
+                  alignItems: 'center', 
+                  gap: '8px',
+                  cursor: 'pointer',
+                  fontSize: '0.85rem',
+                  color: '#d1d5db'
+                }}
+              >
+                <input 
+                  type="checkbox" 
+                  checked={hideCalendarTable}
+                  onChange={(e) => setHideCalendarTable(e.target.checked)}
+                  style={{ 
+                    cursor: 'pointer',
+                    width: '16px',
+                    height: '16px',
+                    accentColor: '#8b78ff'
+                  }}
+                />
+                Hide Calendar/Table
+              </label>
+              
               <label style={{ 
                 display: 'flex', 
                 alignItems: 'center', 
@@ -677,7 +714,7 @@ function App() {
           </div>
         </aside>
 
-        <section className="calendar-area" id="calendar-section">
+        <section className={`calendar-area ${hideCalendarTable ? 'calendar-hidden' : ''}`} id="calendar-section">
           {/* View toggle on top of calendar - only visible on mobile/tablet portrait */}
           <div className="calendar-top-bar">
             <div className="view-toggle view-toggle-mobile" style={{ display: 'flex', justifyContent: 'center' }}>
@@ -713,19 +750,23 @@ function App() {
           </div>
 
           {/* Render based on view mode */}
-          {viewMode === 'calendar' ? (
-            <div className="calendar-wrapper">
-              <GameCalendar 
-                onSelectEvent={handleEventSelect} 
-                onShowMore={handleShowMore} 
-                hiddenGames={hiddenGames} 
-                hideEndedEvents={hideEndedEvents}
-              />
-            </div>
-          ) : (
-            <Suspense fallback={<div style={{ padding: '40px', textAlign: 'center' }}>Loading table view...</div>}>
-              <EventTable onEventClick={handleEventSelect} />
-            </Suspense>
+          {!hideCalendarTable && (
+            <>
+              {viewMode === 'calendar' ? (
+                <div className="calendar-wrapper">
+                  <GameCalendar 
+                    onSelectEvent={handleEventSelect} 
+                    onShowMore={handleShowMore} 
+                    hiddenGames={hiddenGames} 
+                    hideEndedEvents={hideEndedEvents}
+                  />
+                </div>
+              ) : (
+                <Suspense fallback={<div style={{ padding: '40px', textAlign: 'center' }}>Loading table view...</div>}>
+                  <EventTable onEventClick={handleEventSelect} />
+                </Suspense>
+              )}
+            </>
           )}
         </section>
 
