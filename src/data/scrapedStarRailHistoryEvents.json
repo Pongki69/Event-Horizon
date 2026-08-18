@@ -1,10 +1,46 @@
 [
   {
+    "title": "Realm of the Strange 2026-09-18",
+    "start": "2026-09-18T19:59:00.000Z",
+    "end": "2026-09-27T05:59:00.000Z",
+    "image": "/images/honkai-star-rail/events/realm-of-the-strange-2026-09-18.png",
+    "description": "Event details coming soon.",
+    "game": "Honkai: Star Rail",
+    "wikiUrl": ""
+  },
+  {
+    "title": "Planar Fissure 2026-09-06",
+    "start": "2026-09-06T19:59:00.000Z",
+    "end": "2026-09-20T05:59:00.000Z",
+    "image": "/images/honkai-star-rail/events/planar-fissure-2026-09-06.png",
+    "description": "Event details coming soon.",
+    "game": "Honkai: Star Rail",
+    "wikiUrl": ""
+  },
+  {
     "title": "Gift of Odyssey 2026-08-26",
     "start": "2026-08-25T19:59:00.000Z",
     "end": "2026-09-27T19:59:00.000Z",
     "image": "/images/honkai-star-rail/events/gift-of-odyssey-2026-08-26-2026-08-25.png",
-    "description": "Gift of Odyssey is a login Event in Version 4.4.",
+    "description": "Event details coming soon.",
+    "game": "Honkai: Star Rail",
+    "wikiUrl": ""
+  },
+  {
+    "title": "Nameless Honor 2026-08-25",
+    "start": "2026-08-25T19:59:00.000Z",
+    "end": "2026-09-27T19:59:00.000Z",
+    "image": "/images/honkai-star-rail/events/nameless-honor-2026-08-25.png",
+    "description": "Event details coming soon.",
+    "game": "Honkai: Star Rail",
+    "wikiUrl": ""
+  },
+  {
+    "title": "Cyclical Extrapolation Cute Corrosion",
+    "start": "2026-08-16T19:59:00.000Z",
+    "end": "2026-08-23T19:59:00.000Z",
+    "image": "",
+    "description": "Event details coming soon.",
     "game": "Honkai: Star Rail",
     "wikiUrl": ""
   },
@@ -14,6 +50,15 @@
     "end": "2026-08-23T19:59:00.000Z",
     "image": "/images/honkai-star-rail/events/garden-of-plenty-2026-08-14-2026-08-13.png",
     "description": "Garden of Plenty is an Event in Version 4.4.",
+    "game": "Honkai: Star Rail",
+    "wikiUrl": ""
+  },
+  {
+    "title": "Garden of Plenty",
+    "start": "2026-08-13T19:59:00.000Z",
+    "end": "2026-08-23T19:59:00.000Z",
+    "image": "/images/honkai-star-rail/events/garden-of-plenty-2026-08-13.png",
+    "description": "Event details coming soon.",
     "game": "Honkai: Star Rail",
     "wikiUrl": ""
   },
@@ -29,9 +74,9 @@
   {
     "title": "Aptitude Showcase - Himeko • Nova, Anaxa, Cerydra, Aventurine, Serval, Moze, Hanya",
     "start": "2026-08-04T19:59:00.000Z",
-    "end": "2026-08-25T07:00:00.000Z",
+    "end": "2026-08-24T19:59:00.000Z",
     "image": "/images/honkai-star-rail/events/aptitude-showcase---himeko-nova-anaxa-ce-2026-08-0.png",
-    "description": "Himeko • Nova, Anaxa, Cerydra, Aventurine, Serval, Moze, Hanya is an Aptitude Showcase in Version 4.4.",
+    "description": "Event details coming soon.",
     "game": "Honkai: Star Rail",
     "wikiUrl": ""
   },
@@ -47,8 +92,8 @@
   {
     "title": "Fate Contract Renewal",
     "start": "2026-07-23T19:59:00.000Z",
-    "end": "2026-11-17T19:59:00.000Z",
-    "image": "",
+    "end": "2026-11-10T19:59:00.000Z",
+    "image": "/images/honkai-star-rail/events/fate-contract-renewal-2026-07-23.png",
     "description": "Event details coming soon.",
     "game": "Honkai: Star Rail",
     "wikiUrl": ""
@@ -81,11 +126,29 @@
     "wikiUrl": ""
   },
   {
+    "title": "Fate Star Rail Night",
+    "start": "2026-07-23T19:59:00.000Z",
+    "end": "2026-08-25T19:59:00.000Z",
+    "image": "/images/honkai-star-rail/events/fate-star-rail-night-2026-07-23.png",
+    "description": "Event details coming soon.",
+    "game": "Honkai: Star Rail",
+    "wikiUrl": ""
+  },
+  {
+    "title": "Splash Screen Imagenae Holy Grail War",
+    "start": "2026-07-23T19:59:00.000Z",
+    "end": "2026-08-25T19:59:00.000Z",
+    "image": "/images/honkai-star-rail/events/splash-screen-imagenae-holy-grail-war-2026-07-23.png",
+    "description": "Event details coming soon.",
+    "game": "Honkai: Star Rail",
+    "wikiUrl": ""
+  },
+  {
     "title": "Fate Gift 2026-07-15",
     "start": "2026-07-14T19:59:00.000Z",
-    "end": "2026-08-25T22:00:00.000Z",
+    "end": "2026-08-25T19:59:00.000Z",
     "image": "/images/honkai-star-rail/events/fate-gift-2026-07-15-2026-07-14.png",
-    "description": "Fate Gift is an Event in Version 4.4.",
+    "description": "Event details coming soon.",
     "game": "Honkai: Star Rail",
     "wikiUrl": ""
   },
@@ -94,7 +157,7 @@
     "start": "2026-07-14T19:59:00.000Z",
     "end": "2026-08-24T19:59:00.000Z",
     "image": "/images/honkai-star-rail/events/gift-of-odyssey-2026-07-15-2026-07-14.png",
-    "description": "Gift of Odyssey is a login Event in Version 4.4.",
+    "description": "Event details coming soon.",
     "game": "Honkai: Star Rail",
     "wikiUrl": ""
   },
@@ -102,8 +165,8 @@
     "title": "Nameless Honor 2026-07-14",
     "start": "2026-07-14T19:59:00.000Z",
     "end": "2026-08-23T19:59:00.000Z",
-    "image": "/images/honkai-star-rail/events/nameless-honor-2026-07-15-2026-07-14.png",
-    "description": "Nameless Honor is the twenty-ninth Battle Pass.",
+    "image": "/images/honkai-star-rail/events/nameless-honor-2026-07-14.png",
+    "description": "Event details coming soon.",
     "game": "Honkai: Star Rail",
     "wikiUrl": ""
   },
@@ -112,7 +175,7 @@
     "start": "2026-07-14T19:59:00.000Z",
     "end": "2026-08-25T19:59:00.000Z",
     "image": "/images/honkai-star-rail/events/antigraft-brickbuster-2026-07-14.png",
-    "description": "No corner stays dust-free forever. At Aventurine's request, you launched an investigation into IPC corruption by hacking into their database.",
+    "description": "Event details coming soon.",
     "game": "Honkai: Star Rail",
     "wikiUrl": ""
   },
@@ -140,6 +203,24 @@
     "end": "2026-08-25T22:00:00.000Z",
     "image": "/images/honkai-star-rail/events/come-with-me-take-the-journey-2026-07-14.png",
     "description": "Dear Trailblazer, the Crew of the Express is waiting for you. Take the journey and embark on your adventure across the cosmos once more! You can earn a max of 480 Stellar Jades!",
+    "game": "Honkai: Star Rail",
+    "wikiUrl": ""
+  },
+  {
+    "title": "Come With Me, Take the Journey 2026-07-15",
+    "start": "2026-07-14T19:59:00.000Z",
+    "end": "2026-08-25T19:59:00.000Z",
+    "image": "/images/honkai-star-rail/events/come-with-me-take-the-journey-2026-07-15-2026-07-1.png",
+    "description": "Event details coming soon.",
+    "game": "Honkai: Star Rail",
+    "wikiUrl": ""
+  },
+  {
+    "title": "Fashion Guide of the Cosmos Resonant Rave",
+    "start": "2026-07-14T19:59:00.000Z",
+    "end": "2026-08-25T19:59:00.000Z",
+    "image": "/images/honkai-star-rail/events/fashion-guide-of-the-cosmos-resonant-rav-2026-07-1.png",
+    "description": "Event details coming soon.",
     "game": "Honkai: Star Rail",
     "wikiUrl": ""
   },
@@ -320,6 +401,15 @@
     "end": "2026-08-22T18:00:00.000Z",
     "image": "/images/honkai-star-rail/events/honkai-star-rail-x-round1-2026-05-21.png",
     "description": "The Stellaron Hunters have joined the game.[1]",
+    "game": "Honkai: Star Rail",
+    "wikiUrl": ""
+  },
+  {
+    "title": "Honkai Star Rail x Round1 Collaboration",
+    "start": "2026-05-21T19:59:00.000Z",
+    "end": "2026-08-22T19:59:00.000Z",
+    "image": "/images/honkai-star-rail/events/honkai-star-rail-x-round1-collaboration-2026-05-21.png",
+    "description": "Event details coming soon.",
     "game": "Honkai: Star Rail",
     "wikiUrl": ""
   },
