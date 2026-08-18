@@ -635,21 +635,30 @@ async function scrapeStarRailEvents() {
 
     console.log(`\n📋 Found ${wikiEvents.length} events from wiki (Current + Upcoming)`);
 
-    // Deduplicate events based on image URL (same image = same event)
-    const seenImages = new Map();
+    // Deduplicate events - only skip if BOTH image AND name are very similar
+    const seenEvents = new Map();
     const uniqueEvents = [];
     
     for (const event of wikiEvents) {
-      const imageKey = event.imageUrl || event.imageKey || event.imageAlt || event.name;
+      let isDuplicate = false;
       
-      if (seenImages.has(imageKey)) {
-        const existing = seenImages.get(imageKey);
-        console.log(`⚠️  Duplicate detected: "${event.name}" (same image as "${existing.name}") - skipping`);
-        continue;
+      // Check against all existing events
+      for (const [key, existing] of seenEvents) {
+        const sameImage = event.imageUrl && existing.imageUrl && event.imageUrl === existing.imageUrl;
+        const similarName = event.name.toLowerCase().trim() === existing.name.toLowerCase().trim();
+        
+        // Only mark as duplicate if BOTH conditions are true
+        if (sameImage && similarName) {
+          console.log(`⚠️  Duplicate detected: "${event.name}" - skipping`);
+          isDuplicate = true;
+          break;
+        }
       }
       
-      seenImages.set(imageKey, event);
-      uniqueEvents.push(event);
+      if (!isDuplicate) {
+        seenEvents.set(event.name, event);
+        uniqueEvents.push(event);
+      }
     }
     
     console.log(`📋 After deduplication: ${uniqueEvents.length} unique events\n`);
