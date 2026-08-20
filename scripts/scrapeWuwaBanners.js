@@ -169,29 +169,38 @@ async function scrapeWuwaBanners() {
     await page.waitForSelector('body', { timeout: 10000 });
     await new Promise(resolve => setTimeout(resolve, 3000));
 
-    // Extract banners from "Current Banners" and "Upcoming Banners" h2 sections
+    // Extract banners from banner sections (check both h2 and h3 headings)
     const banners = await page.evaluate(() => {
       const bannerList = [];
 
-      // Match h2 headings for current and upcoming sections
-      const h2Elements = document.querySelectorAll('h2');
+      // Match h2 AND h3 headings for current and upcoming sections
+      const headings = [...document.querySelectorAll('h2, h3')];
       const sectionsToProcess = [];
 
-      for (const h2 of h2Elements) {
-        const text = h2.textContent.trim();
-        if (text.includes('Current Banners') || text.includes('Upcoming Banners') ||
-            text.includes('Available Convene Banners')) {
+      for (const heading of headings) {
+        const text = heading.textContent.trim();
+        // Match patterns like "Current Banners", "Upcoming Character Banners", etc.
+        const matchesCurrent = (text.includes('Current') || text.includes('Available')) && 
+                              (text.includes('Banner') || text.includes('Character') || text.includes('Convene'));
+        const matchesUpcoming = text.includes('Upcoming') && 
+                               (text.includes('Banner') || text.includes('Character'));
+        
+        if (matchesCurrent || matchesUpcoming) {
           const isUpcoming = text.includes('Upcoming');
-          sectionsToProcess.push({ h2, isUpcoming });
+          sectionsToProcess.push({ heading, isUpcoming });
         }
       }
 
-      // Each h2 section can contain multiple h3 subsections, each with one table
-      for (const { h2, isUpcoming } of sectionsToProcess) {
-        let element = h2.nextElementSibling;
+      // Each h2/h3 section can contain multiple tables
+      for (const { heading, isUpcoming } of sectionsToProcess) {
+        let element = heading.nextElementSibling;
 
         while (element) {
-          if (element.tagName === 'H2') break; // Next major section
+          // Stop at next heading of same or higher level
+          if ((element.tagName === 'H2') || 
+              (element.tagName === 'H3' && heading.tagName === 'H3')) {
+            break;
+          }
 
           if (element.tagName === 'TABLE') {
             const table = element;
@@ -217,20 +226,44 @@ async function scrapeWuwaBanners() {
               // Skip data: URIs (not loaded yet)
               if (imageUrl.startsWith('data:')) imageUrl = '';
 
-              // Second cell: featured characters — first <a> is the 5★ character
+              // Second cell: featured characters — find ALL 5★ characters (multiple can be featured)
               const characterCell = cells[1];
+              const cellText = characterCell.textContent;
+              
+              // Check if this row contains "5★ Limited Rate-Up" or "5★ Rate-Up"
+              if (!cellText.includes('5★')) continue;
+              
               const links = characterCell.querySelectorAll('a');
-              // The first link text after "5★ Limited Rate-Up:" is the main character
-              const characterName = links[0] ? links[0].textContent.trim() : '';
+              
+              // Extract character names from links
+              // Strategy: get all links, then filter by checking if they appear after "5★" in the text
+              const fiveStarText = cellText.split('5★')[1]; // Everything after "5★"
+              if (!fiveStarText) continue;
+              
+              const fourStarIndex = fiveStarText.indexOf('4★');
+              const fiveStarOnlyText = fourStarIndex > 0 ? fiveStarText.substring(0, fourStarIndex) : fiveStarText;
+              
+              const characterNames = [];
+              for (const link of links) {
+                const linkText = link.textContent.trim();
+                // Check if this link text appears in the 5★ section
+                if (fiveStarOnlyText.includes(linkText) && linkText.length > 1 && !linkText.includes('★')) {
+                  characterNames.push(linkText);
+                }
+              }
+              
+              // If no character names found from links, skip
+              if (characterNames.length === 0) continue;
 
-              if (!characterName) continue;
-
-              bannerList.push({
-                characterName,
-                imageUrl,
-                durationText,
-                isUpcoming
-              });
+              // Create a banner entry for EACH 5★ character/weapon
+              for (const characterName of characterNames) {
+                bannerList.push({
+                  characterName,
+                  imageUrl,
+                  durationText,
+                  isUpcoming
+                });
+              }
             }
           }
 
