@@ -54,7 +54,23 @@ if errorlevel 1 (
 echo.
 echo Pushing to GitHub...
 git push origin main
-if errorlevel 1 goto :error
+if errorlevel 1 (
+    echo.
+    echo Push failed - remote has changes. Pulling first...
+    git pull origin main --no-rebase
+    if errorlevel 1 (
+        echo.
+        echo Pull failed - conflicts detected. Trying to resolve...
+        git checkout --ours src/data/*.js src/data/*.json
+        git add src/data/*.js src/data/*.json
+        git commit -m "Merge remote changes (keeping local banner updates)"
+        if errorlevel 1 echo No conflicts to resolve, continuing...
+    )
+    echo.
+    echo Retrying push...
+    git push origin main
+    if errorlevel 1 goto :error
+)
 
 echo.
 echo ==========================================
@@ -70,6 +86,7 @@ echo.
 echo ==========================================
 echo ERROR!
 echo A scraper or Git command failed.
+echo Please check the output above for details.
 echo ==========================================
 
 pause
