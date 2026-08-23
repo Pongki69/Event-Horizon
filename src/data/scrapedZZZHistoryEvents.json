@@ -18,10 +18,19 @@
     "wikiUrl": ""
   },
   {
+    "title": "Shiyu Defense: Critical Node",
+    "start": "2026-08-21T03:00:00.000Z",
+    "end": "2026-09-03T19:59:00.000Z",
+    "image": "/images/zenless-zone-zero/events/shiyu-defense--critical-node.png",
+    "description": "Event details coming soon.",
+    "game": "Zenless Zone Zero",
+    "wikiUrl": ""
+  },
+  {
     "title": "Crispy Meal Deployment Plan",
     "start": "2026-08-19T03:00:00.000Z",
     "end": "2026-09-06T19:59:00.000Z",
-    "image": "/images/zenless-zone-zero/events/crispy-meal-deployment-plan.png",
+    "image": "",
     "description": "Event details coming soon.",
     "game": "Zenless Zone Zero",
     "wikiUrl": ""
@@ -156,7 +165,7 @@
     "title": "Marcel Anniversary Gifts",
     "start": "2026-07-29T03:00:00.000Z",
     "end": "2026-09-07T19:59:00.000Z",
-    "image": "",
+    "image": "/images/zenless-zone-zero/events/marcel-anniversary-gifts.png",
     "description": "Event details coming soon.",
     "game": "Zenless Zone Zero",
     "wikiUrl": ""
