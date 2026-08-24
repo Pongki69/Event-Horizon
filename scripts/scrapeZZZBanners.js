@@ -155,6 +155,7 @@ async function scrapeZZZBanners() {
         while (el) {
           if (el.tagName === 'H2') break;
 
+          // Handle TABLE-based banners (current phase and immediate next phase)
           if (el.tagName === 'TABLE') {
             const text = el.textContent;
             if (!text.includes('Duration') || !text.includes('Rate-Up Agents')) {
@@ -202,6 +203,56 @@ async function scrapeZZZBanners() {
               endDate,
               isUpcoming
             });
+          }
+
+          // Handle PARAGRAPH-based future announcements (beyond immediate next phase)
+          // Example: "Claret and Roxy were recently announced... likely that both will release in Version 3.2, which is slated to go live on September 9, 2026."
+          // Note: Often split across two paragraphs - first has character names, second has version/date
+          if (el.tagName === 'P') {
+            const text = el.textContent;
+            
+            // Look for character names followed by announcement keywords
+            const announcementMatch = text.match(/([A-Z][a-z]+)(?:\s+and\s+([A-Z][a-z]+))?\s+(?:were|was)\s+(?:recently\s+)?announced/i);
+            
+            if (announcementMatch) {
+              // Look for version and date in current paragraph
+              let versionMatch = text.match(/Version\s+(\d+\.\d+)/i);
+              let dateMatch = text.match(/(?:go live|release)(?:\s+on)?\s+([A-Za-z]+\s+\d{1,2},\s+\d{4})/i);
+              
+              // If not found in current paragraph, check the next paragraph
+              if ((!versionMatch || !dateMatch) && el.nextElementSibling) {
+                const nextEl = el.nextElementSibling;
+                if (nextEl.tagName === 'P') {
+                  const nextText = nextEl.textContent;
+                  if (!versionMatch) versionMatch = nextText.match(/Version\s+(\d+\.\d+)/i);
+                  if (!dateMatch) dateMatch = nextText.match(/(?:go live|release)(?:\s+on)?\s+([A-Za-z]+\s+\d{1,2},\s+\d{4})/i);
+                }
+              }
+              
+              if (versionMatch && dateMatch) {
+                const char1 = announcementMatch[1];
+                const char2 = announcementMatch[2];
+                const version = versionMatch[1];
+                const releaseDate = dateMatch[1];
+                
+                console.log(`Found future banner announcement: ${char1}${char2 ? ' & ' + char2 : ''} in Version ${version} on ${releaseDate}`);
+                
+                const agentNames = char2 ? [char1, char2] : [char1];
+                
+                // For future announcements, use the release date as both start and a placeholder end date
+                // (we'll set isTBA flag so the UI can show "TBA" for end date)
+                results.push({
+                  name: char1,
+                  allAgents: agentNames,
+                  displayTitle: char2 ? `${char1} & ${char2}` : char1,
+                  startDate: releaseDate,
+                  endDate: releaseDate, // Placeholder - will be marked as TBA
+                  isUpcoming: true,
+                  isTBA: true, // Flag to indicate dates are tentative
+                  version: version
+                });
+              }
+            }
           }
 
           el = el.nextElementSibling;
@@ -384,11 +435,19 @@ async function scrapeZZZBanners() {
     const processedBanners = [];
 
     for (const banner of banners) {
-      console.log(`\nProcessing banner: ${banner.displayTitle} (${banner.isUpcoming ? 'upcoming' : 'current'})`);
+      console.log(`\nProcessing banner: ${banner.displayTitle} (${banner.isUpcoming ? 'upcoming' : 'current'}${banner.isTBA ? ' - TBA' : ''})`);
 
       // Parse dates
       const startDate = parseBannerDate(banner.startDate, false);
-      const endDate = parseBannerDate(banner.endDate, true);
+      let endDate;
+      
+      if (banner.isTBA) {
+        // For TBA banners, set a placeholder end date (3 weeks after start, typical patch duration)
+        endDate = startDate + (21 * 24 * 60 * 60 * 1000); // 21 days in milliseconds
+        console.log(`  ℹ TBA banner - using estimated end date (+21 days)`);
+      } else {
+        endDate = parseBannerDate(banner.endDate, true);
+      }
 
       if (!startDate || !endDate) {
         console.log(`  ✗ Skipping: invalid dates`);
