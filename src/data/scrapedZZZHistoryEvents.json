@@ -4,7 +4,7 @@
     "start": "2026-08-28T03:00:00.000Z",
     "end": "2026-09-13T19:59:00.000Z",
     "image": "/images/zenless-zone-zero/events/ding-dong--delivery-training-in-progress.png",
-    "description": "Ding-Dong! Delivery Training in Progress is an In-Game Event in Version 3.1.",
+    "description": "Event details coming soon.",
     "game": "Zenless Zone Zero",
     "wikiUrl": ""
   },
@@ -13,7 +13,7 @@
     "start": "2026-08-24T03:00:00.000Z",
     "end": "2026-09-26T19:59:00.000Z",
     "image": "/images/zenless-zone-zero/events/dangerous-fugitive-s-leisurely-vacation.png",
-    "description": "Dangerous Fugitive's Leisurely Vacation is an In-Game Event in Version 3.1.",
+    "description": "Event details coming soon.",
     "game": "Zenless Zone Zero",
     "wikiUrl": ""
   },
@@ -22,7 +22,7 @@
     "start": "2026-08-21T03:00:00.000Z",
     "end": "2026-09-03T19:59:00.000Z",
     "image": "/images/zenless-zone-zero/events/shiyu-defense--critical-node.png",
-    "description": "The 2026-08-21 Critical Node is a Critical Node in Shiyu Defense, added in Version 3.1.",
+    "description": "Event details coming soon.",
     "game": "Zenless Zone Zero",
     "wikiUrl": ""
   },
@@ -31,7 +31,7 @@
     "start": "2026-08-19T03:00:00.000Z",
     "end": "2026-09-06T19:59:00.000Z",
     "image": "/images/zenless-zone-zero/events/crispy-meal-deployment-plan.png",
-    "description": "Crispy Meal Deployment Plan is an In-Game Event in Version 3.1.",
+    "description": "Event details coming soon.",
     "game": "Zenless Zone Zero",
     "wikiUrl": ""
   },
@@ -40,7 +40,7 @@
     "start": "2026-08-19T03:00:00.000Z",
     "end": "2026-09-07T19:59:00.000Z",
     "image": "/images/zenless-zone-zero/events/the-great-en-nah-giveaway-.png",
-    "description": "The Great En-Nah Giveaway! is a Check-In Event in Version 3.1.",
+    "description": "Event details coming soon.",
     "game": "Zenless Zone Zero",
     "wikiUrl": ""
   },
@@ -49,7 +49,7 @@
     "start": "2026-08-19T03:00:00.000Z",
     "end": "2026-09-07T19:59:00.000Z",
     "image": "/images/zenless-zone-zero/events/the-final-callback.png",
-    "description": "The Final Callback is an Audition Stage Event in Version 3.1.",
+    "description": "Event details coming soon.",
     "game": "Zenless Zone Zero",
     "wikiUrl": ""
   },
@@ -102,8 +102,8 @@
     "title": "Summer Waves Roll In",
     "start": "2026-07-29T03:00:00.000Z",
     "end": "2026-09-06T19:59:00.000Z",
-    "image": "/images/zenless-zone-zero/events/summer-waves-roll-in.png",
-    "description": "Summer Waves Roll In is an In-Game Event in Version 3.1.",
+    "image": "",
+    "description": "Event details coming soon.",
     "game": "Zenless Zone Zero",
     "wikiUrl": ""
   },
@@ -111,26 +111,26 @@
     "title": "Gift From the Clouds",
     "start": "2026-07-29T03:00:00.000Z",
     "end": "2026-09-07T19:59:00.000Z",
-    "image": "/images/zenless-zone-zero/events/gift-from-the-clouds.png",
-    "description": "Gift From the Clouds is a Check-In Event in Version 3.1.",
+    "image": "",
+    "description": "Event details coming soon.",
     "game": "Zenless Zone Zero",
     "wikiUrl": ""
   },
   {
     "title": "Filmgoer Thank-You Gift",
     "start": "2026-07-29T03:00:00.000Z",
-    "end": "2026-09-08T06:59:00.000Z",
+    "end": "2026-09-07T19:59:00.000Z",
     "image": "/images/zenless-zone-zero/events/filmgoer-thank-you-gift.png",
-    "description": "Filmgoer Thank-You Gift is an Event in Version 3.1.",
+    "description": "Event details coming soon.",
     "game": "Zenless Zone Zero",
     "wikiUrl": ""
   },
   {
     "title": "New Eridu City Fund",
     "start": "2026-07-29T03:00:00.000Z",
-    "end": "2026-09-08T06:59:00.000Z",
+    "end": "2026-09-07T19:59:00.000Z",
     "image": "/images/zenless-zone-zero/events/new-eridu-city-fund.png",
-    "description": "New Eridu City Fund is the nineteenth Battle Pass.",
+    "description": "Event details coming soon.",
     "game": "Zenless Zone Zero",
     "wikiUrl": ""
   },
@@ -146,27 +146,27 @@
   {
     "title": "Phaethon's Grand Reveal of the Year",
     "start": "2026-07-29T03:00:00.000Z",
-    "end": "2026-09-08T06:59:00.000Z",
+    "end": "2026-09-07T19:59:00.000Z",
     "image": "/images/zenless-zone-zero/events/phaethon-s-grand-reveal-of-the-year.png",
-    "description": "Phaethon's Grand Reveal of the Year is an Event in Version 3.1.",
+    "description": "Event details coming soon.",
     "game": "Zenless Zone Zero",
     "wikiUrl": ""
   },
   {
     "title": "Potential Hypothesis: Hunting Game",
     "start": "2026-07-29T03:00:00.000Z",
-    "end": "2026-09-08T06:59:00.000Z",
+    "end": "2026-09-07T19:59:00.000Z",
     "image": "/images/zenless-zone-zero/events/potential-hypothesis--hunting-game.png",
-    "description": "Potential Hypothesis: Hunting Game is an In-Game Event in Version 3.1.",
+    "description": "Event details coming soon.",
     "game": "Zenless Zone Zero",
     "wikiUrl": ""
   },
   {
     "title": "Marcel Anniversary Gifts",
     "start": "2026-07-29T03:00:00.000Z",
-    "end": "2026-09-08T06:59:00.000Z",
+    "end": "2026-09-07T19:59:00.000Z",
     "image": "/images/zenless-zone-zero/events/marcel-anniversary-gifts.png",
-    "description": "Marcel Anniversary Gifts is an Event in Version 3.1.",
+    "description": "Event details coming soon.",
     "game": "Zenless Zone Zero",
     "wikiUrl": ""
   },
