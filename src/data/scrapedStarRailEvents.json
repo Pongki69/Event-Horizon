@@ -1,101 +1,20 @@
 [
   {
-    "title": "Stellar Companions 2026-04-22",
-    "start": "2026-04-21T19:59:00.000Z",
-    "end": "2026-08-25T19:59:00.000Z",
+    "title": "Fate Contract: Renewal",
+    "start": "2026-07-23T19:59:00.000Z",
+    "end": "2026-11-10T19:59:00.000Z",
     "timezone": "UTC+8",
-    "image": "/images/honkai-star-rail/events/stellar-companions-2026-04-22-2026-04-21.png",
+    "image": "/images/honkai-star-rail/events/fate-contract-renewal-2026-07-23.png",
     "description": "Event details coming soon.",
     "game": "Honkai: Star Rail"
   },
   {
-    "title": "Come With Me, Take the Journey",
-    "start": "2026-07-14T19:59:00.000Z",
-    "end": "2026-08-25T22:00:00.000Z",
+    "title": "Cyclical Extrapolation: Financial Freedom",
+    "start": "2026-08-23T19:59:00.000Z",
+    "end": "2026-08-30T19:59:00.000Z",
     "timezone": "UTC+8",
-    "image": "/images/honkai-star-rail/events/come-with-me-take-the-journey-2026-07-14.png",
-    "description": "Dear Trailblazer, the Crew of the Express is waiting for you. Take the journey and embark on your adventure across the cosmos once more! You can earn a max of 480 Stellar Jades!",
-    "game": "Honkai: Star Rail"
-  },
-  {
-    "title": "Gift of Odyssey 2026-07-15",
-    "start": "2026-07-14T19:59:00.000Z",
-    "end": "2026-08-24T19:59:00.000Z",
-    "timezone": "UTC+8",
-    "image": "/images/honkai-star-rail/events/gift-of-odyssey-2026-07-15-2026-07-14.png",
-    "description": "Gift of Odyssey is a login Event in Version 4.4.",
-    "game": "Honkai: Star Rail"
-  },
-  {
-    "title": "Antigraft Brickbuster",
-    "start": "2026-07-14T19:59:00.000Z",
-    "end": "2026-08-25T19:59:00.000Z",
-    "timezone": "UTC+8",
-    "image": "/images/honkai-star-rail/events/antigraft-brickbuster-2026-07-14.png",
-    "description": "No corner stays dust-free forever. At Aventurine's request, you launched an investigation into IPC corruption by hacking into their database.",
-    "game": "Honkai: Star Rail"
-  },
-  {
-    "title": "Fashion Guide of the Cosmos: Resonant Rave",
-    "start": "2026-07-14T19:59:00.000Z",
-    "end": "2026-08-25T22:00:00.000Z",
-    "timezone": "UTC+8",
-    "image": "/images/honkai-star-rail/events/fashion-guide-of-the-cosmos-resonant-rav-2026-07-1.png",
-    "description": "Fashion Guide of the Cosmos: Resonant Rave is a discount Event in Version 4.4.",
-    "game": "Honkai: Star Rail"
-  },
-  {
-    "title": "Fate Gift 2026-07-15",
-    "start": "2026-07-14T19:59:00.000Z",
-    "end": "2026-08-25T22:00:00.000Z",
-    "timezone": "UTC+8",
-    "image": "/images/honkai-star-rail/events/fate-gift-2026-07-15-2026-07-14.png",
-    "description": "Fate Gift is an Event in Version 4.4.",
-    "game": "Honkai: Star Rail"
-  },
-  {
-    "title": "Imagenae: Holy Grail War",
-    "start": "2026-07-23T19:59:00.000Z",
-    "end": "2026-08-25T19:59:00.000Z",
-    "timezone": "UTC+8",
-    "image": "/images/honkai-star-rail/events/imagenae-holy-grail-war-2026-07-23.png",
-    "description": "A golden rain falls. A Holy Grail, stolen. Somewhere in the shadows beyond the Phantasmoon's reach, a certain king's treasury has unexpectedly shattered into shambles.\nTo prevent chaos, you'll have no choice but to team up with Rin Tohsaka, a mage from another world, to restore order, and while you're at it, to claim your own share of the treasure.",
-    "game": "Honkai: Star Rail"
-  },
-  {
-    "title": "Fate/Star Rail Night",
-    "start": "2026-07-23T19:59:00.000Z",
-    "end": "2026-08-25T19:59:00.000Z",
-    "timezone": "UTC+8",
-    "image": "/images/honkai-star-rail/events/fatestar-rail-night-2026-07-23.png",
-    "description": "Join the mage Rin Tohsaka in the Holy Grail War and claim the treasure! Turn-based card combat, various gameplay schools... Participate in the event to obtain Self-Modeling Resins, Tracks of Destiny, Stellar Jades, and other rewards.",
-    "game": "Honkai: Star Rail"
-  },
-  {
-    "title": "Fate Contract: Renewal",
-    "start": "2026-07-23T19:59:00.000Z",
-    "end": "2026-11-10T23:00:00.000Z",
-    "timezone": "UTC+8",
-    "image": "/images/honkai-star-rail/events/fate-contract-renewal-2026-07-23.png",
-    "description": "Fate Contract: Renewal is an Event in Version 4.4.",
-    "game": "Honkai: Star Rail"
-  },
-  {
-    "title": "Aptitude Showcase - Himeko • Nova, Anaxa, Cerydra, Aventurine, Serval, Moze, Hanya",
-    "start": "2026-08-04T19:59:00.000Z",
-    "end": "2026-08-25T07:00:00.000Z",
-    "timezone": "UTC+8",
-    "image": "/images/honkai-star-rail/events/aptitude-showcase---himeko-nova-anaxa-ce-2026-08-0.png",
-    "description": "Himeko • Nova, Anaxa, Cerydra, Aventurine, Serval, Moze, Hanya is an Aptitude Showcase in Version 4.4.",
-    "game": "Honkai: Star Rail"
-  },
-  {
-    "title": "Nameless Honor 2026-08-25",
-    "start": "2026-08-25T19:59:00.000Z",
-    "end": "2026-09-27T19:59:00.000Z",
-    "timezone": "UTC+8",
-    "image": "/images/honkai-star-rail/events/nameless-honor-2026-08-26-2026-08-25.png",
-    "description": "Nameless Honor is the thirtieth Battle Pass.",
+    "image": "",
+    "description": "Event details coming soon.",
     "game": "Honkai: Star Rail"
   },
   {
@@ -104,25 +23,52 @@
     "end": "2026-09-27T19:59:00.000Z",
     "timezone": "UTC+8",
     "image": "/images/honkai-star-rail/events/gift-of-odyssey-2026-08-26-2026-08-25.png",
-    "description": "Gift of Odyssey is a login Event in Version 4.4.",
+    "description": "Event details coming soon.",
+    "game": "Honkai: Star Rail"
+  },
+  {
+    "title": "Overdrive: Whirlwind Grand Prix",
+    "start": "2026-08-25T19:59:00.000Z",
+    "end": "2026-09-27T19:59:00.000Z",
+    "timezone": "UTC+8",
+    "image": "/images/honkai-star-rail/events/overdrive-whirlwind-grand-prix-2026-08-25.png",
+    "description": "Event details coming soon.",
+    "game": "Honkai: Star Rail"
+  },
+  {
+    "title": "Nameless Honor 2026-08-25",
+    "start": "2026-08-25T19:59:00.000Z",
+    "end": "2026-09-27T19:59:00.000Z",
+    "timezone": "UTC+8",
+    "image": "/images/honkai-star-rail/events/nameless-honor-2026-08-26-2026-08-25.png",
+    "description": "Event details coming soon.",
+    "game": "Honkai: Star Rail"
+  },
+  {
+    "title": "Aptitude Showcase - Robin • Summeretto, Hyacine, Dan Heng, Qingque, Gallagher",
+    "start": "2026-08-25T19:59:00.000Z",
+    "end": "2026-09-11T19:59:00.000Z",
+    "timezone": "UTC+8",
+    "image": "",
+    "description": "Event details coming soon.",
     "game": "Honkai: Star Rail"
   },
   {
     "title": "Planar Fissure 2026-09-06",
     "start": "2026-09-06T19:59:00.000Z",
-    "end": "2026-09-20T19:59:00.000Z",
+    "end": "2026-09-20T05:59:00.000Z",
     "timezone": "UTC+8",
     "image": "/images/honkai-star-rail/events/planar-fissure-2026-07-27-2026-09-06.png",
-    "description": "During the event, successfully challenge Simulated Universe or Divergent Universe to earn double Planar Ornaments rewards.",
+    "description": "Event details coming soon.",
     "game": "Honkai: Star Rail"
   },
   {
     "title": "Realm of the Strange 2026-09-18",
     "start": "2026-09-18T19:59:00.000Z",
-    "end": "2026-09-27T19:59:00.000Z",
+    "end": "2026-09-27T05:59:00.000Z",
     "timezone": "UTC+8",
     "image": "/images/honkai-star-rail/events/realm-of-the-strange-2026-07-03-2026-09-18.png",
-    "description": "During the event, successfully challenge Caverns of Corrosion to earn double rewards.",
+    "description": "Event details coming soon.",
     "game": "Honkai: Star Rail"
   }
 ]
