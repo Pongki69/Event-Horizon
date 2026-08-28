@@ -7,7 +7,7 @@ import StealthPlugin from 'puppeteer-extra-plugin-stealth';
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
-import { downloadImage, loadExistingImages, resolveImage } from './archiveUtils.js';
+import { downloadImage, loadExistingImages, resolveImage, setupRequestInterception } from './archiveUtils.js';
 
 puppeteer.use(StealthPlugin());
 
@@ -121,6 +121,10 @@ async function scrapeZZZBanners() {
     
     // Enable console logging from page
     page.on('console', msg => console.log('PAGE LOG:', msg.text()));
+
+    // Setup request interception to block ads and analytics
+    await setupRequestInterception(page);
+    console.log('✓ Request interception enabled (blocking ads/analytics)');
 
     // Navigate to Game8 banner schedule page
     await page.goto('https://game8.co/games/Zenless-Zone-Zero/archives/435687', {

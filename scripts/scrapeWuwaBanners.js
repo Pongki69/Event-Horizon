@@ -7,7 +7,7 @@ import StealthPlugin from 'puppeteer-extra-plugin-stealth';
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
-import { downloadImage, loadExistingImages, resolveImage } from './archiveUtils.js';
+import { downloadImage, loadExistingImages, resolveImage, setupRequestInterception } from './archiveUtils.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -156,6 +156,10 @@ async function scrapeWuwaBanners() {
   try {
     const page = await browser.newPage();
     await page.setUserAgent('Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36');
+
+    // Setup request interception to block ads and analytics
+    await setupRequestInterception(page);
+    console.log('✓ Request interception enabled (blocking ads/analytics)');
 
     // Navigate to banners page
     await page.goto('https://game8.co/games/Wuthering-Waves/archives/453303', {

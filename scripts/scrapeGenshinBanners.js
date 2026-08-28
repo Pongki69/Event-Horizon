@@ -7,7 +7,7 @@ import StealthPlugin from 'puppeteer-extra-plugin-stealth';
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
-import { downloadImage, loadExistingImages, resolveImage } from './archiveUtils.js';
+import { downloadImage, loadExistingImages, resolveImage, setupRequestInterception } from './archiveUtils.js';
 
 puppeteer.use(StealthPlugin());
 
@@ -253,6 +253,10 @@ async function scrapeGenshinBanners() {
     page.on('requestfailed', request => {
       console.log(`Request failed: ${request.url()} - ${request.failure().errorText}`);
     });
+    
+    // Setup request interception to block ads and analytics
+    await setupRequestInterception(page);
+    console.log('✓ Request interception enabled (blocking ads/analytics)');
     
     // Add random delay before navigation (human-like behavior)
     const randomDelay = Math.floor(Math.random() * 2000) + 1000;

@@ -34,6 +34,18 @@ echo All scrapers completed successfully!
 echo ==========================================
 
 echo.
+echo Pulling latest changes from GitHub...
+git pull origin main --no-rebase --no-edit
+if errorlevel 1 (
+    echo.
+    echo Pull failed - conflicts detected. Trying to resolve...
+    git checkout --ours src/data/*.js src/data/*.json
+    git add src/data/*.js src/data/*.json
+    git -c core.editor=true commit -m "Merge remote changes (keeping local banner updates)"
+    if errorlevel 1 echo No conflicts to resolve, continuing...
+)
+
+echo.
 echo Adding changes to Git...
 git add -A
 if errorlevel 1 goto :error
@@ -57,13 +69,13 @@ git push origin main
 if errorlevel 1 (
     echo.
     echo Push failed - remote has changes. Pulling first...
-    git pull origin main --no-rebase
+    git pull origin main --no-rebase --no-edit
     if errorlevel 1 (
         echo.
         echo Pull failed - conflicts detected. Trying to resolve...
         git checkout --ours src/data/*.js src/data/*.json
         git add src/data/*.js src/data/*.json
-        git commit -m "Merge remote changes (keeping local banner updates)"
+        git -c core.editor=true commit -m "Merge remote changes (keeping local banner updates)"
         if errorlevel 1 echo No conflicts to resolve, continuing...
     )
     echo.

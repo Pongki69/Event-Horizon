@@ -12,6 +12,54 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 /**
+ * Block ad and analytics domains to speed up scraping and avoid anti-bot detection
+ */
+export async function setupRequestInterception(page) {
+  const blockedDomains = [
+    'adthrive.com',
+    'ads.adthrive.com',
+    'google-analytics.com',
+    'googletagmanager.com',
+    'doubleclick.net',
+    'googlesyndication.com',
+    'googleadservices.com',
+    'facebook.com',
+    'facebook.net',
+    'quantserve.com',
+    'scorecardresearch.com',
+    'pubmatic.com',
+    'ads.pubmatic.com',
+    'advertising.com',
+    'adnxs.com',
+    'rubiconproject.com',
+    'criteo.com',
+    'outbrain.com',
+    'taboola.com',
+  ];
+
+  await page.setRequestInterception(true);
+  
+  page.on('request', (request) => {
+    const url = request.url();
+    const resourceType = request.resourceType();
+    
+    // Block ads, analytics, and tracking scripts
+    if (blockedDomains.some(domain => url.includes(domain))) {
+      request.abort();
+      return;
+    }
+    
+    // Block unnecessary resource types to speed up loading
+    if (['media', 'font'].includes(resourceType)) {
+      request.abort();
+      return;
+    }
+    
+    request.continue();
+  });
+}
+
+/**
  * Download and save an image locally
  */
 export async function downloadImage(imageUrl, game, eventTitle, type = 'events', originalImageSrc = null) {
