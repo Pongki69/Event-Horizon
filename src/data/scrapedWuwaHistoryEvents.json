@@ -53,8 +53,19 @@
     "title": "Second Coming of Solaris: Coded Deception",
     "start": "2026-08-27T04:00:00.000Z",
     "end": "2026-09-14T04:00:00.000Z",
+    "endNote": "",
     "image": "/images/wuthering-waves/events/second-coming-of-solaris--coded-deception.png",
     "description": "Second Coming of Solaris: Coded Deception is an event in Wuthering Waves 3.6. See how to play, how to unlock Second Coming of Solaris: Coded Deception, event schedule, and all available rewards here!",
+    "game": "Wuthering Waves",
+    "wikiUrl": ""
+  },
+  {
+    "title": "Way to Sword Transcendent",
+    "start": "2026-08-26T04:00:00.000Z",
+    "end": "2026-09-09T04:00:00.000Z",
+    "endNote": "",
+    "image": "/images/wuthering-waves/events/way-to-sword-transcendent.png",
+    "description": "Way to Sword Transcendent is a web event introduced in Wuthering Waves' Version 3.6 update. See how to play Way to Sword Transcendent, as well as its rewards are here!",
     "game": "Wuthering Waves",
     "wikiUrl": ""
   },
@@ -62,17 +73,9 @@
     "title": "Resonance Sim Realm",
     "start": "2026-08-22T04:00:00.000Z",
     "end": "2026-09-29T04:00:00.000Z",
+    "endNote": "",
     "image": "/images/wuthering-waves/events/resonance-sim-realm.png",
     "description": "Resonance Sim Realm is a combat event in Wuthering Waves 3.6. See how to play, how to unlock Resonance Sim Realm, stage guides, the event schedule, and all available rewards here!",
-    "game": "Wuthering Waves",
-    "wikiUrl": ""
-  },
-  {
-    "title": "Gifts of Drifting Mist",
-    "start": "2026-08-20T04:00:00.000Z",
-    "end": "2026-09-29T04:00:00.000Z",
-    "image": "/images/wuthering-waves/events/gifts-of-drifting-mist.png",
-    "description": "Gifts of Drifting Mist is an event in Wuthering Waves 3.6. See how to play, how to unlock Gifts of Drifting Mist, event schedule, and all available rewards here!",
     "game": "Wuthering Waves",
     "wikiUrl": ""
   },
@@ -83,6 +86,16 @@
     "endNote": "",
     "image": "/images/wuthering-waves/events/ascendant-aces.png",
     "description": "Ascendant Aces is a continuous event in Wuthering Waves. See how to play, how to unlock Ascendant Aces, event schedule, and all available rewards here!",
+    "game": "Wuthering Waves",
+    "wikiUrl": ""
+  },
+  {
+    "title": "Gifts of Drifting Mist",
+    "start": "2026-08-20T04:00:00.000Z",
+    "end": "2026-09-29T04:00:00.000Z",
+    "endNote": "",
+    "image": "/images/wuthering-waves/events/gifts-of-drifting-mist.png",
+    "description": "Gifts of Drifting Mist is an event in Wuthering Waves 3.6. See how to play, how to unlock Gifts of Drifting Mist, event schedule, and all available rewards here!",
     "game": "Wuthering Waves",
     "wikiUrl": ""
   },
