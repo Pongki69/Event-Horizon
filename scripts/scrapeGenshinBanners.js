@@ -578,46 +578,87 @@ async function scrapeGenshinBanners() {
       }
       
       const isWeapon = banner.isWeapon;
-      const primaryName = isWeapon ? banner.weapons[0] : banner.characters[0];
       
-      // Fetch image from wiki
-      let localImage = '';
-      const imageUrl = await fetchWikiImage(primaryName, isWeapon);
-      if (imageUrl) {
-        console.log(`  ✓ Found wiki image`);
-        localImage = await downloadImage(imageUrl, 'genshin-impact', primaryName, 'banners');
-        if (localImage) console.log(`  ✓ Saved: ${localImage}`);
-      }
-      
-      // Fetch description from wiki
-      let description = await fetchWikiDescription(primaryName, isWeapon);
-      if (!description) {
-        console.log(`  ⚠ No wiki description found, using fallback`);
-        description = isWeapon ? `${banner.name} weapon banner.` : `${banner.name} character banner.`;
+      // For weapon banners, create separate entries for each weapon
+      if (isWeapon && banner.weapons && banner.weapons.length > 0) {
+        for (const weaponName of banner.weapons) {
+          console.log(`  Processing weapon: ${weaponName}`);
+          
+          // Fetch image from wiki
+          let localImage = '';
+          const imageUrl = await fetchWikiImage(weaponName, true);
+          if (imageUrl) {
+            console.log(`    ✓ Found wiki image`);
+            localImage = await downloadImage(imageUrl, 'genshin-impact', weaponName, 'banners');
+            if (localImage) console.log(`    ✓ Saved: ${localImage}`);
+          }
+          
+          // Fetch description from wiki
+          let description = await fetchWikiDescription(weaponName, true);
+          if (!description) {
+            console.log(`    ⚠ No wiki description found, using fallback`);
+            description = `${weaponName} weapon banner.`;
+          } else {
+            console.log(`    ✓ Description: ${description.substring(0, 80)}...`);
+          }
+          
+          // Create wiki URL
+          const wikiName = weaponName.replace(/\s+/g, '_');
+          const wikiUrl = `https://genshin-impact.fandom.com/wiki/${wikiName}`;
+          
+          processedBanners.push({
+            title: weaponName,
+            start: new Date(startDate).toISOString(),
+            end: new Date(endDate).toISOString(),
+            image: localImage || '',
+            type: banner.type,
+            rarity: banner.rarity,
+            bannerType: 'weapon',
+            game: 'Genshin Impact',
+            description,
+            wikiUrl
+          });
+        }
       } else {
-        console.log(`  ✓ Description: ${description.substring(0, 80)}...`);
+        // Character banner - process normally
+        const primaryName = banner.characters[0];
+        console.log(`  Processing character: ${primaryName}`);
+        
+        // Fetch image from wiki
+        let localImage = '';
+        const imageUrl = await fetchWikiImage(primaryName, false);
+        if (imageUrl) {
+          console.log(`    ✓ Found wiki image`);
+          localImage = await downloadImage(imageUrl, 'genshin-impact', primaryName, 'banners');
+          if (localImage) console.log(`    ✓ Saved: ${localImage}`);
+        }
+        
+        // Fetch description from wiki
+        let description = await fetchWikiDescription(primaryName, false);
+        if (!description) {
+          console.log(`    ⚠ No wiki description found, using fallback`);
+          description = `${banner.name} character banner.`;
+        } else {
+          console.log(`    ✓ Description: ${description.substring(0, 80)}...`);
+        }
+        
+        // Create wiki URL
+        const wikiName = primaryName.replace(/\s+/g, '_');
+        const wikiUrl = `https://genshin-impact.fandom.com/wiki/${wikiName}`;
+        
+        processedBanners.push({
+          title: banner.name,
+          start: new Date(startDate).toISOString(),
+          end: new Date(endDate).toISOString(),
+          image: localImage || '',
+          type: banner.type,
+          rarity: banner.rarity,
+          bannerType: 'character',
+          game: 'Genshin Impact',
+          description,
+          wikiUrl
+        });
       }
-      
-      // Create wiki URL
-      const wikiName = primaryName.replace(/\s+/g, '_');
-      const wikiUrl = `https://genshin-impact.fandom.com/wiki/${wikiName}`;
-      
-      // Create title without stars - just name with optional weapon icon
-      const typeBadge = isWeapon ? '🗡️' : '';
-      const title = isWeapon ? `${typeBadge} ${banner.name}` : banner.name;
-      
-      processedBanners.push({
-        title: title.trim(),
-        start: new Date(startDate).toISOString(),
-        end: new Date(endDate).toISOString(),
-        image: localImage || '',
-        type: banner.type,
-        rarity: banner.rarity,
-        bannerType: isWeapon ? 'weapon' : 'character',
-        game: 'Genshin Impact',
-        description,
-        wikiUrl
-      });
     }
 
     console.log(`\nProcessed ${processedBanners.length} total banner entries`);
