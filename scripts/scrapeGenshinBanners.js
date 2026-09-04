@@ -186,6 +186,9 @@ async function scrapeGenshinBanners() {
   try {
     const page = await browser.newPage();
     
+    // Enable console logging from page evaluate
+    page.on('console', msg => console.log('PAGE LOG:', msg.text()));
+    
     // Set realistic viewport
     await page.setViewport({ width: 1920, height: 1080 });
     
@@ -335,7 +338,11 @@ async function scrapeGenshinBanners() {
       const tables = document.querySelectorAll('table');
       
       for (const table of tables) {
-        if (!table.textContent.includes('Banner Dates') || !table.textContent.includes('5 Star Rate-Up')) {
+        const tableText = table.textContent;
+        const hasBannerDates = tableText.includes('Banner Dates');
+        const has5StarRateUp = tableText.includes('5 Star Rate-Up');
+        
+        if (!hasBannerDates || !has5StarRateUp) {
           continue;
         }
         
@@ -358,30 +365,59 @@ async function scrapeGenshinBanners() {
           const isWeaponBanner = text.includes('Epitome Invocation') || text.includes('Weapon Rate-Up');
           
           if (isWeaponBanner) {
-            // Parse weapon banner
-            const weaponMatch = text.match(/5 Star Rate-Up:\s*([A-Za-z\s',]+?)(?:\n|4 Star|Banner|Version|$)/);
-            if (!weaponMatch) continue;
+            // Parse weapon banner - extract weapon names from links
+            const allLinks = Array.from(row.querySelectorAll('a'));
+            const weaponNames = [];
             
-            const weaponNames = weaponMatch[1].split(/\s*,\s*/).map(w => w.trim()).filter(w => w.length > 2);
-            if (weaponNames.length === 0) continue;
+            for (const link of allLinks) {
+              const weaponName = link.textContent.trim();
+              const href = link.getAttribute('href') || '';
+              
+              // Accept links that go to genshin wiki or archives  
+              const isWeaponLink = href.includes('/wiki/') || href.includes('/archives/');
+              
+              if (isWeaponLink &&
+                  weaponName &&
+                  weaponName.length >= 3 &&
+                  weaponName.length <= 40 &&
+                  !weaponName.match(/\d+ Star/) && // Skip "4 Star", "5 Star" text
+                  !weaponName.includes('Banner') &&
+                  !weaponName.includes('Invocation') &&
+                  !weaponName.includes('Version') &&
+                  !weaponName.includes('Phase') &&
+                  !weaponName.includes('Rate-Up') &&
+                  !weaponName.includes('Wish') &&
+                  !weaponName.includes('The Flute') && // Common 4-star weapon
+                  !weaponName.includes('Favonius') && // 4-star weapon family
+                  !weaponName.includes('Eye of Perception') && // 4-star weapon
+                  !weaponName.includes('Stringless')) { // 4-star weapon
+                weaponNames.push(weaponName);
+              }
+            }
             
-            const key = `weapon-${weaponNames.join('-')}-${startDate}`;
-            if (seen.has(key)) continue;
-            seen.add(key);
+            // Deduplicate 
+            const uniqueWeapons = [...new Set(weaponNames)];
             
-            const now = new Date();
-            const start = new Date(startDate);
-            const type = start > now ? 'upcoming' : 'test-run';
-            
-            bannerData.push({
-              name: weaponNames.join(' & '),
-              weapons: weaponNames,
-              startDate,
-              endDate,
-              type,
-              isWeapon: true,
-              rarity: 5
-            });
+            if (uniqueWeapons.length > 0) {
+                const key = `weapon-${uniqueWeapons.join('-')}-${startDate}`;
+                if (!seen.has(key)) {
+                  seen.add(key);
+                  
+                  const now = new Date();
+                  const start = new Date(startDate);
+                  const type = start > now ? 'upcoming' : 'test-run';
+                  
+                  bannerData.push({
+                    name: uniqueWeapons.join(' & '),
+                    weapons: uniqueWeapons,
+                    startDate,
+                    endDate,
+                    type,
+                    isWeapon: true,
+                    rarity: 5
+                  });
+                }
+              }
           } else {
             // Parse character banner
             const charMatch = text.match(/5 Star Rate-Up:\s*([A-Za-z\s]+?)(?:\n|4 Star|Banner|Version|$)/);
@@ -422,6 +458,97 @@ async function scrapeGenshinBanners() {
         }
       }
       
+      // Look for upcoming character teasers in "Next Banners Schedule" section
+      const headings = document.querySelectorAll('h2, h3, h4');
+      for (const heading of headings) {
+        const headingText = heading.textContent.trim();
+        
+        // Look for "Next Banners Schedule" heading
+        if (headingText.match(/next.*banner.*schedule/i)) {
+          console.log(`Found upcoming banner section: ${headingText}`);
+          
+          // Look for the subheading mentioning character names (e.g., "Vesna and Vodyanitsa of Version 7.1")
+          let el = heading.nextElementSibling;
+          let iterCount = 0;
+          const upcomingChars = [];
+          
+          while (el && iterCount < 20) {
+            iterCount++;
+            
+            // Stop if we hit another H2
+            if (el.tagName === 'H2') break;
+            
+            const elemText = el.textContent || '';
+            
+            // Check for pattern: "CharName and CharName of Version X.X"
+            const versionMatch = elemText.match(/([A-Z][a-z]+)\s+and\s+([A-Z][a-z]+)\s+of\s+Version\s+\d+\.\d+/i);
+            if (versionMatch) {
+              const char1 = versionMatch[1];
+              const char2 = versionMatch[2];
+              console.log(`Found upcoming characters in text: ${char1}, ${char2}`);
+              if (!upcomingChars.includes(char1)) upcomingChars.push(char1);
+              if (!upcomingChars.includes(char2)) upcomingChars.push(char2);
+            }
+            
+            // Also look for character links in tables with "Character Banners" header
+            if (elemText.includes('Character Banners')) {
+              const charLinks = el.querySelectorAll('a[href*="/archives/"]');
+              for (const link of charLinks) {
+                const charName = link.textContent.trim();
+                if (charName &&
+                    charName.length >= 3 &&
+                    charName.length <= 20 &&
+                    charName.match(/^[A-Z][a-z]+$/) &&
+                    !upcomingChars.includes(charName)) {
+                  console.log(`Found upcoming character in table: ${charName}`);
+                  upcomingChars.push(charName);
+                }
+              }
+            }
+            
+            el = el.nextElementSibling;
+          }
+          
+          console.log(`Total upcoming characters found: ${upcomingChars.length} - ${upcomingChars.join(', ')}`);
+          
+          // Add each upcoming character as a banner with estimated dates
+          for (const charName of upcomingChars) {
+            const key = `char-${charName}-upcoming`;
+            if (!seen.has(key)) {
+              seen.add(key);
+              
+              // Estimate dates based on typical 3-week banner cycle
+              const lastBanner = bannerData[bannerData.length - 1];
+              let estimatedStart = 'TBA';
+              let estimatedEnd = 'TBA';
+              
+              if (lastBanner && lastBanner.endDate) {
+                const lastEnd = new Date(lastBanner.endDate);
+                const nextStart = new Date(lastEnd);
+                nextStart.setDate(nextStart.getDate() + 1);
+                const nextEnd = new Date(nextStart);
+                nextEnd.setDate(nextEnd.getDate() + 21);
+                
+                estimatedStart = nextStart.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
+                estimatedEnd = nextEnd.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
+              }
+              
+              bannerData.push({
+                name: charName,
+                characters: [charName],
+                signatureWeapon: '',
+                startDate: estimatedStart,
+                endDate: estimatedEnd,
+                type: 'upcoming',
+                isWeapon: false,
+                rarity: 5,
+                isTBA: estimatedStart === 'TBA'
+              });
+            }
+          }
+        }
+      }
+      
       return bannerData;
     });
 
@@ -433,8 +560,17 @@ async function scrapeGenshinBanners() {
     for (const banner of banners) {
       console.log(`\nProcessing: ${banner.name} (${banner.rarity}★ ${banner.isWeapon ? 'weapon' : 'character'})`);
       
-      const startDate = parseBannerDate(banner.startDate, false);
-      const endDate = parseBannerDate(banner.endDate, true);
+      let startDate, endDate;
+      
+      if (banner.isTBA) {
+        // For TBA banners, use a far future date as placeholder
+        startDate = Date.now() + (90 * 24 * 60 * 60 * 1000); // 90 days from now
+        endDate = startDate + (21 * 24 * 60 * 60 * 1000); // +21 days
+        console.log(`  ℹ TBA banner - using estimated future dates`);
+      } else {
+        startDate = parseBannerDate(banner.startDate, false);
+        endDate = parseBannerDate(banner.endDate, true);
+      }
       
       if (!startDate || !endDate) {
         console.log(`  ✗ Skipping: invalid dates`);
