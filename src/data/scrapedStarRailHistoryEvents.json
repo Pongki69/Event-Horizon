@@ -31,7 +31,7 @@
     "start": "2026-08-25T19:59:00.000Z",
     "end": "2026-09-27T19:59:00.000Z",
     "image": "/images/honkai-star-rail/events/gift-of-odyssey-2026-08-26-2026-08-25.png",
-    "description": "Event details coming soon.",
+    "description": "Gift of Odyssey is a login Event in Version 4.4.",
     "game": "Honkai: Star Rail",
     "wikiUrl": ""
   },
@@ -40,7 +40,7 @@
     "start": "2026-08-25T19:59:00.000Z",
     "end": "2026-09-27T19:59:00.000Z",
     "image": "/images/honkai-star-rail/events/nameless-honor-2026-08-26-2026-08-25.png",
-    "description": "Event details coming soon.",
+    "description": "Nameless Honor is the thirtieth Battle Pass.",
     "game": "Honkai: Star Rail",
     "wikiUrl": ""
   },
@@ -56,9 +56,9 @@
   {
     "title": "Aptitude Showcase - Robin • Summeretto, Hyacine, Dan Heng, Qingque, Gallagher",
     "start": "2026-08-25T19:59:00.000Z",
-    "end": "2026-09-11T19:59:00.000Z",
+    "end": "2026-09-12T07:00:00.000Z",
     "image": "",
-    "description": "Event details coming soon.",
+    "description": "Robin • Summeretto, Hyacine, Dan Heng, Qingque, Gallagher is an Aptitude Showcase in Version 4.5.",
     "game": "Honkai: Star Rail",
     "wikiUrl": ""
   },
