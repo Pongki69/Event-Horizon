@@ -4,7 +4,7 @@
     "start": "2026-10-03T03:00:00.000Z",
     "end": "2026-10-18T19:59:00.000Z",
     "image": "/images/zenless-zone-zero/events/chronicles-of-the-hobbling-crow.png",
-    "description": "Event details coming soon.",
+    "description": "Chronicles of the Hobbling Crow is an In-Game Event in Version 3.2.",
     "game": "Zenless Zone Zero",
     "wikiUrl": ""
   },
@@ -13,7 +13,7 @@
     "start": "2026-09-30T03:00:00.000Z",
     "end": "2026-10-18T19:59:00.000Z",
     "image": "/images/zenless-zone-zero/events/diary-of-an-orbie-parent.png",
-    "description": "Event details coming soon.",
+    "description": "Diary of an Orbie Parent is an In-Game Event in Version 3.2.",
     "game": "Zenless Zone Zero",
     "wikiUrl": ""
   },
@@ -49,16 +49,16 @@
     "start": "2026-09-09T03:00:00.000Z",
     "end": "2026-10-19T19:59:00.000Z",
     "image": "/images/zenless-zone-zero/events/all-new-program.png",
-    "description": "Event details coming soon.",
+    "description": "All-New Program is a Check-In Event in Version 3.2.",
     "game": "Zenless Zone Zero",
     "wikiUrl": ""
   },
   {
     "title": "Potential Hypothesis: Reforged in Fire",
     "start": "2026-09-09T03:00:00.000Z",
-    "end": "2026-10-19T19:59:00.000Z",
+    "end": "2026-10-20T06:59:00.000Z",
     "image": "/images/zenless-zone-zero/events/potential-hypothesis--reforged-in-fire.png",
-    "description": "Event details coming soon.",
+    "description": "Potential Hypothesis: Hunting Game is an In-Game Event in Version 3.2.",
     "game": "Zenless Zone Zero",
     "wikiUrl": ""
   },
@@ -66,7 +66,16 @@
     "title": "Angels Support Operation",
     "start": "2026-09-09T03:00:00.000Z",
     "end": "2026-11-29T19:59:00.000Z",
-    "image": "/images/zenless-zone-zero/events/angels-support-operation.png",
+    "image": "",
+    "description": "Angels Support Operation is an In-Game Event in Version 3.2.",
+    "game": "Zenless Zone Zero",
+    "wikiUrl": ""
+  },
+  {
+    "title": "The Final Callback",
+    "start": "2026-09-09T03:00:00.000Z",
+    "end": "2026-09-29T19:59:00.000Z",
+    "image": "/images/zenless-zone-zero/events/the-final-callback.png",
     "description": "Event details coming soon.",
     "game": "Zenless Zone Zero",
     "wikiUrl": ""

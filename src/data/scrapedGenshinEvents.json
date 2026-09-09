@@ -1,10 +1,10 @@
 [
   {
     "title": "When We Look Up at the Moon",
-    "start": "2026-07-01T02:00:00.000Z",
-    "end": "2026-09-21T19:59:00.000Z",
+    "start": "2026-07-01T03:00:00.000Z",
+    "end": "2026-09-22T06:59:00.000Z",
     "image": "/images/genshin-impact/events/when-we-look-up-at-the-moon.png",
-    "description": "Event details coming soon.",
+    "description": "Version \"Luna VIII\" introduces the following new areas: Dunanna Pit, Lunar Highlands, Moontide Sea, and the Dark Side of the Moon\n\nComplete the corresponding exploration missions within the specified duration to obtain an additional reward of Primogems ×400.",
     "game": "Genshin Impact"
   },
   {
@@ -17,10 +17,10 @@
   },
   {
     "title": "Phantasmagoric Chronicle",
-    "start": "2026-08-12T02:00:00.000Z",
+    "start": "2026-08-12T03:00:00.000Z",
     "end": "2026-09-20T19:59:00.000Z",
     "image": "/images/genshin-impact/events/phantasmagoric-chronicle.png",
-    "description": "Event details coming soon.",
+    "description": "After each Miliastra Pass event begins, rewards in Chronicles of the Skies will be unlocked by default. Travelers can also unlock Chronicles of the Realms or Epic of the Realms to obtain more generous rewards.\n\nTravelers who have already unlocked Chronicles of the Realms need only exchange the remaining difference in cost through purchasing Chronicle Recompilation in order to unlock Epic of the Realms.\n\nThe purchase of Chronicles of the Realms, Epic of the Realms, and Chronicle Recompilation for this Miliastra Pass period will be available until 2026/05/18. After the purchase period ends, you can still complete Chronicle Missions and claim rewards. Traveler, please take note of the purchase period and event duration of the Miliastra Pass.\n\nAfter unlocking \"Chronicles of the Realms\" or \"Epic of the Realms,\" you will unlock the Battle Pass Boon effect, granting a discount when purchasing the corresponding Battle Pass in Teyvat. Likewise, unlocking \"Gnostic Hymn\" or \"Gnostic Chorus\" will grant the Chronicle Boon effect, offering a discount when purchasing the corresponding Miliastra Pass in Miliastra Wonderland. You can check the Boon button on the Miliastra Pass or Battle Pass purchase screen for more details. The Boon effect can only be activated once during the current event period.\n\nThe Miliastra Pass and Battle Pass share the same start and end dates each period. Please be sure to check the time and claim your rewards promptly.",
     "game": "Genshin Impact"
   },
   {
@@ -33,34 +33,34 @@
   },
   {
     "title": "Everwinter Without Mercy",
-    "start": "2026-08-12T02:00:00.000Z",
-    "end": "2026-09-21T19:59:00.000Z",
+    "start": "2026-08-12T03:00:00.000Z",
+    "end": "2026-09-22T06:59:00.000Z",
     "image": "/images/genshin-impact/events/everwinter-without-mercy.png",
-    "description": "Event details coming soon.",
+    "description": "After the Version update, Archon Quests Chapter VII: Act I and Act II will be permanently available. Meet the unlock criteria to unlock said Archon Quests.\n\nComplete the corresponding Archon Quest within the specified duration to obtain Primogems, Character Ascension Materials, Character Level-Up Materials, Snezhnaya regional specialties, and other rewards.",
     "game": "Genshin Impact"
   },
   {
     "title": "Raiment Collection: Gentle Warmth",
-    "start": "2026-08-12T02:00:00.000Z",
-    "end": "2026-09-22T19:59:00.000Z",
+    "start": "2026-08-12T03:00:00.000Z",
+    "end": "2026-09-22T21:59:00.000Z",
     "image": "/images/genshin-impact/events/raiment-collection--gentle-warmth.png",
-    "description": "Event details coming soon.",
+    "description": "During the event, Travelers can obtain corresponding \"Treasured Insights\" and Geodes of Replication by completing Treasured Quests. Rewards from these quests are subject to a weekly limit.\n\nDuring the event, once your total accumulated \"Treasured Insights\" reach the required amount, you can claim the Manekin Cosmetics Set \"Amber Nectar.\"\n\nBefore claiming your first component of the \"Amber Nectar\" Manekin Cosmetic Set, you may freely switch between available set rewards. Once you've claimed any component of the set, your\n\nThe Manekin Cosmetic Set \"Amber Nectar\" will be available for a limited time in the Miliastra Shop after Version Luna VII ends. Please visit the Miliastra Shop for more details.",
     "game": "Genshin Impact"
   },
   {
     "title": "The Forge Realm's Temper: Game of Wits",
-    "start": "2026-08-12T02:00:00.000Z",
-    "end": "2026-09-22T19:59:00.000Z",
+    "start": "2026-08-12T03:00:00.000Z",
+    "end": "2026-09-22T22:59:00.000Z",
     "image": "/images/genshin-impact/events/the-forge-realm-s-temper--game-of-wits.png",
-    "description": "Event details coming soon.",
+    "description": "After the event starts, Travelers can go to Prince at The Cat's Tail to select stages to challenge.\n\nThis event includes 4 stages and some stages will have special victory and defeat conditions. Each stage also has specific rules related to the victory and defeat conditions.\n\nFully utilize the special rules and avoid the conditions for defeat to complete these stage challenges.\n\nComplete stage challenges to obtain the corresponding rewards.",
     "game": "Genshin Impact"
   },
   {
     "title": "The Godforsaken Frostlands",
-    "start": "2026-08-12T02:00:00.000Z",
-    "end": "2026-11-02T19:59:00.000Z",
+    "start": "2026-08-12T03:00:00.000Z",
+    "end": "2026-11-03T06:59:00.000Z",
     "image": "/images/genshin-impact/events/the-godforsaken-frostlands.png",
-    "description": "Event details coming soon.",
+    "description": "After the version update, the following new areas of Snezhnaya will be unlocked: Volkodlak Tundra, Everfrozen Earth, Fellfrost Peak, Flamefeather Valley, and White Birch Snowgrave.\n\nComplete the corresponding exploration missions within the specified duration to obtain an additional reward of Primogems ×400.",
     "game": "Genshin Impact"
   },
   {
@@ -76,7 +76,7 @@
     "start": "2026-08-28T02:00:00.000Z",
     "end": "2026-09-13T19:59:00.000Z",
     "image": "/images/genshin-impact/events/great-expeditionist-challenge.png",
-    "description": "Event details coming soon.",
+    "description": "During the event, four game modes will be available: \"Precision Express Handling,\" \"Roly-Poly Domain Raid,\" \"Maze of Frost and Foresight,\" and \"Trigger Reflex Trial.\"\n\nIn the \"Precision Express Handling\" game, you will drive a train and control its movement according to the instructions, ensuring it safely reaches the target station within the time limit.\n\nIn the \"Roly-Poly Domain Raid\" game, you can raise your \"Snowball Level\" through combat, and control snowballs to defeat enemies during the \"Snowball Phase.\"\n\nIn the \"Maze of Frost and Foresight\" game, you need to use Prime Ice Constructs and various mechanisms to map out routes and help Jack Frosts reach the destination.\n\nIn the \"Trigger Reflex Trial\" game, you need to use firearms to knock down as many targets as possible within the time limit to earn a higher score.\n\nComplete various challenges to earn Tournament Points and improve your ranking. Reaching a specified rank allows you to invite \"Kätzlein Cocktail\" Diona (Cryo). You can also obtain Primogems, Crown of Insight, and other rewards.",
     "game": "Genshin Impact"
   },
   {
@@ -84,15 +84,15 @@
     "start": "2026-08-29T02:00:00.000Z",
     "end": "2026-09-13T19:59:00.000Z",
     "image": "/images/genshin-impact/events/heated-battle-mode--tactical-formation.png",
-    "description": "Event details coming soon.",
+    "description": "After the event starts, Travelers can go to the Invitation Board of The Cat's Tail to participate in \"Genius Invokation TCG\" duels under the special rules of \"Heated Battle Mode.\"\n\nThe special rule for this edition is: Travelers must use Character Cards selected on the spot and randomly generated Action Cards to do battle.\n\nTravelers can invite teammates or participate in duels via match-making after reaching Player Level 4.",
     "game": "Genshin Impact"
   },
   {
     "title": "Test Run - Flins, Ineffa, Aino, Iansan, Lan Yan",
-    "start": "2026-09-01T02:00:00.000Z",
-    "end": "2026-09-21T19:59:00.000Z",
+    "start": "2026-09-01T10:00:00.000Z",
+    "end": "2026-09-22T06:59:00.000Z",
     "image": "",
-    "description": "Event details coming soon.",
+    "description": "Test Run - Flins, Ineffa, Aino, Iansan, Lan Yan is a Test Run - Character Trial Event in Version 7.0.",
     "game": "Genshin Impact"
   },
   {
@@ -100,7 +100,7 @@
     "start": "2026-09-07T02:00:00.000Z",
     "end": "2026-09-16T19:59:00.000Z",
     "image": "/images/genshin-impact/events/trial-of-the-bastion.png",
-    "description": "Event details coming soon.",
+    "description": "During the event, Travelers will need to build defensive lines before battle, then use firearms during the combat phase to fend off multiple waves of enemies and prevent them from breaching the stronghold.\n\nDefeat enemies to earn score. Once your challenge score reaches specified thresholds, you can claim the corresponding rewards.\n\nAfter the event starts, a new trial will unlock each day for the first 5 days (5 trials in total). Each new trial becomes available once the preceding one is completed.",
     "game": "Genshin Impact"
   },
   {
@@ -108,15 +108,15 @@
     "start": "2026-09-07T02:00:00.000Z",
     "end": "2026-09-20T19:59:00.000Z",
     "image": "/images/genshin-impact/events/starlight-voyage--joyous-moment.png",
-    "description": "Event details coming soon.",
+    "description": "During the quest completion period, Travelers can obtain \"Sightseeing Experiences\" by completing Starlight Voyage event stages.\n\nAfter the event begins, the available stages in Starlight Voyage and the maximum obtainable \"Sightseeing Experiences\" will gradually increase over time. On Day 1, the cap is 800, and it will increase by 400 every two days thereafter, up to a maximum of 1,600.\n\nDuring the event, Travelers can obtain the corresponding event reward \"Prismatic Crystals\" by completing quests and accumulating \"Sightseeing Experiences.\"\n\n\"Prismatic Crystals\" obtained from event rewards can only be used for a limited time. Don't forget to spend them before they expire.",
     "game": "Genshin Impact"
   },
   {
     "title": "Overflowing Abundance 2026-09-14",
-    "start": "2026-09-14T02:00:00.000Z",
+    "start": "2026-09-13T20:00:00.000Z",
     "end": "2026-09-20T19:59:00.000Z",
     "image": "/images/genshin-impact/events/overflowing-abundance-2026-09-14.png",
-    "description": "Event details coming soon.",
+    "description": "During the \"Overflowing Abundance\" event, successfully challenge Domains of Mastery or Domains of Forgery and consume \"Original Resin\" to double your rewards. You can double your rewards up to 3 times a day!\n\nDuring the event, all Domains of Mastery and Domains of Forgery that you have already unlocked will be available all day.",
     "game": "Genshin Impact"
   }
 ]
