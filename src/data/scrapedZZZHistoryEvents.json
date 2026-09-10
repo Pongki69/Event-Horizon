@@ -31,7 +31,7 @@
     "start": "2026-09-16T03:00:00.000Z",
     "end": "2026-10-04T19:59:00.000Z",
     "image": "/images/zenless-zone-zero/events/shadow-chase-showdown.png",
-    "description": "Event details coming soon.",
+    "description": "Shadow Chase Showdown is an In-Game Event in Version 3.2.",
     "game": "Zenless Zone Zero",
     "wikiUrl": ""
   },
@@ -66,7 +66,7 @@
     "title": "Angels Support Operation",
     "start": "2026-09-09T03:00:00.000Z",
     "end": "2026-11-29T19:59:00.000Z",
-    "image": "",
+    "image": "/images/zenless-zone-zero/events/angels-support-operation.png",
     "description": "Angels Support Operation is an In-Game Event in Version 3.2.",
     "game": "Zenless Zone Zero",
     "wikiUrl": ""
@@ -76,7 +76,7 @@
     "start": "2026-09-09T03:00:00.000Z",
     "end": "2026-09-29T19:59:00.000Z",
     "image": "/images/zenless-zone-zero/events/the-final-callback.png",
-    "description": "Event details coming soon.",
+    "description": "The Final Callback is an Audition Stage Event in Version 3.2.",
     "game": "Zenless Zone Zero",
     "wikiUrl": ""
   },
@@ -103,7 +103,7 @@
     "start": "2026-08-28T03:00:00.000Z",
     "end": "2026-09-13T19:59:00.000Z",
     "image": "/images/zenless-zone-zero/events/ding-dong--delivery-training-in-progress.png",
-    "description": "Event details coming soon.",
+    "description": "Ding-Dong! Delivery Training in Progress is an In-Game Event in Version 3.1.",
     "game": "Zenless Zone Zero",
     "wikiUrl": ""
   },
