@@ -634,52 +634,73 @@ async function scrapeZZZEvents() {
             console.log(`Found ${allFigures.length} figure elements on page`);
             
             // Try to find the main event image - priority order:
-            // 1. figure.pi-item.pi-image with data-source="image"
-            // 2. infobox image with data-image-key
-            // 3. image with "Event_" in data-image-key
-            // 4. first image with data-image-key
+            // 1. Portable infobox Event_ image (skip stickers)
+            // 2. figure.pi-item.pi-image with data-source="image" and Event_ prefix
+            // 3. Any infobox image with Event_ prefix
+            // 4. First Event_ image (not sticker)
             
             let img = null;
             let dataImageKey = '';
             
-            // 1. Try figure with data-source="image" (most reliable for event images)
-            const figure = document.querySelector('figure.pi-item.pi-image[data-source="image"]');
-            if (figure) {
-              img = figure.querySelector('img');
-              if (img) {
-                dataImageKey = img.getAttribute('data-image-key') || '';
-                console.log(`Found figure.pi-item.pi-image with data-image-key: "${dataImageKey}"`);
+            // 1. HIGHEST PRIORITY: Portable infobox Event_ image (main event banner, skip stickers)
+            const infoboxImages = document.querySelectorAll('.portable-infobox img[data-image-key], aside.portable-infobox img[data-image-key]');
+            for (const infoImg of infoboxImages) {
+              const key = infoImg.getAttribute('data-image-key') || '';
+              // Prioritize images with Event_ prefix and exclude sticker/icon patterns
+              if (key.startsWith('Event_') && !key.includes('Sticker') && !key.includes('Icon')) {
+                dataImageKey = key;
+                console.log(`✓ Found portable infobox Event_ image (not sticker): "${dataImageKey}"`);
+                break;
               }
             }
             
-            // 2. Try infobox image
+            // 2. Try figure with data-source="image" that has Event_ prefix
             if (!dataImageKey) {
-              img = document.querySelector('.infoboxtable img[data-image-key], .portable-infobox img[data-image-key]');
-              if (img) {
-                dataImageKey = img.getAttribute('data-image-key') || '';
-                console.log(`Found infobox image with data-image-key: "${dataImageKey}"`);
+              const figure = document.querySelector('figure.pi-item.pi-image[data-source="image"]');
+              if (figure) {
+                img = figure.querySelector('img');
+                if (img) {
+                  const key = img.getAttribute('data-image-key') || '';
+                  if (key.startsWith('Event_')) {
+                    dataImageKey = key;
+                    console.log(`Found figure.pi-item.pi-image with Event_ prefix: "${dataImageKey}"`);
+                  }
+                }
               }
             }
             
-            // 3. Try to find image with "Event_" in the key
+            // 3. Try any infobox image with Event_ prefix
             if (!dataImageKey) {
-              const allImages = document.querySelectorAll('img[data-image-key]');
-              for (const image of allImages) {
-                const key = image.getAttribute('data-image-key');
-                if (key && key.startsWith('Event_')) {
+              const infoboxImgs = document.querySelectorAll('.infoboxtable img[data-image-key], .portable-infobox img[data-image-key]');
+              for (const infoImg of infoboxImgs) {
+                const key = infoImg.getAttribute('data-image-key') || '';
+                if (key.startsWith('Event_')) {
                   dataImageKey = key;
-                  console.log(`Found Event_ image with data-image-key: "${dataImageKey}"`);
+                  console.log(`Found infobox Event_ image: "${dataImageKey}"`);
                   break;
                 }
               }
             }
             
-            // 4. Fallback to first image with data-image-key
+            // 4. Fallback: Try to find ANY Event_ image (not sticker)
+            if (!dataImageKey) {
+              const allImages = document.querySelectorAll('img[data-image-key]');
+              for (const image of allImages) {
+                const key = image.getAttribute('data-image-key');
+                if (key && key.startsWith('Event_') && !key.includes('Sticker')) {
+                  dataImageKey = key;
+                  console.log(`Found Event_ image (not sticker): "${dataImageKey}"`);
+                  break;
+                }
+              }
+            }
+            
+            // 5. Last resort: any image with data-image-key
             if (!dataImageKey) {
               img = document.querySelector('img[data-image-key]');
               if (img) {
                 dataImageKey = img.getAttribute('data-image-key') || '';
-                console.log(`Found first image with data-image-key: "${dataImageKey}"`);
+                console.log(`⚠ Using fallback first image: "${dataImageKey}"`);
               }
             }
             
@@ -732,7 +753,7 @@ async function scrapeZZZEvents() {
         const imagePath = await downloadImage(
           imageUrl,
           'zenless-zone-zero',
-          event.name,
+          event.name, // Use the full name which includes date suffix for recurring events
           'events'
         );
         

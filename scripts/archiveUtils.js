@@ -294,7 +294,25 @@ export function resolveImage(newImage, title, existingImageMap) {
   if (newImage && newImage.startsWith('/images/')) {
     return newImage;
   }
-  const fallback = existingImageMap.get(title.toLowerCase().trim()) || '';
+  
+  // List of recurring events that should use exact title match (including date/version suffix)
+  const recurringEventPatterns = [
+    'All-New Program',
+    'The Final Callback'
+  ];
+  
+  // Check if this is a recurring event
+  const isRecurringEvent = recurringEventPatterns.some(pattern => title.includes(pattern));
+  
+  let fallback = '';
+  if (isRecurringEvent) {
+    // For recurring events, use EXACT title match (includes date like "2026-09-09" or version like "3.2")
+    fallback = existingImageMap.get(title) || '';
+  } else {
+    // For regular events, use normalized lowercase match (backward compatible)
+    fallback = existingImageMap.get(title.toLowerCase().trim()) || '';
+  }
+  
   if (fallback) {
     // Verify the file actually exists on disk before using cached path
     const __dirname = path.dirname(fileURLToPath(import.meta.url));
