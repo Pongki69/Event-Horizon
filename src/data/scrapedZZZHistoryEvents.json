@@ -3,8 +3,8 @@
     "title": "Chronicles of the Hobbling Crow",
     "start": "2026-10-03T03:00:00.000Z",
     "end": "2026-10-18T19:59:00.000Z",
-    "image": "/images/zenless-zone-zero/events/chronicles-of-the-hobbling-crow.png",
-    "description": "Chronicles of the Hobbling Crow is an In-Game Event in Version 3.2.",
+    "image": "",
+    "description": "Event details coming soon.",
     "game": "Zenless Zone Zero",
     "wikiUrl": ""
   },
@@ -12,8 +12,8 @@
     "title": "Diary of an Orbie Parent",
     "start": "2026-09-30T03:00:00.000Z",
     "end": "2026-10-18T19:59:00.000Z",
-    "image": "/images/zenless-zone-zero/events/diary-of-an-orbie-parent.png",
-    "description": "Diary of an Orbie Parent is an In-Game Event in Version 3.2.",
+    "image": "",
+    "description": "Event details coming soon.",
     "game": "Zenless Zone Zero",
     "wikiUrl": ""
   },
@@ -48,7 +48,7 @@
     "title": "All-New Program",
     "start": "2026-09-09T03:00:00.000Z",
     "end": "2026-10-19T19:59:00.000Z",
-    "image": "",
+    "image": "/images/zenless-zone-zero/events/all-new-program.png",
     "description": "Event details coming soon.",
     "game": "Zenless Zone Zero",
     "wikiUrl": ""
@@ -56,9 +56,9 @@
   {
     "title": "Potential Hypothesis: Reforged in Fire",
     "start": "2026-09-09T03:00:00.000Z",
-    "end": "2026-10-20T06:59:00.000Z",
+    "end": "2026-10-19T19:59:00.000Z",
     "image": "/images/zenless-zone-zero/events/potential-hypothesis--reforged-in-fire.png",
-    "description": "Potential Hypothesis: Hunting Game is an In-Game Event in Version 3.2.",
+    "description": "Event details coming soon.",
     "game": "Zenless Zone Zero",
     "wikiUrl": ""
   },
@@ -67,7 +67,7 @@
     "start": "2026-09-09T03:00:00.000Z",
     "end": "2026-11-29T19:59:00.000Z",
     "image": "/images/zenless-zone-zero/events/angels-support-operation.png",
-    "description": "Angels Support Operation is an In-Game Event in Version 3.2.",
+    "description": "Event details coming soon.",
     "game": "Zenless Zone Zero",
     "wikiUrl": ""
   },
@@ -76,16 +76,25 @@
     "start": "2026-09-09T03:00:00.000Z",
     "end": "2026-09-29T19:59:00.000Z",
     "image": "/images/zenless-zone-zero/events/the-final-callback.png",
-    "description": "The Final Callback is an Audition Stage Event in Version 3.2.",
+    "description": "Event details coming soon.",
     "game": "Zenless Zone Zero",
     "wikiUrl": ""
   },
   {
     "title": "Vyrium Vacation Album",
-    "start": "2026-09-08T16:00:00.000Z",
-    "end": "2026-10-10T15:59:00.000Z",
+    "start": "2026-09-09T03:00:00.000Z",
+    "end": "2026-10-09T19:59:00.000Z",
     "image": "/images/zenless-zone-zero/events/vyrium-vacation-album.png",
     "description": "Vyrium Vacation Album is a Web Event in Version 3.2.",
+    "game": "Zenless Zone Zero",
+    "wikiUrl": ""
+  },
+  {
+    "title": "New Eridu City Fund",
+    "start": "2026-09-09T03:00:00.000Z",
+    "end": "2026-10-18T19:59:00.000Z",
+    "image": "/images/zenless-zone-zero/events/new-eridu-city-fund.png",
+    "description": "Event details coming soon.",
     "game": "Zenless Zone Zero",
     "wikiUrl": ""
   },
