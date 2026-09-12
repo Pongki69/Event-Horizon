@@ -10,7 +10,12 @@ export function getRecurringWuwaEndgame() {
   
   // Find the 2nd phase banner end date (banners are sorted, 2nd phase starts after 1st phase)
   // Get all unique end dates and find the latest one that's in the future
-  const bannerEndDates = [...new Set(scrapedWuwaBanners.map(b => b.end.getTime()))].sort((a, b) => b - a);
+  // Filter out TBA dates before processing
+  const bannerEndDates = [...new Set(
+    scrapedWuwaBanners
+      .filter(b => b.end !== 'TBA' && typeof b.end !== 'string')
+      .map(b => b.end.getTime())
+  )].sort((a, b) => b - a);
   const secondPhaseBannerEnd = bannerEndDates.length > 0 ? new Date(bannerEndDates[0]) : null;
   
   // Define endgame modes with their reset patterns
@@ -47,7 +52,12 @@ export function getRecurringWuwaEndgame() {
   // Add Doubled Pawns Matrix: Pilot if we have banner data
   if (secondPhaseBannerEnd) {
     // Find the earliest banner start date for this patch
-    const bannerStartDates = [...new Set(scrapedWuwaBanners.map(b => b.start.getTime()))].sort((a, b) => a - b);
+    // Filter out TBA dates before processing
+    const bannerStartDates = [...new Set(
+      scrapedWuwaBanners
+        .filter(b => b.start !== 'TBA' && typeof b.start !== 'string')
+        .map(b => b.start.getTime())
+    )].sort((a, b) => a - b);
     const patchStart = bannerStartDates.length > 0 ? new Date(bannerStartDates[0]) : null;
     
     if (patchStart) {

@@ -41,6 +41,22 @@ const formatStartsIn = (timeUntilStart, isShort = false) => {
 function CountdownBadge({ endDate, startDate, timezone = 'UTC+8', isUpcoming, isEnded, endNote, useShortFormat = false }) {
   const [countdown, setCountdown] = useState(null);
   
+  // Handle TBA dates for future unannounced content
+  if (startDate === 'TBA' || endDate === 'TBA') {
+    return (
+      <div 
+        className="countdown-badge" 
+        style={{ 
+          backgroundColor: '#8b5cf6',
+          fontWeight: '600',
+          boxShadow: '0 2px 8px rgba(139, 92, 246, 0.3)'
+        }}
+      >
+        TBA
+      </div>
+    );
+  }
+  
   useEffect(() => {
     // If event has ended or is permanent, no need to update countdown
     if (isEnded || endNote === 'Permanent') {

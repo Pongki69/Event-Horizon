@@ -275,10 +275,98 @@ async function scrapeWuwaBanners() {
         }
       }
 
+      // AFTER processing all tables, check for future version announcements
+      // Look for sections like "Likely Hsin and Suoming" where character names are links
+      
+      // Pattern 1: Look for headings like "Likely CharName and CharName"
+      const futureHeadings = document.querySelectorAll('h2, h3, h4');
+      for (const heading of futureHeadings) {
+        const headingText = heading.textContent.trim();
+        
+        // Check if heading starts with "Likely" and contains "and"
+        if (headingText.toLowerCase().startsWith('likely') && headingText.toLowerCase().includes(' and ')) {
+          // Extract character names from <a> links within the heading
+          const links = heading.querySelectorAll('a');
+          const characterNames = Array.from(links)
+            .map(link => link.textContent.trim())
+            .filter(name => name.length > 0 && name.length < 30);
+          
+            // Find future banners - just mark as TBA without version extraction
+            if (characterNames.length >= 2) {
+              const char1 = characterNames[0];
+              const char2 = characterNames[1];
+              
+              // Add both characters as future banners with simple TBA
+              bannerList.push({
+                characterName: char1,
+                imageUrl: '',
+                durationText: 'Date TBA',
+                isUpcoming: true,
+                isFuture: true
+              });
+              
+              bannerList.push({
+                characterName: char2,
+                imageUrl: '',
+                durationText: 'Date TBA',
+                isUpcoming: true,
+                isFuture: true
+              });
+              
+              break; // Only process the first one found
+            }
+        }
+      }
+      
+      // Pattern 2: Fallback - look for bold/strong names with version mentions in paragraphs
+      if (!bannerList.some(b => b.isFuture)) {
+        const paragraphs = document.querySelectorAll('p');
+        
+        for (const p of paragraphs) {
+          const text = p.textContent || '';
+          const strongTags = p.querySelectorAll('strong, b, a');
+          const strongNames = Array.from(strongTags).map(tag => tag.textContent.trim()).filter(name => name.length > 0 && name.length < 20);
+          const versionMatch = text.match(/Version\s+(\d+\.\d+)/i);
+          
+          if (strongNames.length >= 2 && versionMatch && text.toLowerCase().includes(' and ')) {
+            const char1 = strongNames[0];
+            const char2 = strongNames[1];
+            const version = versionMatch[1];
+            
+            if (text.toLowerCase().includes('featured') || text.toLowerCase().includes('banner')) {
+              bannerList.push({
+                characterName: char1.trim(),
+                imageUrl: '',
+                durationText: `Version ${version} (Date TBA)`,
+                isUpcoming: true,
+                isFuture: true
+              });
+              
+              bannerList.push({
+                characterName: char2.trim(),
+                imageUrl: '',
+                durationText: `Version ${version} (Date TBA)`,
+                isUpcoming: true,
+                isFuture: true
+              });
+              
+              break;
+            }
+          }
+        }
+      }
+
       return bannerList;
     });
 
     console.log(`Found ${banners.length} banners`);
+    
+    // Check if any future banners were detected
+    const futureBanners = banners.filter(b => b.isFuture);
+    if (futureBanners.length > 0) {
+      console.log(`\n🔮 Detected ${futureBanners.length} future unannounced banners:`);
+      futureBanners.forEach(b => console.log(`   - ${b.characterName} (${b.durationText})`));
+    }
 
     // Process each banner
     const processedBanners = [];
@@ -286,6 +374,78 @@ async function scrapeWuwaBanners() {
     for (const banner of banners) {
       console.log(`\n  Banner: ${banner.characterName}`);
       console.log(`    Duration text: ${banner.durationText.replace(/\n/g, ' ').substring(0, 80)}`);
+
+      // Handle future unannounced banners (no dates yet)
+      if (banner.isFuture) {
+        console.log(`    Type: future (${banner.durationText})`);
+        
+        // Try to fetch character splash art (API first)
+        let splashImageUrl = null;
+        try {
+          const resolvedUrl = await resolveWuwaWikiImage(banner.characterName, null);
+          if (resolvedUrl) {
+            splashImageUrl = resolvedUrl;
+            console.log(`    ✓ Resolved splash art for future banner (API)`);
+          }
+        } catch (err) {
+          console.log(`    ⚠ Could not resolve splash art via API: ${err.message}`);
+        }
+        
+        // Fallback: Direct wiki page scraping
+        if (!splashImageUrl) {
+          console.log(`    ⚠ Trying direct wiki page scraping for future banner...`);
+          try {
+            const wikiUrl = `https://wutheringwaves.fandom.com/wiki/${encodeURIComponent(banner.characterName)}`;
+            const wikiPage = await browser.newPage();
+            await wikiPage.setUserAgent('Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36');
+            await wikiPage.goto(wikiUrl, { waitUntil: 'domcontentloaded', timeout: 60000 });
+            
+            // Wait a bit for images to load
+            await new Promise(resolve => setTimeout(resolve, 2000));
+            
+            // Wait for and extract the thumbnail image
+            await wikiPage.waitForSelector('img.pi-image-thumbnail', { timeout: 10000 }).catch(() => {});
+            
+            const imageUrl = await wikiPage.evaluate(() => {
+              const img = document.querySelector('img.pi-image-thumbnail');
+              if (img && img.src) {
+                return img.src.split('/revision')[0];
+              }
+              return null;
+            });
+            
+            if (imageUrl) {
+              splashImageUrl = imageUrl;
+              console.log(`    ✓ Found character thumbnail via scraping`);
+            } else {
+              console.log(`    ✗ No thumbnail found on wiki page`);
+            }
+            
+            await wikiPage.close();
+          } catch (scrapeErr) {
+            console.log(`    ✗ Wiki page scraping failed: ${scrapeErr.message}`);
+          }
+        }
+        
+        // Download the image if found
+        let localImage = '';
+        if (splashImageUrl) {
+          localImage = await downloadImage(splashImageUrl, 'wuthering-waves', banner.characterName, 'banners');
+          if (localImage) console.log(`    ✓ Image saved: ${localImage}`);
+        }
+
+        processedBanners.push({
+          title: banner.characterName,
+          start: 'TBA',
+          end: 'TBA',
+          image: localImage, 
+          description: `${banner.characterName} is an upcoming character. Release date to be announced.`,
+          game: 'Wuthering Waves',
+          type: 'future'
+        });
+        
+        continue; // Skip normal date processing
+      }
 
       // Parse duration — handles both:
       //   "Banner Countdown:\nJuly 30, 2026 - August 19, 2026\n..."  (current)
@@ -394,10 +554,47 @@ async function scrapeWuwaBanners() {
             localImage = await downloadImage(resolvedUrl, 'wuthering-waves', banner.characterName, 'banners');
             if (localImage) console.log(`    ✓ Image saved: ${localImage}`);
           } else {
-            console.log(`    ✗ No image found on wiki`);
+            console.log(`    ✗ No image found on wiki API`);
           }
         } catch (imgErr) {
           console.log(`    ✗ Wiki image fetch failed: ${imgErr.message}`);
+        }
+      }
+      
+      // Fallback 2: Scrape wiki page directly for character thumbnail
+      if (!localImage) {
+        console.log(`    ⚠ Trying direct wiki page scraping...`);
+        try {
+          const wikiUrl = `https://wutheringwaves.fandom.com/wiki/${encodeURIComponent(banner.characterName)}`;
+          const wikiPage = await browser.newPage();
+          await wikiPage.setUserAgent('Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36');
+          await wikiPage.goto(wikiUrl, { waitUntil: 'domcontentloaded', timeout: 60000 });
+          
+          // Wait a bit for images to load
+          await new Promise(resolve => setTimeout(resolve, 2000));
+          
+          // Wait for and extract the thumbnail image
+          await wikiPage.waitForSelector('img.pi-image-thumbnail', { timeout: 10000 }).catch(() => {});
+          
+          const imageUrl = await wikiPage.evaluate(() => {
+            const img = document.querySelector('img.pi-image-thumbnail');
+            if (img && img.src) {
+              return img.src.split('/revision')[0];
+            }
+            return null;
+          });
+          
+          if (imageUrl) {
+            console.log(`    ✓ Found character thumbnail on wiki page`);
+            localImage = await downloadImage(imageUrl, 'wuthering-waves', banner.characterName, 'banners');
+            if (localImage) console.log(`    ✓ Image saved: ${localImage}`);
+          } else {
+            console.log(`    ✗ No thumbnail found on wiki page`);
+          }
+          
+          await wikiPage.close();
+        } catch (scrapeErr) {
+          console.log(`    ✗ Wiki page scraping failed: ${scrapeErr.message}`);
         }
       }
       
@@ -423,13 +620,18 @@ async function scrapeWuwaBanners() {
 
     // Generate JavaScript code
     const bannersCode = processedBanners.map(banner => {
+      // Handle TBA dates - don't wrap in new Date()
+      const startValue = banner.start === 'TBA' ? "'TBA'" : `new Date('${banner.start}')`;
+      const endValue = banner.end === 'TBA' ? "'TBA'" : `new Date('${banner.end}')`;
+      
       return `  {
     title: '${banner.title.replace(/'/g, "\\'")}',
-    start: new Date('${banner.start}'),
-    end: new Date('${banner.end}'),
+    start: ${startValue},
+    end: ${endValue},
     image: '${banner.image}',
     description: \`${banner.description.replace(/`/g, '\\`').replace(/\$/g, '\\$')}\`,
     game: '${banner.game}',
+    type: '${banner.type}',
   }`;
     }).join(',\n');
 
@@ -448,10 +650,15 @@ ${bannersCode}
 
     const bannersCodeFinal = processedBanners.map(banner => {
       const img = resolveImage(banner.image, banner.title, existingImageMap);
+      
+      // Handle TBA dates - don't wrap in new Date()
+      const startValue = banner.start === 'TBA' ? "'TBA'" : `new Date('${banner.start}')`;
+      const endValue = banner.end === 'TBA' ? "'TBA'" : `new Date('${banner.end}')`;
+      
       return `  {
     title: '${banner.title.replace(/'/g, "\\'")}',
-    start: new Date('${banner.start}'),
-    end: new Date('${banner.end}'),
+    start: ${startValue},
+    end: ${endValue},
     image: '${img.replace(/'/g, "\\'")}',
     description: \`${banner.description.replace(/`/g, '\\`').replace(/\$/g, '\\$')}\`,
     game: '${banner.game}',

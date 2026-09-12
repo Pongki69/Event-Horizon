@@ -14,6 +14,11 @@ const convertStoredDateToUTC8 = (storedDate, timezone = 'UTC+8') => {
     return new Date('2099-12-31T23:59:59.999Z');
   }
   
+  // Handle TBA dates - return far future date
+  if (storedDate === 'TBA' || (typeof storedDate === 'string' && storedDate === 'TBA')) {
+    return new Date('2099-12-31T23:59:59.999Z');
+  }
+  
   const date = new Date(storedDate);
   
   // If already UTC+8 or GMT+8 or Server Time, no adjustment needed
@@ -46,11 +51,16 @@ export const formatAsiaDate = (date, formatStr = 'MMMM d, yyyy') => {
     return 'Indefinite';
   }
   
+  // Handle "TBA" dates
+  if (date === 'TBA' || (typeof date === 'string' && date === 'TBA')) {
+    return 'TBA';
+  }
+  
   const dateObj = new Date(date);
   
-  // Check if date is invalid
+  // Check if date is invalid - return TBA for invalid dates
   if (isNaN(dateObj.getTime())) {
-    return 'Indefinite';
+    return 'TBA';
   }
 
   const months = ['January', 'February', 'March', 'April', 'May', 'June', 

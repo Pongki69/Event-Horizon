@@ -103,11 +103,22 @@ export async function downloadImage(imageUrl, game, eventTitle, type = 'events',
 
     console.log(`  Downloading image for ${eventTitle}...`);
     
-    // Download the image
+    // Download the image with proper headers (Wikia blocks requests without referer)
     return new Promise((resolve, reject) => {
+      const urlObj = new URL(imageUrl);
       const protocol = imageUrl.startsWith('https') ? https : http;
       
-      protocol.get(imageUrl, (response) => {
+      const options = {
+        hostname: urlObj.hostname,
+        path: urlObj.pathname + urlObj.search,
+        headers: {
+          'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36',
+          'Referer': `https://${urlObj.hostname}/`,
+          'Accept': 'image/webp,image/apng,image/*,*/*;q=0.8'
+        }
+      };
+      
+      protocol.get(options, (response) => {
         if (response.statusCode !== 200) {
           console.log(`Failed to download image for ${eventTitle}: ${response.statusCode}`);
           resolve(imageUrl); // Return original URL as fallback

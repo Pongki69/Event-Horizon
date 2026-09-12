@@ -331,7 +331,7 @@ function App() {
   const upcomingBanners = useMemo(() => 
     allBanners
       .filter(banner => !hiddenGames.has(banner.game || ''))
-      .filter(banner => isEventUpcomingAsia(banner.start, banner.timezone || 'UTC+8')),
+      .filter(banner => banner.type === 'future' || isEventUpcomingAsia(banner.start, banner.timezone || 'UTC+8')),
     [hiddenGames, allBanners]
   );
 
