@@ -14,7 +14,7 @@
     "end": "2026-09-27T19:59:00.000Z",
     "timezone": "UTC+8",
     "image": "/images/honkai-star-rail/events/gift-of-odyssey-2026-08-26-2026-08-25.png",
-    "description": "Gift of Odyssey is a login Event in Version 4.4.",
+    "description": "Event details coming soon.",
     "game": "Honkai: Star Rail"
   },
   {
@@ -23,7 +23,7 @@
     "end": "2026-09-27T19:59:00.000Z",
     "timezone": "UTC+8",
     "image": "/images/honkai-star-rail/events/overdrive-whirlwind-grand-prix-2026-08-25.png",
-    "description": "The brand-new racing grand prix in Astropolis will emulate the \"Phantasmoon Games.\" The sole winning team will ascend to godhood and become the \"God of Traffic (Laws).\"",
+    "description": "Event details coming soon.",
     "game": "Honkai: Star Rail"
   },
   {
@@ -32,25 +32,16 @@
     "end": "2026-09-27T19:59:00.000Z",
     "timezone": "UTC+8",
     "image": "/images/honkai-star-rail/events/nameless-honor-2026-08-26-2026-08-25.png",
-    "description": "Nameless Honor is the thirtieth Battle Pass.",
-    "game": "Honkai: Star Rail"
-  },
-  {
-    "title": "Cyclical Extrapolation: A Game of Fortune",
-    "start": "2026-09-06T19:59:00.000Z",
-    "end": "2026-09-13T19:59:00.000Z",
-    "timezone": "UTC+8",
-    "image": "",
-    "description": "No details available for this event.",
+    "description": "Event details coming soon.",
     "game": "Honkai: Star Rail"
   },
   {
     "title": "Planar Fissure 2026-09-06",
     "start": "2026-09-06T19:59:00.000Z",
-    "end": "2026-09-20T19:59:00.000Z",
+    "end": "2026-09-20T05:59:00.000Z",
     "timezone": "UTC+8",
     "image": "/images/honkai-star-rail/events/planar-fissure-2026-09-07-2026-09-06.png",
-    "description": "During the event, successfully challenge Simulated Universe or Divergent Universe to earn double Planar Ornaments rewards.",
+    "description": "Event details coming soon.",
     "game": "Honkai: Star Rail"
   },
   {
@@ -59,7 +50,7 @@
     "end": "2026-09-27T19:59:00.000Z",
     "timezone": "UTC+8",
     "image": "/images/honkai-star-rail/events/minuscule-great-adventure-2026-09-11.png",
-    "description": "Embark on a minuscule great adventure that packs over half the troubles in the cosmos! Assemble your hero squad, challenge stage after stage of trials, and defeat all the formidable foes in your path.",
+    "description": "Event details coming soon.",
     "game": "Honkai: Star Rail"
   },
   {
@@ -68,7 +59,7 @@
     "end": "2026-09-27T19:59:00.000Z",
     "timezone": "UTC+8",
     "image": "",
-    "description": "Aptitude Showcase - Aventurine • Waveflair, Ashveil, Sampo, Hook, Guinaifen is an Aptitude Showcase in Version 4.1.",
+    "description": "Event details coming soon.",
     "game": "Honkai: Star Rail"
   },
   {
@@ -77,16 +68,16 @@
     "end": "2026-09-20T19:59:00.000Z",
     "timezone": "UTC+8",
     "image": "",
-    "description": "No details available for this event.",
+    "description": "Event details coming soon.",
     "game": "Honkai: Star Rail"
   },
   {
     "title": "Realm of the Strange 2026-09-18",
     "start": "2026-09-18T19:59:00.000Z",
-    "end": "2026-09-27T19:59:00.000Z",
+    "end": "2026-09-27T05:59:00.000Z",
     "timezone": "UTC+8",
     "image": "/images/honkai-star-rail/events/realm-of-the-strange-2026-07-03-2026-09-18.png",
-    "description": "During the event, successfully challenge Caverns of Corrosion to earn double rewards.",
+    "description": "Event details coming soon.",
     "game": "Honkai: Star Rail"
   }
 ]

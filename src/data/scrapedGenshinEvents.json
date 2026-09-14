@@ -16,18 +16,18 @@
     "game": "Genshin Impact"
   },
   {
-    "title": "Phantasmagoric Chronicle",
-    "start": "2026-08-12T02:00:00.000Z",
-    "end": "2026-09-20T19:59:00.000Z",
-    "image": "/images/genshin-impact/events/phantasmagoric-chronicle.png",
-    "description": "Event details coming soon.",
-    "game": "Genshin Impact"
-  },
-  {
     "title": "Frostfarer",
     "start": "2026-08-12T02:00:00.000Z",
     "end": "2026-09-20T19:59:00.000Z",
     "image": "/images/genshin-impact/events/frostfarer.png",
+    "description": "Event details coming soon.",
+    "game": "Genshin Impact"
+  },
+  {
+    "title": "Phantasmagoric Chronicle",
+    "start": "2026-08-12T02:00:00.000Z",
+    "end": "2026-09-20T19:59:00.000Z",
+    "image": "/images/genshin-impact/events/phantasmagoric-chronicle.png",
     "description": "Event details coming soon.",
     "game": "Genshin Impact"
   },
@@ -68,22 +68,6 @@
     "start": "2026-08-19T02:00:00.000Z",
     "end": "2026-09-21T19:59:00.000Z",
     "image": "/images/genshin-impact/events/stygian-onslaught--battle-of-the-starburst.png",
-    "description": "Event details coming soon.",
-    "game": "Genshin Impact"
-  },
-  {
-    "title": "Great Expeditionist Challenge",
-    "start": "2026-08-28T02:00:00.000Z",
-    "end": "2026-09-13T19:59:00.000Z",
-    "image": "/images/genshin-impact/events/great-expeditionist-challenge.png",
-    "description": "Event details coming soon.",
-    "game": "Genshin Impact"
-  },
-  {
-    "title": "Heated Battle Mode: Tactical Formation",
-    "start": "2026-08-29T02:00:00.000Z",
-    "end": "2026-09-13T19:59:00.000Z",
-    "image": "/images/genshin-impact/events/heated-battle-mode--tactical-formation.png",
     "description": "Event details coming soon.",
     "game": "Genshin Impact"
   },
