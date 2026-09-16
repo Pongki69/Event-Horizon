@@ -1,24 +1,15 @@
 // Auto-generated Star Rail endgame content
-// Generated on: 2026-09-16T02:49:58.929Z
+// Generated on: 2026-09-16T15:57:13.672Z
 // DO NOT EDIT MANUALLY - Run npm run scrape:starrail-endgame to update
 
 export const scrapedStarRailEndgame = [
   {
-    "title": "Memory of Chaos",
-    "start": "2026-07-06T04:00:00.000Z",
-    "end": "2026-08-17T04:00:00.000Z",
+    "title": "Pure Fiction",
+    "start": "2026-08-03T04:00:00.000Z",
+    "end": "2026-09-14T04:00:00.000Z",
     "game": "Honkai: Star Rail",
-    "image": "/images/honkai-star-rail/events/memory-of-chaos.webp",
-    "description": "Memory of Chaos is a recurring endgame challenge. Complete stages to earn Stellar Jades and other rewards.",
-    "wikiUrl": "https://honkai-star-rail.fandom.com/wiki/Memory_of_Chaos"
-  },
-  {
-    "title": "Apocalyptic Shadow",
-    "start": "2026-08-31T04:00:00.000Z",
-    "end": "2026-10-05T03:59:59.000Z",
-    "game": "Honkai: Star Rail",
-    "image": "/images/honkai-star-rail/events/apocalyptic-shadow.png",
-    "description": "Apocalyptic Shadow is a game mode within the Treasures Lightward section of the Interastral Peace Guide. It is unlocked after completing Adventure Mission Grim Film of Finality, and can be accessed by speaking with Elegy.",
-    "wikiUrl": "https://honkai-star-rail.fandom.com/wiki/Apocalyptic_Shadow"
+    "image": "/images/honkai-star-rail/events/pure-fiction.webp",
+    "description": "\"People often hold the belief that a document produced by a photocopier faithfully replicates its original, and they tend to trust that a story narrated by a parrot reflects truth.\" — Hellerdon, ██ Historian",
+    "wikiUrl": "https://honkai-star-rail.fandom.com/wiki/Pure_Fiction"
   }
 ];
