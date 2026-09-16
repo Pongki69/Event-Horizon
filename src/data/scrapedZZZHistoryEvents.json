@@ -39,7 +39,7 @@
     "title": "Deadly Assault",
     "start": "2026-09-11T03:00:00.000Z",
     "end": "2026-09-24T19:59:00.000Z",
-    "image": "/images/zenless-zone-zero/events/deadly-assault.png",
+    "image": "",
     "description": "Event details coming soon.",
     "game": "Zenless Zone Zero",
     "wikiUrl": ""
@@ -57,7 +57,7 @@
     "title": "All-New Program",
     "start": "2026-09-09T03:00:00.000Z",
     "end": "2026-10-19T19:59:00.000Z",
-    "image": "/images/zenless-zone-zero/events/all-new-program.png",
+    "image": "",
     "description": "Event details coming soon.",
     "game": "Zenless Zone Zero",
     "wikiUrl": ""
@@ -75,7 +75,7 @@
     "title": "Angels Support Operation",
     "start": "2026-09-09T03:00:00.000Z",
     "end": "2026-11-29T19:59:00.000Z",
-    "image": "",
+    "image": "/images/zenless-zone-zero/events/angels-support-operation.png",
     "description": "Event details coming soon.",
     "game": "Zenless Zone Zero",
     "wikiUrl": ""
@@ -102,7 +102,7 @@
     "title": "New Eridu City Fund",
     "start": "2026-09-09T03:00:00.000Z",
     "end": "2026-10-18T19:59:00.000Z",
-    "image": "/images/zenless-zone-zero/events/new-eridu-city-fund.png",
+    "image": "",
     "description": "Event details coming soon.",
     "game": "Zenless Zone Zero",
     "wikiUrl": ""
