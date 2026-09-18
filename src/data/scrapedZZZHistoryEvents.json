@@ -58,16 +58,16 @@
     "start": "2026-09-09T03:00:00.000Z",
     "end": "2026-10-19T19:59:00.000Z",
     "image": "/images/zenless-zone-zero/events/all-new-program.png",
-    "description": "All-New Program is a Check-In Event in Version 3.2.",
+    "description": "Event details coming soon.",
     "game": "Zenless Zone Zero",
     "wikiUrl": ""
   },
   {
     "title": "Potential Hypothesis: Reforged in Fire",
     "start": "2026-09-09T03:00:00.000Z",
-    "end": "2026-10-20T06:59:00.000Z",
+    "end": "2026-10-19T19:59:00.000Z",
     "image": "/images/zenless-zone-zero/events/potential-hypothesis--reforged-in-fire.png",
-    "description": "Potential Hypothesis: Hunting Game is an In-Game Event in Version 3.2.",
+    "description": "Event details coming soon.",
     "game": "Zenless Zone Zero",
     "wikiUrl": ""
   },
@@ -75,7 +75,7 @@
     "title": "Angels Support Operation",
     "start": "2026-09-09T03:00:00.000Z",
     "end": "2026-11-29T19:59:00.000Z",
-    "image": "",
+    "image": "/images/zenless-zone-zero/events/angels-support-operation.png",
     "description": "Angels Support Operation is an In-Game Event in Version 3.2.",
     "game": "Zenless Zone Zero",
     "wikiUrl": ""
@@ -94,7 +94,7 @@
     "start": "2026-09-09T03:00:00.000Z",
     "end": "2026-10-09T19:59:00.000Z",
     "image": "/images/zenless-zone-zero/events/vyrium-vacation-album.png",
-    "description": "Vyrium Vacation Album is a Web Event in Version 3.2.",
+    "description": "Event details coming soon.",
     "game": "Zenless Zone Zero",
     "wikiUrl": ""
   },
@@ -111,7 +111,7 @@
     "title": "Shiyu Defense: Critical Node",
     "start": "2026-09-03T20:00:00.000Z",
     "end": "2026-09-17T19:59:00.000Z",
-    "image": "",
+    "image": "/images/zenless-zone-zero/events/shiyu-defense--critical-node.png",
     "description": "The 2026-09-04 Critical Node is a Critical Node in Shiyu Defense, added in Version 3.1.",
     "game": "Zenless Zone Zero",
     "wikiUrl": ""
