@@ -16,22 +16,6 @@
     "game": "Genshin Impact"
   },
   {
-    "title": "Frostfarer",
-    "start": "2026-08-12T02:00:00.000Z",
-    "end": "2026-09-20T19:59:00.000Z",
-    "image": "/images/genshin-impact/events/frostfarer.png",
-    "description": "Event details coming soon.",
-    "game": "Genshin Impact"
-  },
-  {
-    "title": "Phantasmagoric Chronicle",
-    "start": "2026-08-12T02:00:00.000Z",
-    "end": "2026-09-20T19:59:00.000Z",
-    "image": "/images/genshin-impact/events/phantasmagoric-chronicle.png",
-    "description": "Event details coming soon.",
-    "game": "Genshin Impact"
-  },
-  {
     "title": "Everwinter Without Mercy",
     "start": "2026-08-12T02:00:00.000Z",
     "end": "2026-09-21T19:59:00.000Z",
@@ -80,26 +64,18 @@
     "game": "Genshin Impact"
   },
   {
-    "title": "Starlight Voyage: Joyous Moment",
-    "start": "2026-09-07T02:00:00.000Z",
-    "end": "2026-09-20T19:59:00.000Z",
-    "image": "/images/genshin-impact/events/starlight-voyage--joyous-moment.png",
+    "title": "Moontrace",
+    "start": "2026-09-23T02:00:00.000Z",
+    "end": "2026-11-01T19:59:00.000Z",
+    "image": "/images/genshin-impact/events/moontrace.png",
     "description": "Event details coming soon.",
     "game": "Genshin Impact"
   },
   {
-    "title": "Overflowing Abundance 2026-09-14",
-    "start": "2026-09-14T02:00:00.000Z",
-    "end": "2026-09-20T19:59:00.000Z",
-    "image": "/images/genshin-impact/events/overflowing-abundance-2026-09-14.png",
-    "description": "Event details coming soon.",
-    "game": "Genshin Impact"
-  },
-  {
-    "title": "Across the Frozen Wilds, Honing One's Edge",
+    "title": "The Forge Realm's Temper: Clever Stratagems",
     "start": "2026-09-23T02:00:00.000Z",
     "end": "2026-11-02T19:59:00.000Z",
-    "image": "/images/genshin-impact/events/across-the-frozen-wilds--honing-one-s-edge.png",
+    "image": "/images/genshin-impact/events/the-forge-realm-s-temper--clever-stratagems.png",
     "description": "Event details coming soon.",
     "game": "Genshin Impact"
   },
@@ -112,10 +88,42 @@
     "game": "Genshin Impact"
   },
   {
+    "title": "Across the Frozen Wilds, Honing One's Edge",
+    "start": "2026-09-23T02:00:00.000Z",
+    "end": "2026-11-02T19:59:00.000Z",
+    "image": "/images/genshin-impact/events/across-the-frozen-wilds--honing-one-s-edge.png",
+    "description": "Event details coming soon.",
+    "game": "Genshin Impact"
+  },
+  {
+    "title": "A Rekviem for the Underworld",
+    "start": "2026-09-23T02:00:00.000Z",
+    "end": "2026-11-02T19:59:00.000Z",
+    "image": "/images/genshin-impact/events/a-rekviem-for-the-underworld.png",
+    "description": "Event details coming soon.",
+    "game": "Genshin Impact"
+  },
+  {
     "title": "Silverwing in Pursuit of the Moon",
     "start": "2026-09-24T02:00:00.000Z",
     "end": "2026-10-11T19:59:00.000Z",
     "image": "/images/genshin-impact/events/silverwing-in-pursuit-of-the-moon.png",
+    "description": "Event details coming soon.",
+    "game": "Genshin Impact"
+  },
+  {
+    "title": "Rainbow's End: Resplendent Starlight",
+    "start": "2026-09-28T02:00:00.000Z",
+    "end": "2026-11-02T19:59:00.000Z",
+    "image": "/images/genshin-impact/events/rainbow-s-end--resplendent-starlight.png",
+    "description": "Event details coming soon.",
+    "game": "Genshin Impact"
+  },
+  {
+    "title": "Stygian Onslaught",
+    "start": "2026-09-30T02:00:00.000Z",
+    "end": "2026-11-02T19:59:00.000Z",
+    "image": "/images/genshin-impact/events/stygian-onslaught.png",
     "description": "Event details coming soon.",
     "game": "Genshin Impact"
   },
