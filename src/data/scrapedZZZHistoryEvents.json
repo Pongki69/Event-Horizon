@@ -13,7 +13,7 @@
     "start": "2026-09-30T03:00:00.000Z",
     "end": "2026-10-18T19:59:00.000Z",
     "image": "/images/zenless-zone-zero/events/diary-of-an-orbie-parent.png",
-    "description": "Diary of an Orbie Parent is an In-Game Event in Version 3.2.",
+    "description": "Event details coming soon.",
     "game": "Zenless Zone Zero",
     "wikiUrl": ""
   },
@@ -67,7 +67,7 @@
     "start": "2026-09-11T03:00:00.000Z",
     "end": "2026-09-24T19:59:00.000Z",
     "image": "/images/zenless-zone-zero/events/deadly-assault.png",
-    "description": "Event details coming soon.",
+    "description": "The 2026-09-11 Deadly Assault is a Combat Event in Version 3.2.",
     "game": "Zenless Zone Zero",
     "wikiUrl": ""
   },
@@ -84,8 +84,8 @@
     "title": "All-New Program",
     "start": "2026-09-09T03:00:00.000Z",
     "end": "2026-10-19T19:59:00.000Z",
-    "image": "/images/zenless-zone-zero/events/all-new-program.png",
-    "description": "Event details coming soon.",
+    "image": "",
+    "description": "All-New Program is a Check-In Event in Version 3.2.",
     "game": "Zenless Zone Zero",
     "wikiUrl": ""
   },
@@ -103,7 +103,7 @@
     "start": "2026-09-09T03:00:00.000Z",
     "end": "2026-11-29T19:59:00.000Z",
     "image": "/images/zenless-zone-zero/events/angels-support-operation.png",
-    "description": "Event details coming soon.",
+    "description": "Angels Support Operation is an In-Game Event in Version 3.2.",
     "game": "Zenless Zone Zero",
     "wikiUrl": ""
   },
@@ -112,7 +112,7 @@
     "start": "2026-09-09T03:00:00.000Z",
     "end": "2026-09-29T19:59:00.000Z",
     "image": "/images/zenless-zone-zero/events/the-final-callback.png",
-    "description": "Event details coming soon.",
+    "description": "The Final Callback is an Audition Stage Event in Version 3.2.",
     "game": "Zenless Zone Zero",
     "wikiUrl": ""
   },
@@ -129,7 +129,7 @@
     "title": "New Eridu City Fund",
     "start": "2026-09-09T03:00:00.000Z",
     "end": "2026-10-18T19:59:00.000Z",
-    "image": "/images/zenless-zone-zero/events/new-eridu-city-fund.png",
+    "image": "",
     "description": "Event details coming soon.",
     "game": "Zenless Zone Zero",
     "wikiUrl": ""
