@@ -48,14 +48,6 @@
     "game": "Genshin Impact"
   },
   {
-    "title": "Tabletop Troupe: A Gathering on Adventure's Eve",
-    "start": "2026-09-23T02:00:00.000Z",
-    "end": "2026-11-02T19:59:00.000Z",
-    "image": "/images/genshin-impact/events/tabletop-troupe--a-gathering-on-adventure-s-eve.png",
-    "description": "Event details coming soon.",
-    "game": "Genshin Impact"
-  },
-  {
     "title": "A Rekviem for the Underworld",
     "start": "2026-09-23T02:00:00.000Z",
     "end": "2026-11-02T19:59:00.000Z",
@@ -64,9 +56,25 @@
     "game": "Genshin Impact"
   },
   {
+    "title": "Tabletop Troupe: A Gathering on Adventure's Eve",
+    "start": "2026-09-23T02:00:00.000Z",
+    "end": "2026-11-02T19:59:00.000Z",
+    "image": "/images/genshin-impact/events/tabletop-troupe--a-gathering-on-adventure-s-eve.png",
+    "description": "Event details coming soon.",
+    "game": "Genshin Impact"
+  },
+  {
     "title": "Raiment Collection: Warmth of a Sunny Day",
     "start": "2026-09-23T02:00:00.000Z",
     "end": "2026-11-03T19:59:00.000Z",
+    "image": "/images/genshin-impact/events/raiment-collection--warmth-of-a-sunny-day.png",
+    "description": "Event details coming soon.",
+    "game": "Genshin Impact"
+  },
+  {
+    "title": "Silverwing in Pursuit of the Moon",
+    "start": "2026-09-24T02:00:00.000Z",
+    "end": "2026-10-11T19:59:00.000Z",
     "image": "",
     "description": "Event details coming soon.",
     "game": "Genshin Impact"
