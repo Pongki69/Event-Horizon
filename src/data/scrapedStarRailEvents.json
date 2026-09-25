@@ -14,7 +14,7 @@
     "end": "2026-09-27T19:59:00.000Z",
     "timezone": "UTC+8",
     "image": "/images/honkai-star-rail/events/gift-of-odyssey-2026-08-26-2026-08-25.png",
-    "description": "Event details coming soon.",
+    "description": "Gift of Odyssey is a login Event in Version 4.5.",
     "game": "Honkai: Star Rail"
   },
   {
@@ -23,7 +23,7 @@
     "end": "2026-09-27T19:59:00.000Z",
     "timezone": "UTC+8",
     "image": "/images/honkai-star-rail/events/overdrive-whirlwind-grand-prix-2026-08-25.png",
-    "description": "Event details coming soon.",
+    "description": "The brand-new racing grand prix in Astropolis will emulate the \"Phantasmoon Games.\" The sole winning team will ascend to godhood and become the \"God of Traffic (Laws).\"",
     "game": "Honkai: Star Rail"
   },
   {
@@ -32,7 +32,7 @@
     "end": "2026-09-27T19:59:00.000Z",
     "timezone": "UTC+8",
     "image": "/images/honkai-star-rail/events/nameless-honor-2026-08-26-2026-08-25.png",
-    "description": "Event details coming soon.",
+    "description": "Nameless Honor is the thirtieth Battle Pass.",
     "game": "Honkai: Star Rail"
   },
   {
@@ -41,7 +41,7 @@
     "end": "2026-09-27T19:59:00.000Z",
     "timezone": "UTC+8",
     "image": "/images/honkai-star-rail/events/minuscule-great-adventure-2026-09-11.png",
-    "description": "Event details coming soon.",
+    "description": "Embark on a minuscule great adventure that packs over half the troubles in the cosmos! Assemble your hero squad, challenge stage after stage of trials, and defeat all the formidable foes in your path.",
     "game": "Honkai: Star Rail"
   },
   {
@@ -50,16 +50,16 @@
     "end": "2026-09-27T19:59:00.000Z",
     "timezone": "UTC+8",
     "image": "",
-    "description": "Event details coming soon.",
+    "description": "Aptitude Showcase - Aventurine • Waveflair, Ashveil, Sampo, Hook, Guinaifen is an Aptitude Showcase in Version 4.5.",
     "game": "Honkai: Star Rail"
   },
   {
     "title": "Realm of the Strange 2026-09-18",
     "start": "2026-09-18T19:59:00.000Z",
-    "end": "2026-09-27T05:59:00.000Z",
+    "end": "2026-09-27T19:59:00.000Z",
     "timezone": "UTC+8",
     "image": "/images/honkai-star-rail/events/realm-of-the-strange-2026-09-19-2026-09-18.png",
-    "description": "Event details coming soon.",
+    "description": "During the event, successfully challenge Caverns of Corrosion to earn double rewards.",
     "game": "Honkai: Star Rail"
   },
   {
@@ -68,7 +68,16 @@
     "end": "2026-09-27T19:59:00.000Z",
     "timezone": "UTC+8",
     "image": "",
-    "description": "Event details coming soon.",
+    "description": "No details available for this event.",
+    "game": "Honkai: Star Rail"
+  },
+  {
+    "title": "Nameless Honor 2026-09-27",
+    "start": "2026-09-27T19:59:00.000Z",
+    "end": "2026-11-08T19:59:00.000Z",
+    "timezone": "UTC+8",
+    "image": "/images/honkai-star-rail/events/nameless-honor-2026-09-28-2026-09-27.png",
+    "description": "Nameless Honor is the thirty-first Battle Pass.",
     "game": "Honkai: Star Rail"
   },
   {
@@ -77,7 +86,25 @@
     "end": "2026-11-10T19:59:00.000Z",
     "timezone": "UTC+8",
     "image": "/images/honkai-star-rail/events/gift-of-odyssey-2026-09-28-2026-09-27.png",
-    "description": "Event details coming soon.",
+    "description": "Gift of Odyssey is a login Event in Version 4.6.",
+    "game": "Honkai: Star Rail"
+  },
+  {
+    "title": "Planar Fissure 2026-10-11",
+    "start": "2026-10-11T19:59:00.000Z",
+    "end": "2026-10-24T19:59:00.000Z",
+    "timezone": "UTC+8",
+    "image": "/images/honkai-star-rail/events/planar-fissure-2026-10-12-2026-10-11.png",
+    "description": "During the event, successfully challenge Simulated Universe or Divergent Universe to earn double Planar Ornaments rewards.",
+    "game": "Honkai: Star Rail"
+  },
+  {
+    "title": "Garden of Plenty 2026-10-30",
+    "start": "2026-10-29T19:59:00.000Z",
+    "end": "2026-11-10T19:59:00.000Z",
+    "timezone": "UTC+8",
+    "image": "/images/honkai-star-rail/events/garden-of-plenty-2026-10-30-2026-10-29.png",
+    "description": "Garden of Plenty is an Event in Version 4.6.",
     "game": "Honkai: Star Rail"
   }
 ]
