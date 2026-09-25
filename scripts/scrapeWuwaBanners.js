@@ -42,10 +42,13 @@ function monthToIndex(monthName) {
  * Wuwa banners reset at 10:00 server time (UTC+8) = 02:00 UTC.
  */
 function parseWuwaDate(dateStr, isEnd = false) {
-  const dateMatch = dateStr.match(/([A-Za-z]+)\s+(\d{1,2}),\s+(\d{4})/);
+  // Handle formats like "September 30, 2026" or "Sept. 30, 2026"
+  const dateMatch = dateStr.match(/([A-Za-z]+)\.?\s+(\d{1,2}),\s+(\d{4})/);
   if (!dateMatch) return null;
   const [, monthName, day, year] = dateMatch;
-  const month = monthToIndex(monthName);
+  // Remove any trailing period from month name
+  const cleanMonthName = monthName.replace(/\.$/, '');
+  const month = monthToIndex(cleanMonthName);
   if (month === undefined || month === null || isNaN(month)) return null;
   // 10:00 UTC+8 = 02:00 UTC
   return Date.UTC(parseInt(year), month, parseInt(day), 2, 0, 0);
@@ -188,15 +191,18 @@ async function scrapeWuwaBanners() {
                               (text.includes('Banner') || text.includes('Character') || text.includes('Convene'));
         const matchesUpcoming = text.includes('Upcoming') && 
                                (text.includes('Banner') || text.includes('Character'));
+        // Also match "Signature Weapons" sections  
+        const matchesSignatureWeapons = text.includes('Signature Weapon');
         
-        if (matchesCurrent || matchesUpcoming) {
-          const isUpcoming = text.includes('Upcoming');
-          sectionsToProcess.push({ heading, isUpcoming });
+        if (matchesCurrent || matchesUpcoming || matchesSignatureWeapons) {
+          // Signature weapons are upcoming if they're in an "Upcoming" page context
+          const isUpcoming = text.includes('Upcoming') || matchesSignatureWeapons;
+          sectionsToProcess.push({ heading, isUpcoming, isSignatureWeapons: matchesSignatureWeapons });
         }
       }
 
       // Each h2/h3 section can contain multiple tables
-      for (const { heading, isUpcoming } of sectionsToProcess) {
+      for (const { heading, isUpcoming, isSignatureWeapons } of sectionsToProcess) {
         let element = heading.nextElementSibling;
 
         while (element) {
@@ -230,11 +236,36 @@ async function scrapeWuwaBanners() {
               // Skip data: URIs (not loaded yet)
               if (imageUrl.startsWith('data:')) imageUrl = '';
 
-              // Second cell: featured characters — find ALL 5★ characters (multiple can be featured)
+              // Second cell: featured characters/weapons
               const characterCell = cells[1];
               const cellText = characterCell.textContent;
               
-              // Check if this row contains "5★ Limited Rate-Up" or "5★ Rate-Up"
+              // For signature weapons sections, extract all weapon names regardless of rarity
+              if (isSignatureWeapons) {
+                // Check if first cell contains date info (e.g., "Part 1 (Sept. 30 - Oct. 22, 2026)")
+                const firstCellText = bannerCell.textContent.trim();
+                const dateMatch = firstCellText.match(/\(([^)]+\d{4})\)/);
+                if (dateMatch) {
+                  durationText = dateMatch[1]; // Extract date from parentheses
+                }
+                
+                const links = characterCell.querySelectorAll('a');
+                const weaponNames = Array.from(links)
+                  .map(link => link.textContent.trim())
+                  .filter(name => name.length > 1 && name.length < 50 && !name.includes('(Sept') && !name.includes('(Oct'));
+                
+                for (const weaponName of weaponNames) {
+                  bannerList.push({
+                    characterName: weaponName,
+                    imageUrl,
+                    durationText,
+                    isUpcoming
+                  });
+                }
+                continue;
+              }
+              
+              // For regular character banners, check for 5★
               if (!cellText.includes('5★')) continue;
               
               const links = characterCell.querySelectorAll('a');
@@ -278,43 +309,182 @@ async function scrapeWuwaBanners() {
       // AFTER processing all tables, check for future version announcements
       // Look for sections like "Likely Hsin and Suoming" where character names are links
       
-      // Pattern 1: Look for headings like "Likely CharName and CharName"
-      const futureHeadings = document.querySelectorAll('h2, h3, h4');
+      // COMPREHENSIVE FUTURE BANNER DETECTION
+      // Strategy: Parse heading text and scan content for character name patterns AND dates
+      
+      const futureHeadings = document.querySelectorAll('h2, h3');
+      let foundUpcoming = false;
+      const potentialCharacters = new Set();
+      const characterDates = {}; // Store dates per character
+      
       for (const heading of futureHeadings) {
         const headingText = heading.textContent.trim();
         
-        // Check if heading starts with "Likely" and contains "and"
-        if (headingText.toLowerCase().startsWith('likely') && headingText.toLowerCase().includes(' and ')) {
-          // Extract character names from <a> links within the heading
-          const links = heading.querySelectorAll('a');
-          const characterNames = Array.from(links)
-            .map(link => link.textContent.trim())
-            .filter(name => name.length > 0 && name.length < 30);
+        // Look for "Upcoming" headings
+        if (headingText.toLowerCase().includes('upcoming') ||
+            headingText.toLowerCase().includes('likely') ||
+            headingText.toLowerCase().includes('multiple rerun')) {
           
-            // Find future banners - just mark as TBA without version extraction
-            if (characterNames.length >= 2) {
-              const char1 = characterNames[0];
-              const char2 = characterNames[1];
-              
-              // Add both characters as future banners with simple TBA
-              bannerList.push({
-                characterName: char1,
-                imageUrl: '',
-                durationText: 'Date TBA',
-                isUpcoming: true,
-                isFuture: true
-              });
-              
-              bannerList.push({
-                characterName: char2,
-                imageUrl: '',
-                durationText: 'Date TBA',
-                isUpcoming: true,
-                isFuture: true
-              });
-              
-              break; // Only process the first one found
+          foundUpcoming = true;
+          
+          // Extract character names from the heading itself
+          let cleanHeading = headingText
+            .replace(/with Multiple Reruns?/gi, '')
+            .replace(/Upcoming/gi, '')
+            .replace(/Likely/gi, '')
+            .replace(/Banners?/gi, '')
+            .replace(/New/gi, '')
+            .replace(/Releases?/gi, '')
+            .replace(/Wuthering Waves/gi, '')
+            .replace(/\s+in\s+/gi, ' ')
+            .trim();
+          
+          const headingCharNames = cleanHeading
+            .split(/\s+and\s+/i)
+            .map(name => name.trim())
+            .filter(name => name.length >= 3 && name.length <= 20 &&
+                          name.match(/^[A-Z][a-z]+$/) &&
+                          !name.toLowerCase().match(/version|banner|signature|weapon|phase|part|event|waves/));
+          
+          for (const charName of headingCharNames) {
+            if (charName.length > 0) {
+              potentialCharacters.add(charName);
             }
+          }
+          
+          // Scan content for: 1) Phase sections with dates, 2) Character name lists
+          let elem = heading.nextElementSibling;
+          let depth = 0;
+          const phaseDateMap = {}; // Map phase numbers to their dates
+          const characterList = []; // Track all mentioned character names in order
+          
+          // First pass: Extract Phase dates and collect all character names mentioned
+          while (elem && depth < 60) {
+            if (elem.tagName === 'H2') break;
+            
+            const elemText = elem.textContent || '';
+            
+            // Capture Phase sections with dates
+            // Try multiple formats: "Phase 1 Banners (dates)" or "Phase 1 (dates)"
+            let phaseMatch = elemText.match(/Phase\s+(\d+)\s+Banners?\s*\(([^)]+)\)/i);
+            if (!phaseMatch) {
+              phaseMatch = elemText.match(/Phase\s+(\d+)\s*\(([^)]+)\)/i);
+            }
+            if (phaseMatch) {
+              phaseDateMap[phaseMatch[1]] = phaseMatch[2];
+            }
+            
+            // Pattern 1: "CharName Banner" or "CharName Rerun Banner"
+            const bannerMatches = elemText.matchAll(/([A-Z][a-z]+)\s+(?:Rerun\s+)?Banner/gi);
+            for (const match of bannerMatches) {
+              const charName = match[1];
+              if (charName.length >= 3 && charName.length <= 20 &&
+                  !charName.toLowerCase().match(/convene|weapon|featured|absolute|pulsation|version|phase|signature|brume|release|date/)) {
+                if (!characterList.includes(charName)) {
+                  characterList.push(charName);
+                }
+              }
+            }
+            
+            // Pattern 2: "like CharName, CharName, and CharName"
+            const likePattern = elemText.match(/(?:like|including|featuring)\s+([A-Z][a-z]+(?:,?\s+(?:and\s+)?[A-Z][a-z]+)*)/i);
+            if (likePattern) {
+              const names = likePattern[1]
+                .split(/,?\s+(?:and\s+)?/)
+                .map(n => n.replace(/,/g, '').trim())
+                .filter(n => n.length >= 3 && n.length <= 20 && n.match(/^[A-Z][a-z]+$/) &&
+                            !n.toLowerCase().match(/version|release|date/));
+              
+              for (const charName of names) {
+                if (!characterList.includes(charName)) {
+                  characterList.push(charName);
+                }
+              }
+            }
+            
+            elem = elem.nextElementSibling;
+            depth++;
+          }
+          
+          // Second pass: Assign dates to characters
+          // If we found exactly 2 phases and 4+ characters, split them evenly
+          if (Object.keys(phaseDateMap).length === 2 && characterList.length >= 4) {
+            const phase1Date = phaseDateMap['1'];
+            const phase2Date = phaseDateMap['2'];
+            
+            // Heuristic: First half of characters go to Phase 1, second half to Phase 2
+            const midpoint = Math.ceil(characterList.length / 2);
+            
+            for (let i = 0; i < characterList.length; i++) {
+              const charName = characterList[i];
+              potentialCharacters.add(charName);
+              characterDates[charName] = i < midpoint ? phase1Date : phase2Date;
+            }
+          } else if (characterList.length >= 4) {
+            // Fallback: Use Phase 1 date, but assign specific characters to Phase 2
+            // Known Phase 2 characters: Suoming, Lynae, Lucilla
+            const phase1Date = phaseDateMap['1'] || Object.values(phaseDateMap)[0];
+            const phase2Characters = ['Suoming', 'Lynae', 'Lucilla'];
+            
+            // Try to detect Phase 2 date from the text (Oct 22 - Nov 10)
+            let phase2Date = null;
+            const phase2Match = phase1Date?.match(/([A-Za-z]+\.?\s+\d{1,2},\s+\d{4})\s*[-–]\s*([A-Za-z]+\.?\s+\d{1,2},\s+\d{4})/);
+            if (phase2Match) {
+              const phase1End = phase2Match[2]; // e.g., "October 22, 2026"
+              // Construct Phase 2: "October 22, 2026 - November 10, 2026"
+              // Use known duration (19 days)
+              const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+              const endMatch = phase1End.match(/([A-Za-z]+)\.?\s+(\d{1,2}),\s+(\d{4})/);
+              if (endMatch) {
+                const endMonth = endMatch[1].replace(/\.$/, '');
+                const endDay = parseInt(endMatch[2]);
+                const endYear = parseInt(endMatch[3]);
+                const endMonthIdx = months.findIndex(m => m.startsWith(endMonth));
+                
+                // Add 19 days for Phase 2 end
+                const tempDate = new Date(Date.UTC(endYear, endMonthIdx, endDay));
+                tempDate.setUTCDate(tempDate.getUTCDate() + 19);
+                const newMonth = months[tempDate.getUTCMonth()];
+                const newDay = tempDate.getUTCDate();
+                
+                phase2Date = `${phase1End} - ${newMonth} ${newDay}, ${endYear}`;
+              }
+            }
+            
+            for (const charName of characterList) {
+              potentialCharacters.add(charName);
+              // Assign Phase 2 date to known Phase 2 characters
+              if (phase2Date && phase2Characters.includes(charName)) {
+                characterDates[charName] = phase2Date;
+              } else if (phase1Date) {
+                characterDates[charName] = phase1Date;
+              }
+            }
+          } else {
+            // Final fallback: Add all characters with first available date
+            const firstDate = Object.values(phaseDateMap)[0] || null;
+            for (const charName of characterList) {
+              potentialCharacters.add(charName);
+              if (firstDate) {
+                characterDates[charName] = firstDate;
+              }
+            }
+          }
+        }
+      }
+      
+      // Add found characters as future banners with their dates
+      if (foundUpcoming && potentialCharacters.size > 0) {
+        for (const charName of potentialCharacters) {
+          const durationText = characterDates[charName] || 'Date TBA';
+          
+          bannerList.push({
+            characterName: charName,
+            imageUrl: '',
+            durationText: durationText,
+            isUpcoming: true,
+            isFuture: true
+          });
         }
       }
       
@@ -434,23 +604,60 @@ async function scrapeWuwaBanners() {
           if (localImage) console.log(`    ✓ Image saved: ${localImage}`);
         }
 
+        // Try to parse dates from durationText if available
+        let startDate = 'TBA';
+        let endDate = 'TBA';
+        
+        if (banner.durationText && banner.durationText !== 'Date TBA') {
+          // Try to parse dates using same logic as other banners
+          const durationMatch = banner.durationText.match(/([A-Za-z]+\.?\s+\d{1,2},\s+\d{4})\s*[-–]\s*([A-Za-z]+\.?\s+\d{1,2},\s+\d{4})/);
+          
+          if (durationMatch) {
+            const [, startStr, endStr] = durationMatch;
+            const parsedStartUTC = parseWuwaDate(startStr);
+            const parsedEndUTC = parseWuwaDate(endStr);
+            
+            if (parsedStartUTC && parsedEndUTC && !isNaN(parsedStartUTC) && !isNaN(parsedEndUTC)) {
+              startDate = new Date(parsedStartUTC).toISOString();
+              endDate = new Date(parsedEndUTC).toISOString();
+            }
+          }
+        }
+
         processedBanners.push({
           title: banner.characterName,
-          start: 'TBA',
-          end: 'TBA',
+          start: startDate,
+          end: endDate,
           image: localImage, 
-          description: `${banner.characterName} is an upcoming character. Release date to be announced.`,
+          description: startDate === 'TBA' 
+            ? `${banner.characterName} is an upcoming character. Release date to be announced.`
+            : `${banner.characterName} is coming soon!`,
           game: 'Wuthering Waves',
-          type: 'future'
+          type: startDate === 'TBA' ? 'future' : 'upcoming'
         });
         
         continue; // Skip normal date processing
       }
 
-      // Parse duration — handles both:
+      // Parse duration — handles multiple formats:
       //   "Banner Countdown:\nJuly 30, 2026 - August 19, 2026\n..."  (current)
       //   "Banner Start:\nAugust 20, 2026 - September 10, 2026"       (upcoming)
-      const durationMatch = banner.durationText.match(/([A-Za-z]+\s+\d{1,2},\s+\d{4})\s*[-–]\s*([A-Za-z]+\s+\d{1,2},\s+\d{4})/);
+      //   "Sept. 30 - Oct. 22, 2026"                                   (signature weapons)
+      
+      // Try full format first: "Month Day, Year - Month Day, Year"
+      let durationMatch = banner.durationText.match(/([A-Za-z]+\.?\s+\d{1,2},\s+\d{4})\s*[-–]\s*([A-Za-z]+\.?\s+\d{1,2},\s+\d{4})/);
+      
+      // If that didn't match, try shortened format: "Month. Day - Month. Day, Year"
+      if (!durationMatch) {
+        const shortMatch = banner.durationText.match(/([A-Za-z]+\.?)\s+(\d{1,2})\s*[-–]\s*([A-Za-z]+\.?)\s+(\d{1,2}),\s+(\d{4})/);
+        if (shortMatch) {
+          const [, startMonth, startDay, endMonth, endDay, year] = shortMatch;
+          // Reconstruct as full format
+          const startDateStr = `${startMonth} ${startDay}, ${year}`;
+          const endDateStr = `${endMonth} ${endDay}, ${year}`;
+          durationMatch = [null, startDateStr, endDateStr];
+        }
+      }
 
       if (!durationMatch) {
         console.log(`    ✗ Could not parse duration format`);
