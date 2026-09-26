@@ -3,7 +3,7 @@
     "title": "Chronicles of the Hobbling Crow",
     "start": "2026-10-03T03:00:00.000Z",
     "end": "2026-10-18T19:59:00.000Z",
-    "image": "/images/zenless-zone-zero/events/chronicles-of-the-hobbling-crow.png",
+    "image": "",
     "description": "Event details coming soon.",
     "game": "Zenless Zone Zero",
     "wikiUrl": ""
@@ -12,7 +12,7 @@
     "title": "Diary of an Orbie Parent",
     "start": "2026-09-30T03:00:00.000Z",
     "end": "2026-10-18T19:59:00.000Z",
-    "image": "/images/zenless-zone-zero/events/diary-of-an-orbie-parent.png",
+    "image": "",
     "description": "Event details coming soon.",
     "game": "Zenless Zone Zero",
     "wikiUrl": ""
@@ -23,6 +23,15 @@
     "end": "2026-10-19T19:59:00.000Z",
     "image": "/images/zenless-zone-zero/events/-en-nah--into-your-lap.png",
     "description": "During the \"'En-Nah' Into Your Lap\" event, players can log in for a total of 7 days to obtain  Boopon ×10!",
+    "game": "Zenless Zone Zero",
+    "wikiUrl": ""
+  },
+  {
+    "title": "Deadly Assault",
+    "start": "2026-09-25T03:00:00.000Z",
+    "end": "2026-10-08T19:59:00.000Z",
+    "image": "",
+    "description": "Event details coming soon.",
     "game": "Zenless Zone Zero",
     "wikiUrl": ""
   },
@@ -48,7 +57,7 @@
     "title": "Shiyu Defense: Critical Node",
     "start": "2026-09-18T03:00:00.000Z",
     "end": "2026-10-01T19:59:00.000Z",
-    "image": "/images/zenless-zone-zero/events/shiyu-defense--critical-node.png",
+    "image": "",
     "description": "Event details coming soon.",
     "game": "Zenless Zone Zero",
     "wikiUrl": ""
@@ -57,7 +66,7 @@
     "title": "Shadow Chase Showdown",
     "start": "2026-09-16T03:00:00.000Z",
     "end": "2026-10-04T19:59:00.000Z",
-    "image": "/images/zenless-zone-zero/events/shadow-chase-showdown.png",
+    "image": "",
     "description": "Event details coming soon.",
     "game": "Zenless Zone Zero",
     "wikiUrl": ""
@@ -84,7 +93,7 @@
     "title": "All-New Program",
     "start": "2026-09-09T03:00:00.000Z",
     "end": "2026-10-19T19:59:00.000Z",
-    "image": "/images/zenless-zone-zero/events/all-new-program.png",
+    "image": "",
     "description": "Event details coming soon.",
     "game": "Zenless Zone Zero",
     "wikiUrl": ""
@@ -102,7 +111,7 @@
     "title": "Angels Support Operation",
     "start": "2026-09-09T03:00:00.000Z",
     "end": "2026-11-29T19:59:00.000Z",
-    "image": "/images/zenless-zone-zero/events/angels-support-operation.png",
+    "image": "",
     "description": "Event details coming soon.",
     "game": "Zenless Zone Zero",
     "wikiUrl": ""
@@ -111,7 +120,7 @@
     "title": "The Final Callback",
     "start": "2026-09-09T03:00:00.000Z",
     "end": "2026-09-29T19:59:00.000Z",
-    "image": "/images/zenless-zone-zero/events/the-final-callback.png",
+    "image": "",
     "description": "Event details coming soon.",
     "game": "Zenless Zone Zero",
     "wikiUrl": ""
@@ -120,7 +129,7 @@
     "title": "Vyrium Vacation Album",
     "start": "2026-09-09T03:00:00.000Z",
     "end": "2026-10-09T19:59:00.000Z",
-    "image": "/images/zenless-zone-zero/events/vyrium-vacation-album.png",
+    "image": "",
     "description": "Event details coming soon.",
     "game": "Zenless Zone Zero",
     "wikiUrl": ""
