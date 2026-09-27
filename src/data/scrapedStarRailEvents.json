@@ -86,16 +86,16 @@
     "end": "2026-11-10T19:59:00.000Z",
     "timezone": "UTC+8",
     "image": "/images/honkai-star-rail/events/gift-of-odyssey-2026-09-28-2026-09-27.png",
-    "description": "Event details coming soon.",
+    "description": "Gift of Odyssey is a login Event in Version 4.6.",
     "game": "Honkai: Star Rail"
   },
   {
     "title": "Planar Fissure 2026-10-11",
     "start": "2026-10-11T19:59:00.000Z",
-    "end": "2026-10-24T05:59:00.000Z",
+    "end": "2026-10-24T19:59:00.000Z",
     "timezone": "UTC+8",
     "image": "/images/honkai-star-rail/events/planar-fissure-2026-10-12-2026-10-11.png",
-    "description": "Event details coming soon.",
+    "description": "During the event, successfully challenge Simulated Universe or Divergent Universe to earn double Planar Ornaments rewards.",
     "game": "Honkai: Star Rail"
   },
   {
