@@ -110,16 +110,6 @@
     "wikiUrl": ""
   },
   {
-    "title": "Past Dreams, Traced Seals",
-    "start": "2026-09-30T04:00:00.000Z",
-    "end": "2026-10-30T04:00:00.000Z",
-    "endNote": "Permanent",
-    "image": "/images/wuthering-waves/events/past-dreams--traced-seals.png",
-    "description": "Past Dreams, Traced Seals is a photo-collection event located in the Heart Realms in Wuthering Waves Version 3.7. See how to play Past Dreams, Traced Seals, the event's schedule and all available rewards here!",
-    "game": "Wuthering Waves",
-    "wikiUrl": ""
-  },
-  {
     "title": "Gifts of Waking Moon",
     "start": "2026-09-30T04:00:00.000Z",
     "end": "2026-11-11T04:00:00.000Z",
@@ -135,7 +125,17 @@
     "end": "2026-11-11T04:00:00.000Z",
     "endNote": "",
     "image": "/images/wuthering-waves/events/3-7-moonlit-path.png",
-    "description": "Moonlit Path is a returning spending event featured in Wuthering Waves Version 3.7. See how to unlock Moonlit Path and its schedule, spending milestones and all rewards here!",
+    "description": "Moonlit Path is a returning spending event featured in Wuthering Waves Version 3.7. See how to unlock Moonlit Path and its schedule, the best character to get in the character selector, know if you should spend, spending milestones and all rewards here!",
+    "game": "Wuthering Waves",
+    "wikiUrl": ""
+  },
+  {
+    "title": "Past Dreams, Traced Seals",
+    "start": "2026-09-30T04:00:00.000Z",
+    "end": "2026-10-30T04:00:00.000Z",
+    "endNote": "Permanent",
+    "image": "/images/wuthering-waves/events/past-dreams--traced-seals.png",
+    "description": "Past Dreams, Traced Seals is a photo-collection event located in the Heart Realms in Wuthering Waves Version 3.7. See how to play Past Dreams, Traced Seals, the event's schedule and all available rewards here!",
     "game": "Wuthering Waves",
     "wikiUrl": ""
   },
@@ -225,7 +225,6 @@
     "title": "Resonance Sim Realm",
     "start": "2026-08-22T04:00:00.000Z",
     "end": "2026-09-29T04:00:00.000Z",
-    "endNote": "",
     "image": "/images/wuthering-waves/events/resonance-sim-realm.png",
     "description": "Resonance Sim Realm is a combat event in Wuthering Waves 3.6. See how to play, how to unlock Resonance Sim Realm, stage guides, the event schedule, and all available rewards here!",
     "game": "Wuthering Waves",
