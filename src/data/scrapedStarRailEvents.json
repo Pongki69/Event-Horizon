@@ -2,10 +2,10 @@
   {
     "title": "Fate Contract: Renewal",
     "start": "2026-07-23T19:59:00.000Z",
-    "end": "2026-11-10T19:59:00.000Z",
+    "end": "2026-11-10T23:00:00.000Z",
     "timezone": "UTC+8",
     "image": "/images/honkai-star-rail/events/fate-contract-renewal-2026-07-23.png",
-    "description": "Event details coming soon.",
+    "description": "Fate Contract: Renewal is an Event in Version 4.4.",
     "game": "Honkai: Star Rail"
   },
   {
@@ -14,7 +14,7 @@
     "end": "2026-11-08T19:59:00.000Z",
     "timezone": "UTC+8",
     "image": "/images/honkai-star-rail/events/nameless-honor-2026-09-28-2026-09-27.png",
-    "description": "Event details coming soon.",
+    "description": "Nameless Honor is the thirty-first Battle Pass.",
     "game": "Honkai: Star Rail"
   },
   {
@@ -23,7 +23,7 @@
     "end": "2026-11-09T19:59:00.000Z",
     "timezone": "UTC+8",
     "image": "/images/honkai-star-rail/events/gift-of-odyssey-2026-09-28-2026-09-27.png",
-    "description": "Event details coming soon.",
+    "description": "Gift of Odyssey is a login Event in Version 4.6.",
     "game": "Honkai: Star Rail"
   },
   {
