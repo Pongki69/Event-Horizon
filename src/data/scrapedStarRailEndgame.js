@@ -1,12 +1,12 @@
 // Auto-generated Star Rail endgame content
-// Generated on: 2026-09-30T17:25:50.659Z
+// Generated on: 2026-10-01T03:34:10.551Z
 // DO NOT EDIT MANUALLY - Run npm run scrape:starrail-endgame to update
 
 export const scrapedStarRailEndgame = [
   {
     "title": "Memory of Chaos",
-    "start": "2026-07-06T04:00:00.000Z",
-    "end": "2026-08-17T04:00:00.000Z",
+    "start": "2026-09-27T22:00:00.000Z",
+    "end": "2026-11-02T03:59:59.000Z",
     "game": "Honkai: Star Rail",
     "image": "/images/honkai-star-rail/events/memory-of-chaos.webp",
     "description": "Memory of Chaos is a recurring endgame challenge. Complete stages to earn Stellar Jades and other rewards.",
