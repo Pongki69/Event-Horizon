@@ -37,7 +37,13 @@ const loadBanners = async () => {
 };
 
 // Simple date formatter used throughout the details and lists (now uses Asia timezone)
-const fmtDate = (d) => formatAsiaDate(new Date(d));
+const fmtDate = (d) => {
+  // Handle TBA and other special strings directly without converting to Date
+  if (typeof d === 'string' && (d === 'TBA' || d === 'Indefinite')) {
+    return formatAsiaDate(d);
+  }
+  return formatAsiaDate(new Date(d));
+};
 
 // Helper function to format game name for display
 const formatGameName = (game) => {
