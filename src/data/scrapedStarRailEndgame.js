@@ -1,5 +1,5 @@
 // Auto-generated Star Rail endgame content
-// Generated on: 2026-10-06T17:45:15.538Z
+// Generated on: 2026-10-07T03:45:03.443Z
 // DO NOT EDIT MANUALLY - Run npm run scrape:starrail-endgame to update
 
 export const scrapedStarRailEndgame = [
