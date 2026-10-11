@@ -1,9 +1,27 @@
 [
   {
+    "title": "\"En-Nah\" Into Your Lap (2026-11-11)",
+    "start": "2026-11-11T03:00:00.000Z",
+    "end": "2026-11-29T19:59:00.000Z",
+    "image": "/images/zenless-zone-zero/events/-en-nah--into-your-lap--2026-11-11-.png",
+    "description": "Event details coming soon.",
+    "game": "Zenless Zone Zero",
+    "wikiUrl": ""
+  },
+  {
+    "title": "All-New Program (2026-10-21)",
+    "start": "2026-10-21T03:00:00.000Z",
+    "end": "2026-11-29T19:59:00.000Z",
+    "image": "/images/zenless-zone-zero/events/all-new-program--2026-10-21-.png",
+    "description": "Event details coming soon.",
+    "game": "Zenless Zone Zero",
+    "wikiUrl": ""
+  },
+  {
     "title": "Deadly Assault",
     "start": "2026-10-08T20:00:00.000Z",
     "end": "2026-10-22T19:59:00.000Z",
-    "image": "",
+    "image": "/images/zenless-zone-zero/events/deadly-assault.png",
     "description": "The 2026-10-09 Deadly Assault is a Combat Event in Version 3.2.",
     "game": "Zenless Zone Zero",
     "wikiUrl": ""
@@ -21,7 +39,7 @@
     "title": "Shiyu Defense: Critical Node",
     "start": "2026-10-02T03:00:00.000Z",
     "end": "2026-10-15T19:59:00.000Z",
-    "image": "",
+    "image": "/images/zenless-zone-zero/events/shiyu-defense--critical-node.png",
     "description": "Event details coming soon.",
     "game": "Zenless Zone Zero",
     "wikiUrl": ""
@@ -39,7 +57,16 @@
     "title": "The Final Callback",
     "start": "2026-09-30T03:00:00.000Z",
     "end": "2026-10-19T19:59:00.000Z",
-    "image": "",
+    "image": "/images/zenless-zone-zero/events/the-final-callback.png",
+    "description": "Event details coming soon.",
+    "game": "Zenless Zone Zero",
+    "wikiUrl": ""
+  },
+  {
+    "title": "\"En-Nah\" Into Your Lap (2026-09-30)",
+    "start": "2026-09-30T03:00:00.000Z",
+    "end": "2026-10-19T19:59:00.000Z",
+    "image": "/images/zenless-zone-zero/events/-en-nah--into-your-lap--2026-09-30-.png",
     "description": "Event details coming soon.",
     "game": "Zenless Zone Zero",
     "wikiUrl": ""
@@ -129,7 +156,7 @@
     "title": "Potential Hypothesis: Reforged in Fire",
     "start": "2026-09-09T03:00:00.000Z",
     "end": "2026-10-19T19:59:00.000Z",
-    "image": "",
+    "image": "/images/zenless-zone-zero/events/potential-hypothesis--reforged-in-fire.png",
     "description": "Event details coming soon.",
     "game": "Zenless Zone Zero",
     "wikiUrl": ""
@@ -138,7 +165,7 @@
     "title": "Angels Support Operation",
     "start": "2026-09-09T03:00:00.000Z",
     "end": "2026-11-29T19:59:00.000Z",
-    "image": "",
+    "image": "/images/zenless-zone-zero/events/angels-support-operation.png",
     "description": "Event details coming soon.",
     "game": "Zenless Zone Zero",
     "wikiUrl": ""
@@ -166,6 +193,15 @@
     "start": "2026-09-09T03:00:00.000Z",
     "end": "2026-10-18T19:59:00.000Z",
     "image": "",
+    "description": "Event details coming soon.",
+    "game": "Zenless Zone Zero",
+    "wikiUrl": ""
+  },
+  {
+    "title": "All-New Program (2026-09-09)",
+    "start": "2026-09-09T03:00:00.000Z",
+    "end": "2026-10-19T19:59:00.000Z",
+    "image": "/images/zenless-zone-zero/events/all-new-program--2026-09-09-.png",
     "description": "Event details coming soon.",
     "game": "Zenless Zone Zero",
     "wikiUrl": ""
