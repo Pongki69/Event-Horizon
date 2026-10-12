@@ -30,7 +30,7 @@
     "title": "Chronicles of the Hobbling Crow",
     "start": "2026-10-03T03:00:00.000Z",
     "end": "2026-10-18T19:59:00.000Z",
-    "image": "",
+    "image": "/images/zenless-zone-zero/events/chronicles-of-the-hobbling-crow.png",
     "description": "Event details coming soon.",
     "game": "Zenless Zone Zero",
     "wikiUrl": ""
@@ -48,7 +48,7 @@
     "title": "Diary of an Orbie Parent",
     "start": "2026-09-30T03:00:00.000Z",
     "end": "2026-10-18T19:59:00.000Z",
-    "image": "",
+    "image": "/images/zenless-zone-zero/events/diary-of-an-orbie-parent.png",
     "description": "Event details coming soon.",
     "game": "Zenless Zone Zero",
     "wikiUrl": ""
@@ -57,7 +57,7 @@
     "title": "The Final Callback",
     "start": "2026-09-30T03:00:00.000Z",
     "end": "2026-10-19T19:59:00.000Z",
-    "image": "/images/zenless-zone-zero/events/the-final-callback.png",
+    "image": "",
     "description": "Event details coming soon.",
     "game": "Zenless Zone Zero",
     "wikiUrl": ""
