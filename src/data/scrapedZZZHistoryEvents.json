@@ -18,6 +18,15 @@
     "wikiUrl": ""
   },
   {
+    "title": "Data Bounty: Combat Simulation",
+    "start": "2026-10-14T03:00:00.000Z",
+    "end": "2026-10-18T19:59:00.000Z",
+    "image": "/images/zenless-zone-zero/events/data-bounty--combat-simulation.png",
+    "description": "Event details coming soon.",
+    "game": "Zenless Zone Zero",
+    "wikiUrl": ""
+  },
+  {
     "title": "Deadly Assault",
     "start": "2026-10-08T20:00:00.000Z",
     "end": "2026-10-22T19:59:00.000Z",
@@ -57,7 +66,7 @@
     "title": "The Final Callback",
     "start": "2026-09-30T03:00:00.000Z",
     "end": "2026-10-19T19:59:00.000Z",
-    "image": "",
+    "image": "/images/zenless-zone-zero/events/the-final-callback.png",
     "description": "Event details coming soon.",
     "game": "Zenless Zone Zero",
     "wikiUrl": ""
