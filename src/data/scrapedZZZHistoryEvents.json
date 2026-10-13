@@ -4,7 +4,7 @@
     "start": "2026-11-11T03:00:00.000Z",
     "end": "2026-11-29T19:59:00.000Z",
     "image": "/images/zenless-zone-zero/events/-en-nah--into-your-lap--2026-11-11-.png",
-    "description": "During the \"'En-Nah' Into Your Lap\" event, players can log in for a total of 7 days to obtain  Boopon ×10!",
+    "description": "Event details coming soon.",
     "game": "Zenless Zone Zero",
     "wikiUrl": ""
   },
@@ -13,7 +13,7 @@
     "start": "2026-10-21T03:00:00.000Z",
     "end": "2026-11-29T19:59:00.000Z",
     "image": "/images/zenless-zone-zero/events/all-new-program--2026-10-21-.png",
-    "description": "All-New Program is a Check-In Event in Version 3.3.",
+    "description": "Event details coming soon.",
     "game": "Zenless Zone Zero",
     "wikiUrl": ""
   },
@@ -22,7 +22,7 @@
     "start": "2026-10-14T03:00:00.000Z",
     "end": "2026-10-18T19:59:00.000Z",
     "image": "/images/zenless-zone-zero/events/data-bounty--combat-simulation.png",
-    "description": "Data Bounty: Combat Simulation is a Double Drops Event in Version 3.2.",
+    "description": "Event details coming soon.",
     "game": "Zenless Zone Zero",
     "wikiUrl": ""
   },
@@ -40,7 +40,7 @@
     "start": "2026-10-03T03:00:00.000Z",
     "end": "2026-10-18T19:59:00.000Z",
     "image": "/images/zenless-zone-zero/events/chronicles-of-the-hobbling-crow.png",
-    "description": "Chronicles of the Hobbling Crow is an In-Game Event in Version 3.2.",
+    "description": "Event details coming soon.",
     "game": "Zenless Zone Zero",
     "wikiUrl": ""
   },
@@ -49,7 +49,7 @@
     "start": "2026-10-02T03:00:00.000Z",
     "end": "2026-10-15T19:59:00.000Z",
     "image": "/images/zenless-zone-zero/events/shiyu-defense--critical-node.png",
-    "description": "The 2026-10-02 Critical Node is a Critical Node in Shiyu Defense, added in Version 3.2.",
+    "description": "Event details coming soon.",
     "game": "Zenless Zone Zero",
     "wikiUrl": ""
   },
@@ -58,7 +58,7 @@
     "start": "2026-09-30T03:00:00.000Z",
     "end": "2026-10-18T19:59:00.000Z",
     "image": "/images/zenless-zone-zero/events/diary-of-an-orbie-parent.png",
-    "description": "Diary of an Orbie Parent is an In-Game Event in Version 3.2.",
+    "description": "Event details coming soon.",
     "game": "Zenless Zone Zero",
     "wikiUrl": ""
   },
@@ -67,7 +67,7 @@
     "start": "2026-09-30T03:00:00.000Z",
     "end": "2026-10-19T19:59:00.000Z",
     "image": "/images/zenless-zone-zero/events/the-final-callback.png",
-    "description": "The Final Callback is an Audition Stage Event in Version 3.2.",
+    "description": "Event details coming soon.",
     "game": "Zenless Zone Zero",
     "wikiUrl": ""
   },
@@ -76,7 +76,7 @@
     "start": "2026-09-30T03:00:00.000Z",
     "end": "2026-10-19T19:59:00.000Z",
     "image": "/images/zenless-zone-zero/events/-en-nah--into-your-lap--2026-09-30-.png",
-    "description": "During the \"'En-Nah' Into Your Lap\" event, players can log in for a total of 7 days to obtain  Boopon ×10!",
+    "description": "Event details coming soon.",
     "game": "Zenless Zone Zero",
     "wikiUrl": ""
   },
@@ -175,7 +175,7 @@
     "start": "2026-09-09T03:00:00.000Z",
     "end": "2026-11-29T19:59:00.000Z",
     "image": "/images/zenless-zone-zero/events/angels-support-operation.png",
-    "description": "Angels Support Operation is an In-Game Event in Version 3.2.",
+    "description": "Event details coming soon.",
     "game": "Zenless Zone Zero",
     "wikiUrl": ""
   },
@@ -210,8 +210,17 @@
     "title": "All-New Program (2026-09-09)",
     "start": "2026-09-09T03:00:00.000Z",
     "end": "2026-10-19T19:59:00.000Z",
-    "image": "/images/zenless-zone-zero/events/all-new-program--2026-09-09-.png",
-    "description": "All-New Program is a Check-In Event in Version 3.2.",
+    "image": "",
+    "description": "Event details coming soon.",
+    "game": "Zenless Zone Zero",
+    "wikiUrl": ""
+  },
+  {
+    "title": "Enigma of the Labyrinth: Operation Bagel",
+    "start": "2026-09-09T03:00:00.000Z",
+    "end": "2026-10-20T19:59:00.000Z",
+    "image": "",
+    "description": "Event details coming soon.",
     "game": "Zenless Zone Zero",
     "wikiUrl": ""
   },
