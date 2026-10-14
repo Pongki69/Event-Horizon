@@ -39,7 +39,7 @@
     "title": "Chronicles of the Hobbling Crow",
     "start": "2026-10-03T03:00:00.000Z",
     "end": "2026-10-18T19:59:00.000Z",
-    "image": "",
+    "image": "/images/zenless-zone-zero/events/chronicles-of-the-hobbling-crow.png",
     "description": "Event details coming soon.",
     "game": "Zenless Zone Zero",
     "wikiUrl": ""
@@ -57,7 +57,7 @@
     "title": "Diary of an Orbie Parent",
     "start": "2026-09-30T03:00:00.000Z",
     "end": "2026-10-18T19:59:00.000Z",
-    "image": "",
+    "image": "/images/zenless-zone-zero/events/diary-of-an-orbie-parent.png",
     "description": "Event details coming soon.",
     "game": "Zenless Zone Zero",
     "wikiUrl": ""
@@ -165,7 +165,7 @@
     "title": "Potential Hypothesis: Reforged in Fire",
     "start": "2026-09-09T03:00:00.000Z",
     "end": "2026-10-19T19:59:00.000Z",
-    "image": "",
+    "image": "/images/zenless-zone-zero/events/potential-hypothesis--reforged-in-fire.png",
     "description": "Event details coming soon.",
     "game": "Zenless Zone Zero",
     "wikiUrl": ""
@@ -174,7 +174,7 @@
     "title": "Angels Support Operation",
     "start": "2026-09-09T03:00:00.000Z",
     "end": "2026-11-29T19:59:00.000Z",
-    "image": "",
+    "image": "/images/zenless-zone-zero/events/angels-support-operation.png",
     "description": "Event details coming soon.",
     "game": "Zenless Zone Zero",
     "wikiUrl": ""
@@ -210,7 +210,7 @@
     "title": "All-New Program (2026-09-09)",
     "start": "2026-09-09T03:00:00.000Z",
     "end": "2026-10-19T19:59:00.000Z",
-    "image": "",
+    "image": "/images/zenless-zone-zero/events/all-new-program--2026-09-09-.png",
     "description": "Event details coming soon.",
     "game": "Zenless Zone Zero",
     "wikiUrl": ""
@@ -218,9 +218,9 @@
   {
     "title": "Enigma of the Labyrinth: Operation Bagel",
     "start": "2026-09-09T03:00:00.000Z",
-    "end": "2026-10-21T03:00:00.000Z",
+    "end": "2026-10-20T19:59:00.000Z",
     "image": "",
-    "description": "Enigma of the Labyrinth: Operation Bagel II is the second season for Enigma of the Labyrinth, in Version 3.2.",
+    "description": "Event details coming soon.",
     "game": "Zenless Zone Zero",
     "wikiUrl": ""
   },
