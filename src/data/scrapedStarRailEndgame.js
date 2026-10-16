@@ -1,5 +1,5 @@
 // Auto-generated Star Rail endgame content
-// Generated on: 2026-10-15T16:09:26.977Z
+// Generated on: 2026-10-16T02:42:00.722Z
 // DO NOT EDIT MANUALLY - Run npm run scrape:starrail-endgame to update
 
 export const scrapedStarRailEndgame = [
@@ -35,7 +35,7 @@ export const scrapedStarRailEndgame = [
     "start": "2025-11-05T11:00:00.000Z",
     "end": "2026-11-11T06:00:00.000Z",
     "game": "Honkai: Star Rail",
-    "image": "/images/honkai-star-rail/events/currency-wars.jpg",
+    "image": "/images/honkai-star-rail/events/events/currency-wars.png",
     "description": "Currency Wars is a Game System in Honkai: Star Rail that is part of the Cosmic Strife tab in the Interastral Peace Guide. It is an auto-chess inspired mode that is periodically updated with new content. At the start of a new Period, all progression from the previous Period is reset except for Startup Guide and Advantage Layout progress.",
     "wikiUrl": "https://honkai-star-rail.fandom.com/wiki/Currency_Wars:_Zero-Sum_Game"
   }
