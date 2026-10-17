@@ -18,6 +18,15 @@
     "wikiUrl": ""
   },
   {
+    "title": "Shiyu Defense: Critical Node",
+    "start": "2026-10-16T03:00:00.000Z",
+    "end": "2026-10-29T19:59:00.000Z",
+    "image": "",
+    "description": "Event details coming soon.",
+    "game": "Zenless Zone Zero",
+    "wikiUrl": ""
+  },
+  {
     "title": "Data Bounty: Combat Simulation",
     "start": "2026-10-14T03:00:00.000Z",
     "end": "2026-10-18T19:59:00.000Z",
@@ -30,7 +39,7 @@
     "title": "Deadly Assault",
     "start": "2026-10-08T20:00:00.000Z",
     "end": "2026-10-22T19:59:00.000Z",
-    "image": "/images/zenless-zone-zero/events/deadly-assault.png",
+    "image": "",
     "description": "The 2026-10-09 Deadly Assault is a Combat Event in Version 3.2.",
     "game": "Zenless Zone Zero",
     "wikiUrl": ""
@@ -40,7 +49,7 @@
     "start": "2026-10-03T03:00:00.000Z",
     "end": "2026-10-18T19:59:00.000Z",
     "image": "",
-    "description": "Event details coming soon.",
+    "description": "Chronicles of the Hobbling Crow is an In-Game Event in Version 3.2.",
     "game": "Zenless Zone Zero",
     "wikiUrl": ""
   },
@@ -58,7 +67,7 @@
     "start": "2026-09-30T03:00:00.000Z",
     "end": "2026-10-18T19:59:00.000Z",
     "image": "",
-    "description": "Event details coming soon.",
+    "description": "Diary of an Orbie Parent is an In-Game Event in Version 3.2.",
     "game": "Zenless Zone Zero",
     "wikiUrl": ""
   },
@@ -67,7 +76,7 @@
     "start": "2026-09-30T03:00:00.000Z",
     "end": "2026-10-19T19:59:00.000Z",
     "image": "",
-    "description": "Event details coming soon.",
+    "description": "The Final Callback is an Audition Stage Event in Version 3.2.",
     "game": "Zenless Zone Zero",
     "wikiUrl": ""
   },
@@ -76,7 +85,7 @@
     "start": "2026-09-30T03:00:00.000Z",
     "end": "2026-10-19T19:59:00.000Z",
     "image": "",
-    "description": "Event details coming soon.",
+    "description": "During the \"'En-Nah' Into Your Lap\" event, players can log in for a total of 7 days to obtain  Boopon ×10!",
     "game": "Zenless Zone Zero",
     "wikiUrl": ""
   },
