@@ -41,10 +41,10 @@
   },
   {
     "title": "The Forge Realm's Temper: Clever Stratagems",
-    "start": "2026-09-23T03:00:00.000Z",
-    "end": "2026-11-02T21:59:00.000Z",
+    "start": "2026-09-23T02:00:00.000Z",
+    "end": "2026-11-02T19:59:00.000Z",
     "image": "/images/genshin-impact/events/the-forge-realm-s-temper--clever-stratagems.png",
-    "description": "After the event starts, Travelers can go to Prince at The Cat's Tail to select stages to challenge.\n\nThis event includes 4 stages and each stage has its distinctive challenge rules.\n\nIn each stage, Travelers can configure different parameters, including stage difficulty, the health of opponents, and the number of rounds to complete the challenge within.\n\nAfter completing the challenge, points will be obtained based on the parameters selected. Achieving the required scores will allow Travelers to claim the corresponding rewards.",
+    "description": "Event details coming soon.",
     "game": "Genshin Impact"
   },
   {
@@ -65,10 +65,10 @@
   },
   {
     "title": "A Rekviem for the Underworld",
-    "start": "2026-09-23T03:00:00.000Z",
-    "end": "2026-11-03T06:59:00.000Z",
+    "start": "2026-09-23T02:00:00.000Z",
+    "end": "2026-11-02T19:59:00.000Z",
     "image": "/images/genshin-impact/events/a-rekviem-for-the-underworld.png",
-    "description": "After the Version update, Archon Quests Chapter VII: Act III and Act IV will be permanently available. Meet the unlock criteria to unlock said Archon Quests.\n\nComplete the corresponding Archon Quest within the specified duration to obtain Primogems, Character Ascension Materials, Character Level-Up Materials, Snezhnaya regional specialties, and other rewards.",
+    "description": "Event details coming soon.",
     "game": "Genshin Impact"
   },
   {
@@ -81,10 +81,10 @@
   },
   {
     "title": "Rainbow's End: Resplendent Starlight",
-    "start": "2026-09-27T16:00:00.000Z",
-    "end": "2026-11-03T06:59:00.000Z",
+    "start": "2026-09-28T02:00:00.000Z",
+    "end": "2026-11-02T19:59:00.000Z",
     "image": "/images/genshin-impact/events/rainbow-s-end--resplendent-starlight.png",
-    "description": "Rainbow's End: Resplendent Starlight is an Event in Version 7.1.",
+    "description": "Event details coming soon.",
     "game": "Genshin Impact"
   },
   {
@@ -139,7 +139,7 @@
     "title": "Starlight Voyage: Heart Unbound",
     "start": "2026-10-19T02:00:00.000Z",
     "end": "2026-11-01T19:59:00.000Z",
-    "image": "",
+    "image": "/images/genshin-impact/events/starlight-voyage--heart-unbound.png",
     "description": "During the quest completion period, Travelers can obtain \"Sightseeing Experiences\" by completing Starlight Voyage event stages.\n\nAfter the event begins, the available stages in Starlight Voyage and the maximum obtainable \"Sightseeing Experiences\" will gradually increase over time. On Day 1, the cap is 800, and it will increase by 400 every two days thereafter, up to a maximum of 1,600.\n\nDuring the event, Travelers can obtain the corresponding event reward \"Prismatic Crystals\" by completing quests and accumulating \"Sightseeing Experiences.\"\n\n\"Prismatic Crystals\" obtained from event rewards can only be used for a limited time. Don't forget to spend them before they expire.",
     "game": "Genshin Impact"
   },
