@@ -16,35 +16,35 @@
     "game": "Genshin Impact"
   },
   {
-    "title": "Moontrace",
-    "start": "2026-09-23T03:00:00.000Z",
+    "title": "Silvery Moonlight Chronicle",
+    "start": "2026-09-23T02:00:00.000Z",
     "end": "2026-11-01T19:59:00.000Z",
-    "image": "/images/genshin-impact/events/moontrace.png",
-    "description": "Moontrace is the fifty-third Battle Pass.",
+    "image": "/images/genshin-impact/events/silvery-moonlight-chronicle.png",
+    "description": "Event details coming soon.",
     "game": "Genshin Impact"
   },
   {
-    "title": "Silvery Moonlight Chronicle",
-    "start": "2026-09-23T03:00:00.000Z",
+    "title": "Moontrace",
+    "start": "2026-09-23T02:00:00.000Z",
     "end": "2026-11-01T19:59:00.000Z",
-    "image": "/images/genshin-impact/events/silvery-moonlight-chronicle.png",
-    "description": "After each Miliastra Pass event begins, rewards in Chronicles of the Skies will be unlocked by default. Travelers can also unlock Chronicles of the Realms or Epic of the Realms to obtain more generous rewards.\n\nTravelers who have already unlocked Chronicles of the Realms need only exchange the remaining difference in cost through purchasing Chronicle Recompilation in order to unlock Epic of the Realms.\n\nThe purchase of Chronicles of the Realms, Epic of the Realms, and Chronicle Recompilation for this Miliastra Pass period will be available until 2026/05/18. After the purchase period ends, you can still complete Chronicle Missions and claim rewards. Traveler, please take note of the purchase period and event duration of the Miliastra Pass.\n\nAfter unlocking \"Chronicles of the Realms\" or \"Epic of the Realms,\" you will unlock the Battle Pass Boon effect, granting a discount when purchasing the corresponding Battle Pass in Teyvat. Likewise, unlocking \"Gnostic Hymn\" or \"Gnostic Chorus\" will grant the Chronicle Boon effect, offering a discount when purchasing the corresponding Miliastra Pass in Miliastra Wonderland. You can check the Boon button on the Miliastra Pass or Battle Pass purchase screen for more details. The Boon effect can only be activated once during the current event period.\n\nThe Miliastra Pass and Battle Pass share the same start and end dates each period. Please be sure to check the time and claim your rewards promptly.",
+    "image": "/images/genshin-impact/events/moontrace.png",
+    "description": "Event details coming soon.",
     "game": "Genshin Impact"
   },
   {
     "title": "Starlit Gala: Wonderland Selects",
-    "start": "2026-09-23T03:00:00.000Z",
+    "start": "2026-09-23T02:00:00.000Z",
     "end": "2026-11-02T19:59:00.000Z",
     "image": "/images/genshin-impact/events/starlit-gala--wonderland-selects.png",
-    "description": "Starlit Gala: Wonderland Selects is an Event for Miliastra Wonderland in Version 7.1.",
+    "description": "Event details coming soon.",
     "game": "Genshin Impact"
   },
   {
     "title": "The Forge Realm's Temper: Clever Stratagems",
-    "start": "2026-09-23T03:00:00.000Z",
-    "end": "2026-11-02T21:59:00.000Z",
+    "start": "2026-09-23T02:00:00.000Z",
+    "end": "2026-11-02T19:59:00.000Z",
     "image": "/images/genshin-impact/events/the-forge-realm-s-temper--clever-stratagems.png",
-    "description": "After the event starts, Travelers can go to Prince at The Cat's Tail to select stages to challenge.\n\nThis event includes 4 stages and each stage has its distinctive challenge rules.\n\nIn each stage, Travelers can configure different parameters, including stage difficulty, the health of opponents, and the number of rounds to complete the challenge within.\n\nAfter completing the challenge, points will be obtained based on the parameters selected. Achieving the required scores will allow Travelers to claim the corresponding rewards.",
+    "description": "Event details coming soon.",
     "game": "Genshin Impact"
   },
   {
@@ -108,14 +108,6 @@
     "start": "2026-10-10T02:00:00.000Z",
     "end": "2026-10-25T19:59:00.000Z",
     "image": "/images/genshin-impact/events/heated-battle-mode--automatic-artistry.png",
-    "description": "Event details coming soon.",
-    "game": "Genshin Impact"
-  },
-  {
-    "title": "Predictive Victory Dynamics",
-    "start": "2026-10-11T02:00:00.000Z",
-    "end": "2026-10-18T19:59:00.000Z",
-    "image": "/images/genshin-impact/events/predictive-victory-dynamics.png",
     "description": "Event details coming soon.",
     "game": "Genshin Impact"
   },
