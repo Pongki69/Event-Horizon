@@ -681,7 +681,7 @@ async function scrapeGenshinBanners() {
     bannerType: '${banner.bannerType}',
     game: '${banner.game}',
     description: '${banner.description.replace(/'/g, "\\'")}',
-    wikiUrl: '${banner.wikiUrl}',
+    wikiUrl: ${JSON.stringify(banner.wikiUrl)},
   }`;
     }).join(',\n');
 
