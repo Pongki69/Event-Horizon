@@ -13,14 +13,6 @@ export const scrapedStarRailEvents = [
     game: 'Honkai: Star Rail',
   },
   {
-    title: 'Gift of Odyssey 2026-09-28',
-    start: new Date('2026-09-27T19:59:00.000Z'),
-    end: new Date('2026-11-09T19:59:00.000Z'),
-    image: '/images/honkai-star-rail/events/gift-of-odyssey-2026-09-28-2026-09-27.png',
-    description: `Event details coming soon.`,
-    game: 'Honkai: Star Rail',
-  },
-  {
     title: 'Love, Ghosts & Robots',
     start: new Date('2026-09-27T19:59:00.000Z'),
     end: new Date('2026-11-10T19:59:00.000Z'),
