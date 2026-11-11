@@ -4,28 +4,5 @@
 
 
 export const scrapedStarRailEvents = [
-  {
-    title: 'Fate Contract: Renewal',
-    start: new Date('2026-07-23T19:59:00.000Z'),
-    end: new Date('2026-11-10T19:59:00.000Z'),
-    image: '/images/honkai-star-rail/events/fate-contract-renewal-2026-07-23.png',
-    description: `Event details coming soon.`,
-    game: 'Honkai: Star Rail',
-  },
-  {
-    title: 'Love, Ghosts & Robots',
-    start: new Date('2026-09-27T19:59:00.000Z'),
-    end: new Date('2026-11-10T19:59:00.000Z'),
-    image: '/images/honkai-star-rail/events/love-ghosts-robots-2026-09-27.png',
-    description: `Event details coming soon.`,
-    game: 'Honkai: Star Rail',
-  },
-  {
-    title: 'Garden of Plenty 2026-10-30',
-    start: new Date('2026-10-29T19:59:00.000Z'),
-    end: new Date('2026-11-10T19:59:00.000Z'),
-    image: '/images/honkai-star-rail/events/garden-of-plenty-2026-10-30-2026-10-29.png',
-    description: `Event details coming soon.`,
-    game: 'Honkai: Star Rail',
-  }
+
 ];
