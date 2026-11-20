@@ -3,7 +3,7 @@
     "title": "Data Bounty: Combat Simulation",
     "start": "2026-11-25T03:00:00.000Z",
     "end": "2026-11-29T19:59:00.000Z",
-    "image": "",
+    "image": "/images/zenless-zone-zero/events/data-bounty--combat-simulation.png",
     "description": "Event details coming soon.",
     "game": "Zenless Zone Zero",
     "wikiUrl": ""
@@ -12,7 +12,16 @@
     "title": "Repair! Drifting Art",
     "start": "2026-11-16T03:00:00.000Z",
     "end": "2026-11-29T19:59:00.000Z",
-    "image": "",
+    "image": "/images/zenless-zone-zero/events/repair--drifting-art.png",
+    "description": "Event details coming soon.",
+    "game": "Zenless Zone Zero",
+    "wikiUrl": ""
+  },
+  {
+    "title": "Shiyu Defense: Critical Node",
+    "start": "2026-11-13T03:00:00.000Z",
+    "end": "2026-11-26T19:59:00.000Z",
+    "image": "/images/zenless-zone-zero/events/shiyu-defense--critical-node.png",
     "description": "Event details coming soon.",
     "game": "Zenless Zone Zero",
     "wikiUrl": ""
@@ -30,7 +39,7 @@
     "title": "Trails of the Hobbling Crow",
     "start": "2026-11-11T03:00:00.000Z",
     "end": "2026-11-29T19:59:00.000Z",
-    "image": "",
+    "image": "/images/zenless-zone-zero/events/trails-of-the-hobbling-crow.png",
     "description": "Event details coming soon.",
     "game": "Zenless Zone Zero",
     "wikiUrl": ""
@@ -49,6 +58,24 @@
     "start": "2026-11-11T03:00:00.000Z",
     "end": "2026-11-30T19:59:00.000Z",
     "image": "",
+    "description": "Event details coming soon.",
+    "game": "Zenless Zone Zero",
+    "wikiUrl": ""
+  },
+  {
+    "title": "The Final Callback",
+    "start": "2026-11-11T03:00:00.000Z",
+    "end": "2026-11-30T19:59:00.000Z",
+    "image": "/images/zenless-zone-zero/events/the-final-callback.png",
+    "description": "Event details coming soon.",
+    "game": "Zenless Zone Zero",
+    "wikiUrl": ""
+  },
+  {
+    "title": "Deadly Assault",
+    "start": "2026-11-06T03:00:00.000Z",
+    "end": "2026-11-19T19:59:00.000Z",
+    "image": "/images/zenless-zone-zero/events/deadly-assault.png",
     "description": "Event details coming soon.",
     "game": "Zenless Zone Zero",
     "wikiUrl": ""
@@ -93,6 +120,15 @@
     "title": "Spooky Funhouse Tales",
     "start": "2026-10-22T03:00:00.000Z",
     "end": "2026-11-29T19:59:00.000Z",
+    "image": "/images/zenless-zone-zero/events/spooky-funhouse-tales.png",
+    "description": "Event details coming soon.",
+    "game": "Zenless Zone Zero",
+    "wikiUrl": ""
+  },
+  {
+    "title": "Enigma of the Labyrinth: Spooky Trial",
+    "start": "2026-10-22T03:00:00.000Z",
+    "end": "2026-12-01T19:59:00.000Z",
     "image": "",
     "description": "Event details coming soon.",
     "game": "Zenless Zone Zero",
@@ -301,7 +337,7 @@
     "start": "2026-09-09T03:00:00.000Z",
     "end": "2026-11-29T19:59:00.000Z",
     "image": "",
-    "description": "Event details coming soon.",
+    "description": "Angels Support Operation is an In-Game Event in Version 3.2.",
     "game": "Zenless Zone Zero",
     "wikiUrl": ""
   },
